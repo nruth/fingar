@@ -92,8 +92,7 @@ public final class Notes {
 			
 			return this.equals(note);
 		}
-		
-		
+				
 		public Position[] getPositionsForNote(){
 			LinkedList<Position> positions = new LinkedList<Position>();
 			
@@ -116,5 +115,6 @@ public final class Notes {
 			}
 			return positions.toArray(new Position[positions.size()]);
 		}
+
 	}
 }
