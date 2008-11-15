@@ -1,11 +1,11 @@
 /**
 	 
  */
-package nruth.gitfga2.tests;
+package nruth.gitfga.encoding.tests;
 
 
-import nruth.gitfga2.AChromatic;
-import nruth.gitfga2.AChromatic.NamedNote;
+import nruth.gitfga.encoding.AChromatic;
+import nruth.gitfga.encoding.AChromatic.NamedNote;
 
 import org.junit.*;
 
@@ -28,6 +28,12 @@ public class AChromaticSpec {
 		for(int idx=0; idx<AChromatic.NamedNote.values().length; idx++){
 			assertEquals(AChromatic.NamedNote.values()[idx].toString(),notes[idx]);
 		}
+	}
+	
+	@Test
+	public void able_to_resolve_the_next_note(){
+		assertEquals("simple progression check",NamedNote.A.getNext(), NamedNote.Bb);
+		assertEquals("new scale octave check",NamedNote.Ab.getNext(), NamedNote.A);
 	}
 	
 }

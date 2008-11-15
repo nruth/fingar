@@ -1,14 +1,13 @@
 /**
 	 
  */
-package nruth.gitfga2.tests;
-
+package nruth.gitfga.encoding.tests;
 
 import static org.junit.Assert.*;
 
 import java.util.*;
 
-import nruth.gitfga2.*;
+import nruth.gitfga.encoding.*;
 
 import org.junit.*;
 
@@ -18,45 +17,9 @@ import org.junit.*;
  */
 public class NoteSpec {
 	
-	/**
-		created: 15 Nov 2008
-		@throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-		fixture_octave = NoteFactory.getRandomOctave(6);
-		fixture_note = NoteFactory.getRandomNamedNote();
-		fixture = new Note(fixture_note, fixture_octave);
-	}
-	
 	private Note fixture;
 	private int fixture_octave;
 	private AChromatic.NamedNote fixture_note;
-	
-	@Test
-	public void belongs_to_an_octave(){
-		assertEquals(fixture_octave, fixture.getOctave());
-	}
-	
-	@Test
-	public void has_a_name_from_named_notes(){
-		boolean contains = false;
-		for(AChromatic.NamedNote namedNote : AChromatic.NamedNote.values()){
-			if(namedNote.toString().equals(fixture.getNote().toString())) contains=true;
-		}
-		assertTrue("note not valid", contains);
-	}
-	
-	@Test 
-	public void note_given_matches_note_returned(){
-		assertEquals(fixture.getNote(), fixture_note);
-	}
-	
-	@Test
-	public void test_equals_check(){
-		assertFalse(fixture.equals(NoteFactory.getRandomNote()) && fixture.equals(NoteFactory.getRandomNote()));
-		assertEquals(fixture, new Note(fixture_note, fixture_octave));
-	}
 	
 	public static class NoteFactory{
 		public static Note getRandomNoteInOctave(int octave){ return new Note(getRandomNamedNote(), octave);}
@@ -88,5 +51,40 @@ public class NoteSpec {
 			for(int n=0; n<notes.length; n++){ notes[n] = getRandomNamedNote(); }
 			assertFalse(notes[0] == notes[1] && notes[2] == notes[3] && notes[0] == notes[3]);
 		}		
+	}
+	
+	@Before
+	public void setUp() throws Exception {
+		fixture_octave = NoteFactory.getRandomOctave(6);
+		fixture_note = NoteFactory.getRandomNamedNote();
+		fixture = new Note(fixture_note, fixture_octave);
+	}
+	
+	@Test
+	public void belongs_to_an_octave(){
+		assertEquals(fixture_octave, fixture.getOctave());
+	}
+	
+	@Test
+	public void has_a_name_from_named_notes(){
+		boolean contains = false;
+		for(AChromatic.NamedNote namedNote : AChromatic.NamedNote.values()){
+			if(namedNote.toString().equals(fixture.getNote().toString())) contains=true;
+		}
+		assertTrue("note not valid", contains);
+	}
+	
+	@Test 
+	public void note_given_matches_note_returned(){
+		assertEquals(fixture.getNote(), fixture_note);
+	}
+	
+	@Test
+	public void is_distinct_from_notes_in_other_octaves_with_the_same_name(){
+		assertFalse(fixture.equals(new Note(fixture_note, fixture_octave+1)));
+		
+		//general equality tests
+		assertFalse(fixture.equals(NoteFactory.getRandomNote()) && fixture.equals(NoteFactory.getRandomNote()));
+		assertEquals(fixture, new Note(fixture_note, fixture_octave));
 	}
 }

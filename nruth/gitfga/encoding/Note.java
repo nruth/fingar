@@ -1,9 +1,9 @@
 /**
 	 
  */
-package nruth.gitfga2;
+package nruth.gitfga.encoding;
 
-import nruth.gitfga2.AChromatic.NamedNote;
+import nruth.gitfga.encoding.AChromatic.NamedNote;
 
 /**
 	@author nicholasrutherford

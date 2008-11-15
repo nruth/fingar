@@ -1,7 +1,7 @@
 /**
 	 
  */
-package nruth.gitfga2.tests;
+package nruth.gitfga.encoding.tests;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -10,7 +10,10 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
   NoteSpec.class,
   AChromaticSpec.class,
+  ScoreSpec.class
 })
+
+
 public class AllTests {
     // the class remains completely empty, 
     // being used only as a holder for the above annotations	
