@@ -18,7 +18,6 @@ import org.junit.*;
 	
  */
 public class NotesTest {
-	
 	/**
 		last modified: 4 Nov 2008
 		@throws java.lang.Exception
