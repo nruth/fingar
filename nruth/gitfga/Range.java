@@ -5,9 +5,10 @@ package nruth.gitfga;
 
 import nruth.gitfga.Notes.Note;
 import static junit.framework.Assert.*;
-/** The range of notes used in the piece mapped to fingering positions for a particular octave setting
-	@author nicholasrutherford
-	
+/** encapsulates the range of notes used in the piece mapped to fingering positions 
+ * for a particular octave setting
+ * i.e. for a piece with a single octave range, whether it will be played high, middle or low on the neck, and which strings.
+	@author nicholasrutherford	
  */
 public final class Range {
 	public Position[] getPositions(Note note, int octave){ //TODO test

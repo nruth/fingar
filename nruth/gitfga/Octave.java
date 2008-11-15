@@ -12,7 +12,7 @@ import nruth.gitfga.Position.GuitarString;
 	@author nicholasrutherford
 	
  */
-public final class Octave {
+public final class Octave { //TODO how am I supposed to be using this again . . .
 	Object[] lookup_table;
 	
 	private ArrayList<Position> lookup(Note note){ return (ArrayList<Position>) lookup_table[note.ordinal()]; }
