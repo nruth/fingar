@@ -23,8 +23,8 @@ public class NoteSpec {
 	
 	public static class NoteFactory{
 		public static Note getRandomNoteInOctave(int octave){ return new Note(getRandomNamedNote(), octave);}
-		public static Note getRandomNoteWithName(AChromatic.NamedNote note_name){ return new Note(note_name, seed.nextInt());}
-		public static Note getRandomNote(){ return new Note(getRandomNamedNote(), seed.nextInt()); }
+		public static Note getRandomNoteWithName(AChromatic.NamedNote note_name){ return new Note(note_name, seed.nextInt(6)+1);}
+		public static Note getRandomNote(){ return new Note(getRandomNamedNote(), seed.nextInt(6)+1); }
 
 		
 		/**
@@ -38,8 +38,8 @@ public class NoteSpec {
 			return notes[random_note];
 		}
 		
-		public static int getRandomOctave(int range){
-			return seed.nextInt(range);
+		public static int getRandomOctave(){
+			return seed.nextInt(Assumptions.OCTAVE_RANGE)+1;
 		}
 		
 		private static Random seed = new Random();
@@ -55,7 +55,7 @@ public class NoteSpec {
 	
 	@Before
 	public void setUp() throws Exception {
-		fixture_octave = NoteFactory.getRandomOctave(6);
+		fixture_octave = NoteFactory.getRandomOctave();
 		fixture_note = NoteFactory.getRandomNamedNote();
 		fixture = new Note(fixture_note, fixture_octave);
 	}
@@ -63,6 +63,27 @@ public class NoteSpec {
 	@Test
 	public void belongs_to_an_octave(){
 		assertEquals(fixture_octave, fixture.getOctave());
+	}
+	
+	@Test
+	public void octave_in_range(){
+		for(int i=1; i<=6; i++){ NoteFactory.getRandomNoteInOctave(i); }
+		//pass, no exceptions
+	}
+	
+	@Test(expected=IndexOutOfBoundsException.class)
+	public void octave_out_of_range_0(){
+		NoteFactory.getRandomNoteInOctave(0);
+	}
+	
+	@Test(expected=IndexOutOfBoundsException.class)
+	public void octave_out_of_range_negative(){
+		NoteFactory.getRandomNoteInOctave(-4);
+	}
+	
+	@Test(expected=IndexOutOfBoundsException.class)
+	public void octave_out_of_range_offend(){
+		NoteFactory.getRandomNoteInOctave(7);
 	}
 	
 	@Test

@@ -5,6 +5,7 @@ note
 	has a name from the set of named notes
 		i.e. an individual frequency in the piece's range	
 	* is distinct from notes in other octaves with the same name
+	* validates its octave is in the range 1-6
 	
 	chromatic scale
 		an ordered list of the named notes

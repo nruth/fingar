@@ -11,6 +11,7 @@ import nruth.gitfga.encoding.AChromatic.NamedNote;
  */
 public final class Note {
 	public Note(NamedNote named_note, int octave) {
+		if(! nruth.Helpers.in_range(1, octave, Assumptions.OCTAVE_RANGE)){ throw new IndexOutOfBoundsException("octave :"+octave+" invalid, must be 1 to "+Assumptions.OCTAVE_RANGE);}
 	    this.octave = octave;
 	    this.named_note = named_note;
     }
