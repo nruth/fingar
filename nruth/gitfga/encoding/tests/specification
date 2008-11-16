@@ -3,8 +3,7 @@ Each note in the score has a name and octave
 note
 	belongs to an octave
 	has a name from the set of named notes
-		i.e. an individual frequency in the piece's range
-	(timing : has a starting time (relative to beginning of piece) and a duration)
+		i.e. an individual frequency in the piece's range	
 	* is distinct from notes in other octaves with the same name
 	
 	chromatic scale
@@ -27,6 +26,7 @@ note
 
 score: The input piece of music
 	an ordered list of notes, indexed by time played from start
+	* timing : each note has a starting time (relative to beginning of piece) and a duration
 	* may be played over a set of possible ranges (on a guitar)
 	
 	Range
