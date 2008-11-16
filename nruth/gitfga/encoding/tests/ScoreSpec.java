@@ -16,10 +16,18 @@ import org.junit.*;
 public class ScoreSpec {
 	private Score fixture;
 	Note[] fixture_notes = new Note[5];
+	float[][] fixture_timing;
 	@Before
 	public void setUp(){
 		for(int i=0; i<fixture_notes.length; i++){fixture_notes[i] = NoteFactory.getRandomNote();}
-		fixture = new Score(fixture_notes);
+		fixture_timing = new float[][]{
+				{0,3},
+				{4,2},
+				{6,4},
+				{10,0.5f},
+				{10.5f,1.5f}
+		};
+		fixture = new Score(fixture_notes, fixture_timing);
 	}
 
 	@Test
@@ -46,7 +54,7 @@ public class ScoreSpec {
 	//next spec
 	@Test
 	public void indexed_by_time_played_from_start(){
-		fail("not implemented");
+		assertEquals(fixture_notes[2],fixture.getNoteAtTime(fixture_timing[2][0]));
 	}
 	
 	@Test

@@ -40,4 +40,8 @@ public final class Note {
     	) return true;
     	else return false;    		
     }
+    
+    public String toString(){
+    	return "["+named_note+octave+"]";
+    }
 }
