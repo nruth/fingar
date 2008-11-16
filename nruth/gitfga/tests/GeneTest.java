@@ -16,6 +16,7 @@ import static nruth.gitfga.tests.GeneTest.GeneFactory.*;
 	@author nicholasrutherford
 	
  */
+@Deprecated
 public class GeneTest {
 	/**
 		last modified: 30 Oct 2008

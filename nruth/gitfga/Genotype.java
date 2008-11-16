@@ -6,6 +6,7 @@ import nruth.gitfga.Notes.Note;
 	@author nicholasrutherford
 	
  */
+@Deprecated
 public final class Genotype implements Cloneable {
 	private final Gene[] chromosome;
 	

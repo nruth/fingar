@@ -10,6 +10,7 @@ import static junit.framework.Assert.*;
  * i.e. for a piece with a single octave range, whether it will be played high, middle or low on the neck, and which strings.
 	@author nicholasrutherford	
  */
+@Deprecated
 public final class Range {
 	public Position[] getPositions(Note note, int octave){ //TODO test
 		return range[octave-1].getPositionsForNote(note);

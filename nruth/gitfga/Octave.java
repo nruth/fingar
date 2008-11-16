@@ -12,6 +12,7 @@ import nruth.gitfga.Position.GuitarString;
 	@author nicholasrutherford
 	
  */
+@Deprecated
 public final class Octave { //TODO how am I supposed to be using this again . . .
 	Object[] lookup_table;
 	

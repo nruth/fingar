@@ -10,6 +10,7 @@ import nruth.gitfga.Notes.Note;
 /**
 	@author nicholasrutherford
  */
+@Deprecated
 public final class MadScientist { 
 	static final Random seed = new Random();
 	

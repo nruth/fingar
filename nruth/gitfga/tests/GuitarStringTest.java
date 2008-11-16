@@ -14,6 +14,7 @@ import static nruth.gitfga.Position.GuitarString.*;
 	@author nicholasrutherford
 	
  */
+@Deprecated
 public class GuitarStringTest {
 	
 	/**

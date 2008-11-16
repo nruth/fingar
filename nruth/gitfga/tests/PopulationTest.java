@@ -17,6 +17,7 @@ import org.junit.*;
 	@author nicholasrutherford
 	
  */
+@Deprecated
 public class PopulationTest {
 	@Test // doesGenotypeRepresetNotes(Genotype g, Notes notes) (tdd)
 	public void doesGenotypeRepresetNotes(){

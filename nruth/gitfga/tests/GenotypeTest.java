@@ -15,6 +15,7 @@ import org.junit.*;
 	@author nicholasrutherford
 	
  */
+@Deprecated
 public class GenotypeTest {
 	//fixtures
 	private Gene gene1, gene2;

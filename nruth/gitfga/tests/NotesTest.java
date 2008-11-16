@@ -17,6 +17,7 @@ import org.junit.*;
 	@author nicholasrutherford
 	
  */
+@Deprecated
 public class NotesTest {
 	/**
 		last modified: 4 Nov 2008

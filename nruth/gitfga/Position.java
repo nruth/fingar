@@ -10,6 +10,7 @@ import nruth.gitfga.Notes.Note;
 	@author nicholasrutherford
 	
  */
+@Deprecated
 public final class Position {
 	public Position(int fret, GuitarString string) {
 	    this.fret = fret;

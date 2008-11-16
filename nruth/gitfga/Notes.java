@@ -11,6 +11,7 @@ import nruth.gitfga.Position.*;
 	@author nicholasrutherford
 	
  */
+@Deprecated
 public final class Notes { //TODO this needs changing to consider octaves too (tdd)
 	public Notes(Note[] notes) {
 	    this.notes = notes;

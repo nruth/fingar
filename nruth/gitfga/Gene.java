@@ -10,6 +10,7 @@ import nruth.gitfga.Position.GuitarString;
 /** coupling to Notes class is avoided by shifting logic involving it into Population, however composited classes are coupled anyway so this may be fallacious.
  * @author nicholasrutherford
  */
+@Deprecated
 public final class Gene implements Cloneable {
 	
 	//constructor only provides for known values, random population initialisation is externalised and handled elsewhere

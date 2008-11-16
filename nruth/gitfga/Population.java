@@ -11,6 +11,7 @@ import nruth.gitfga.tests.NotesTest.NotesFactory;
  * contains a reference copy of the musical notes the individuals will call back to.
 	@author nicholasrutherford
  */
+@Deprecated
 public final class Population {
 	public Population(Notes notes, int size){
 		if(Population.music == null) Population.music = notes;
