@@ -30,8 +30,7 @@ public class Score {
     }
 
 	/**
-    	last modified: 16 Nov 2008
-    	@param i notes in score, indexed from 1
+    	@param index notes in score, indexed from 1
     	@return the note at index
      */
     public Note getNote(int index) {
@@ -39,13 +38,20 @@ public class Score {
     }
 
 	/**
+    	@param beats_from_start
+    	@return the note at given beat (time from start)
+     */
+    public Note getNoteAtTime(float beats_from_start) {
+	    return notes.get(beats_from_start); 
+    }
+
+	/**
     	last modified: 16 Nov 2008
     	@param f
     	@return
      */
-    public Note getNoteAtTime(float beats_from_start) {
-	    // TODO Auto-generated method stub
-	    return notes.get(beats_from_start); 
+    public float getDurationOfNoteAtTime(float start_beat) {
+	    return durations.get(start_beat);
     }
 	
 }

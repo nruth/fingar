@@ -59,7 +59,7 @@ public class ScoreSpec {
 	
 	@Test
 	public void note_durations_recorded(){
-		fail("not implemented");
+		assertEquals(fixture_timing[3][1], fixture.getDurationOfNoteAtTime(fixture_timing[3][0]));
 	}
 	
 	@Test
