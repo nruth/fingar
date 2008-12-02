@@ -63,12 +63,12 @@ public class ScoreSpec {
 	}
 	
 	@Test
-	public void may_be_played_over_a_set_of_possible_ranges(){
+	public void range_determined_from_highest_and_lowest_notes(){
 		fail("not implemented");
 	}
-
+	
 	@Test
-	public void range_from_highest_and_lowest_notes(){
+	public void may_be_played_over_a_set_of_possible_ranges(){
 		fail("not implemented");
 	}
 }
