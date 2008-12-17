@@ -3,6 +3,8 @@
  */
 package nruth.fingar.domain.tests;
 
+import nruth.fingar.domain.tests.NoteSpec.NoteFactory;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -10,7 +12,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
   NoteSpec.class,
   NamedNoteSpec.class,
-  ScoreSpec.class
+  ScoreSpec.class,
+  NoteFactory.class,
 })
 
 

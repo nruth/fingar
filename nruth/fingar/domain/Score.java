@@ -1,7 +1,7 @@
 /**
 	 
  */
-package nruth.gitfga.encoding;
+package nruth.fingar.domain;
 
 import java.util.HashMap;
 

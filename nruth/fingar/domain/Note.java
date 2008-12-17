@@ -1,9 +1,7 @@
 /**
 	 
  */
-package nruth.gitfga.encoding;
-
-import nruth.gitfga.encoding.AChromatic.NamedNote;
+package nruth.fingar.domain;
 
 /**
 	@author nicholasrutherford
@@ -17,7 +15,7 @@ public final class Note {
     }
 
 	private int octave;
-	private AChromatic.NamedNote named_note;
+	private NamedNote named_note;
 	
 
 
@@ -27,7 +25,7 @@ public final class Note {
     }
 
 	/**	@return the note's name */
-    public AChromatic.NamedNote getNote() {
+    public NamedNote getNote() {
 	    return named_note;
     }
 	

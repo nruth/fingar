@@ -3,10 +3,9 @@
  */
 package nruth.fingar.domain.tests;
 import static org.junit.Assert.*;
-
 import org.junit.*;
 import org.junit.runner.JUnitCore;
-
+import nruth.fingar.domain.*;
 /**
 	@author nicholasrutherford
 	from spec:
@@ -19,8 +18,6 @@ score: The input piece of music
 	
 	Range
 		the interval range of the score, determined from its highest and lowest used notes
-	
-
  */
 public class ScoreSpec {
 	@Test
@@ -28,13 +25,15 @@ public class ScoreSpec {
 		//check notes match in order
 		for(int i=0; i<fixture_notes.length; i++){assertEquals(fixture_notes[i], fixture.getNote(i+1));}		
 	}
+		
+	@Test(expected=IndexOutOfBoundsException.class)
+	public void check_list_index_bounds_start(){ fixture.getNote(0); }
 	
-	@Test
-	public void check_list_index_bounds(){
-		try {  fixture.getNote(-1); fail("-1 index accepted"); } catch (Exception e) { }
-		try {  fixture.getNote(0); fail("0 index accepted"); } catch (Exception e) { }
-		try {  fixture.getNote(fixture_notes.length+1); fail("length+1 index accepted"); } catch (Exception e) { }
-	}
+	@Test(expected=IndexOutOfBoundsException.class)
+	public void check_list_index_bounds_negative(){ fixture.getNote(-1); }
+	
+	@Test(expected=IndexOutOfBoundsException.class)
+	public void check_list_index_bounds_end(){fixture.getNote(fixture_notes.length+1);}
 	
 	@Test
 	public void indexed_by_time_played_from_start(){
@@ -68,7 +67,7 @@ public class ScoreSpec {
 	float[][] fixture_timing;
 	@Before
 	public void setUp(){
-		for(int i=0; i<fixture_notes.length; i++){fixture_notes[i] = NoteFactory.getRandomNote();}
+		for(int i=0; i<fixture_notes.length; i++){fixture_notes[i] = NoteSpec.NoteFactory.getRandomNote();}
 		fixture_timing = new float[][]{
 				{0f,3f},
 				{4f,2f},
