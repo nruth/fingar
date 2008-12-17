@@ -12,7 +12,7 @@ import static junit.framework.Assert.*;
  */
 @Deprecated
 public final class Range {
-	public Position[] getPositions(Note note, int octave){ //TODO test
+	public Position[] getPositions(Note note, int octave){ 
 		return range[octave-1].getPositionsForNote(note);
 	}
 	
