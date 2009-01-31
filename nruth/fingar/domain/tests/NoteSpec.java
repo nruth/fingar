@@ -6,6 +6,7 @@ package nruth.fingar.domain.tests;
 import static org.junit.Assert.*;
 import java.util.*;
 import nruth.fingar.domain.*;
+
 import org.junit.*;
 
 public class NoteSpec {	
@@ -25,7 +26,7 @@ public class NoteSpec {
 	
 	@Test
 	public void is_distinct_from_notes_in_other_octaves_with_the_same_name(){
-		assertFalse(fixture.equals(new Note(fixture_note, fixture_octave+1)));
+		assertFalse(fixture.equals(new Note(fixture_note, (fixture_octave%Assumptions.OCTAVE_RANGE)+1 )));
 		
 		//general equality tests
 		assertFalse(fixture.equals(NoteFactory.getRandomNote()) && fixture.equals(NoteFactory.getRandomNote()));
@@ -36,6 +37,37 @@ public class NoteSpec {
 	public void assesses_equality_of_notes(){
 		assertEquals(fixture.getNote(), fixture_note);
 	}
+	
+	/**
+	 * compares notes and returns the interval difference  
+	 */
+	@Test(expected=NullPointerException.class)
+	public void compare_null_note(){
+		fixture.compareTo(null);
+	}
+	
+	/**
+	 * compares notes and returns the interval difference  
+	 */
+	@Test
+	public void compare_notes(){
+		//same object
+		assertEquals(0, fixture.compareTo(fixture));
+		
+		//same note different object
+		assertEquals(0, fixture.compareTo(new Note(fixture.getNote(),fixture.getOctave())));
+
+		//compare_higher_note
+		assertEquals(2, new Note(NamedNote.A, 2).compareTo(new Note(NamedNote.B, 2)));
+		
+		//	compare_lower_note
+		assertEquals(-3, new Note(NamedNote.D, 2).compareTo(new Note(NamedNote.B, 2)));
+
+		//	compare_across_octaves
+		assertEquals(14, new Note(NamedNote.A, 2).compareTo(new Note(NamedNote.B, 3)));
+		assertEquals(-15, new Note(NamedNote.D, 2).compareTo(new Note(NamedNote.B, 1)));
+	}
+	
 	
 	/**
 	 * validates its octave is in a possible range (1..4)

@@ -7,7 +7,7 @@ package nruth.fingar.domain;
 	@author nicholasrutherford
 	
  */
-public final class Note {
+public final class Note implements Comparable<Note>{
 	public Note(NamedNote named_note, int octave) {
 		if(! nruth.Helpers.in_range(1, octave, Assumptions.OCTAVE_RANGE)){ throw new IndexOutOfBoundsException("octave :"+octave+" invalid, must be 1 to "+Assumptions.OCTAVE_RANGE);}
 	    this.octave = octave;
@@ -43,4 +43,27 @@ public final class Note {
     public String toString(){
     	return "["+named_note+octave+"]";
     }
+
+	public int compareTo(Note cmp) {
+		if(cmp == null) throw new NullPointerException();
+    	if(cmp == this) return 0;
+    	
+    	if(cmp.getOctave() < this.getOctave()){
+    		//this note is in a higher octave
+    		//interval difference = complete octaves * 12 + ordinal difference
+    		int octave_diff = this.octave - cmp.octave;
+    		return -((octave_diff*12) - get_ordinal_diff(cmp));
+    	} else if (cmp.getOctave() > this.getOctave()){
+    		//this note is in a lower octave
+    		int octave_diff = cmp.octave - this.octave;
+    		return +((octave_diff*12) + get_ordinal_diff(cmp));
+    	} else {
+    		//same octave
+    		return  get_ordinal_diff(cmp);    		
+    	}
+	}
+	
+	private int get_ordinal_diff(Note cmp){
+		return cmp.getNote().ordinal() - this.getNote().ordinal();
+	}
 }
