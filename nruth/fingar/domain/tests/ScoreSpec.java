@@ -18,6 +18,15 @@ public class ScoreSpec {
 	}
 	
 	/**
+	 * each note has a starting time (relative to beginning of piece) and a duration
+	 */
+	@Test
+	public void note_start_time_and_durations_recorded(){
+		assertEquals(fixture_notes[2],fixture.getNoteAtTime(fixture_timing[2][0]));
+		assertEquals(fixture_timing[3][1], fixture.get_duration_of_note_at_time(fixture_timing[3][0]));
+	}
+	
+	/**
 	 * an ordered list of notes, indexed by time played from start
 	 */
 	@Test
@@ -43,14 +52,17 @@ public class ScoreSpec {
 	 */
 	@Test(expected=IndexOutOfBoundsException.class)
 	public void check_list_index_bounds_end(){fixture.getNote(fixture_notes.length+1);}
-	
+
 	/**
-	 * timing : each note has a starting time (relative to beginning of piece) and a duration
+	 * an ordered list of notes, indexed by time played from start
 	 */
 	@Test
-	public void note_start_time_and_durations_recorded(){
-		assertEquals(fixture_notes[2],fixture.getNoteAtTime(fixture_timing[2][0]));
-		assertEquals(fixture_timing[3][1], fixture.getDurationOfNoteAtTime(fixture_timing[3][0]));
+	public void note_start_timings_are_progressive(){
+//		for(int n=0; (n+1)<fixture_notes.length; n++){
+//			fixture.get_note_start_times().
+//		}
+//		
+		fail("not implemented");
 	}
 	
 	/**
@@ -58,20 +70,45 @@ public class ScoreSpec {
 	 */
 	@Test
 	public void range_determined_from_highest_and_lowest_notes(){
-		fail("not implemented");
 		//replace the fixtures with a known range
 		//and test the calculation code gives the same result
-
 		
+		Note highnote, lownote;		
+		Note[] notes;
+		float[][] timing;
+		Score score;
 		
+		//0 range
+		lownote = new Note(NamedNote.A, 1);
+		highnote = new Note(NamedNote.A, 1);		
+		notes = new Note[] {lownote,highnote};
+		timing = new float[][] {{0f,1f},{1f,1f}};		
+		score = new Score(notes, timing);
+		assertEquals(0, score.getIntervalRange());
 		
-//		int highest = 0;
-//		int lowest = 0;
-//		for(Note n : fixture_notes){
-//			int octave = n.getOctave();
-//			if(highest < octave) highest=octave;
-//			if(lowest > octave) lowest=octave;
-//		}
+		//small range
+		lownote = new Note(NamedNote.A, 1);
+		highnote = new Note(NamedNote.C, 1);		
+		notes = new Note[] {lownote,highnote};
+		timing = new float[][] {{0f,1f},{1f,1f}};		
+		score = new Score(notes, timing);
+		assertEquals(3, score.getIntervalRange());
+		
+		//octave range
+		lownote = new Note(NamedNote.A, 1);
+		highnote = new Note(NamedNote.A, 2);		
+		notes = new Note[] {highnote,lownote};
+		timing = new float[][] {{0f,1f},{1f,1f}};		
+		score = new Score(notes, timing);
+		assertEquals(12, score.getIntervalRange());
+		
+		//mixed range
+		lownote = new Note(NamedNote.D, 1);
+		highnote = new Note(NamedNote.C, 3);		
+		notes = new Note[] {lownote, new Note(NamedNote.A, 2), highnote, new Note(NamedNote.G, 2)};
+		timing = new float[][] {{0f,1f},{1f,1f},{2f,1f}, {3f, 1f}};		
+		score = new Score(notes, timing);
+		assertEquals(22, score.getIntervalRange());
 	}
 	
 //	TODO: design decision, may leave this out, stick to same frequency range as original input	

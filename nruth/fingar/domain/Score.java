@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 /**
 	@author nicholasrutherford
-	
  */
 public class Score {
 	private HashMap<Float, Note> notes; //quick lookup of note at time
@@ -50,8 +49,25 @@ public class Score {
     	@param f
     	@return
      */
-    public float getDurationOfNoteAtTime(float start_beat) {
+    public float get_duration_of_note_at_time(float start_beat) {
 	    return durations.get(start_beat);
     }
 	
+    public int getIntervalRange(){
+		Note highest = notes.get(start_beats[0]);
+		Note lowest = notes.get(start_beats[0]);
+		
+		for (Note note : notes.values()){
+			if(note.compareTo(highest) < 0) highest = note;
+			if(note.compareTo(lowest) > 0) lowest = note;
+		}
+		
+		return lowest.compareTo(highest);
+    }
+
+    /**
+     * get note start times for the score
+     * @return float time values (from 0) marking note positions. This is copy by value, not reference, so changes are not passed on to the Score object (which would corrupt it)  
+     */
+	public float[] get_note_start_times() {	return start_beats.clone();	}
 }
