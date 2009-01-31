@@ -58,11 +58,29 @@ public class ScoreSpec {
 	 */
 	@Test
 	public void note_start_timings_are_progressive(){
-//		for(int n=0; (n+1)<fixture_notes.length; n++){
-//			fixture.get_note_start_times().
-//		}
-//		
-		fail("not implemented");
+		float[] times = fixture.get_note_start_times();
+		
+		for(int n=1; n<times.length; n++){
+//			fixture.getNote(n).equals(fixture.getNoteAtTime(times[n]));
+			
+			assertTrue(times[n] > times[n-1]);
+		}	
+	}
+	
+	/**
+	 * an ordered list of notes, indexed by time played from start
+	 */
+	@Test(expected=IndexOutOfBoundsException.class)
+	public void muddled_note_start_timings_are_rejected(){
+		for(int i=0; i<fixture_notes.length; i++){fixture_notes[i] = NoteSpec.NoteFactory.getRandomNote();}
+		fixture_timing = new float[][]{
+				{0f,3f},
+				{10f,0.5f},
+				{4f,2f},
+				{6f,4f},
+				{10.5f,1.5f}
+		};
+		fixture = new Score(fixture_notes, fixture_timing);
 	}
 	
 	/**
