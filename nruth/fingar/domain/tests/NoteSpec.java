@@ -8,16 +8,6 @@ import java.util.*;
 import nruth.fingar.domain.*;
 import org.junit.*;
 
-/**
-	@author nicholasrutherford
-	from spec:
-		note
-		* belongs to an octave
-		* has a name from the set of named notes
-		* is distinct from notes in other octaves with the same name
-		* assesses equality of notes
-		* validates its octave is in a possible range (1..4)
- */
 public class NoteSpec {	
 	@Test
 	public void belongs_to_an_octave(){
@@ -47,20 +37,32 @@ public class NoteSpec {
 		assertEquals(fixture.getNote(), fixture_note);
 	}
 	
+	/**
+	 * validates its octave is in a possible range (1..4)
+	 */
 	@Test
 	public void check_each_octave(){
 		for(int i=1; i<=Assumptions.OCTAVE_RANGE; i++){ NoteFactory.getRandomNoteInOctave(i); }
-		//pass, no exceptions
+		//passes if no exceptions thrown
 	}
 	
+	/**
+	 * validates its octave is in a possible range (1..4)
+	 */
 	@Test(expected=IndexOutOfBoundsException.class)
 	public void octave_out_of_range_0(){ NoteFactory.getRandomNoteInOctave(0); }
 	
+	/**
+	 * validates its octave is in a possible range (1..4)
+	 */
 	@Test(expected=IndexOutOfBoundsException.class)
 	public void octave_out_of_range_negative(){	NoteFactory.getRandomNoteInOctave(-4); }
 	
+	/**
+	 * validates its octave is in a possible range (1..4)
+	 */
 	@Test(expected=IndexOutOfBoundsException.class)
-	public void octave_out_of_range_offend(){ NoteFactory.getRandomNoteInOctave(Assumptions.OCTAVE_RANGE+1); }
+	public void octave_out_of_range_off_end(){ NoteFactory.getRandomNoteInOctave(Assumptions.OCTAVE_RANGE+1); }
 	
 	@Before
 	public void setUp() throws Exception {

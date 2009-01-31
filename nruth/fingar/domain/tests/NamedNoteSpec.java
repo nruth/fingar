@@ -4,32 +4,26 @@
 package nruth.fingar.domain.tests;
 
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 import org.junit.*;
 import static org.junit.Assert.*;
 import nruth.fingar.domain.NamedNote;
-/**
-	@author nicholasrutherford
-	from spec: 
-		chromatic scale
-		an ordered list of the named notes
-			named notes: {A, Bb, B, C, Db, D, Eb, E, F, Gb, G, Ab}
-			For the A chromatic scale, this is 12 semitones (all notes before repetition of A)	
-		* of use as an object concept (for enumeration of note names)
-		* should be able to resolve the next note
-		* can compare notes for equality and relative position
-		* can advance by intervals
-		* can state the degree of a note in the scale
-	
-		degree
-			the number of a note in a scale (e.g. array index)
- */
+
 public class NamedNoteSpec {
+	/**
+	 * can compare notes for equality
+	 */
 	@Test
 	public void test_named_notes_equality(){
 		assertEquals(NamedNote.A, NamedNote.A);
 		assertFalse(NamedNote.A.equals(NamedNote.B));
 	}
 	
+	/**
+	 * can state the degree of a note in the scale
+	 */
 	@Test
 	public void can_state_the_degree_of_a_note_in_the_scale(){
 		assertEquals(1, NamedNote.A.getDegree());
@@ -37,33 +31,52 @@ public class NamedNoteSpec {
 		assertEquals(12, NamedNote.Ab.getDegree());
 	}
 	
-	@Test
-	public void named_notes_correct(){
-		String[] notes =  {"A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab"};
-		
-		for(int idx=0; idx<NamedNote.values().length; idx++){
-			assertEquals(NamedNote.values()[idx].toString(),notes[idx]);
-		}
-	}
-	
-	@Test
-	public void intervals_in_octave(){
-		assertEquals("number of notes named", NamedNote.values().length, 12);
-		
-		assertEquals("octave interval increment", NamedNote.A.advance(12), NamedNote.A);
-		assertEquals("octave + single interval increment", NamedNote.A.advance(13), NamedNote.Bb);
-	}
-	
+	/**
+	 * should be able to resolve the next note
+	 */
 	@Test
 	public void able_to_resolve_the_next_note(){
 		assertEquals("simple progression check",NamedNote.A.getNext(), NamedNote.Bb);
 		assertEquals("new scale octave check",NamedNote.Ab.getNext(), NamedNote.A);
 	}
 	
+	/**
+	 * can advance by intervals
+	 */
 	@Test
 	public void can_advance_by_intervals(){
 		assertEquals("single interval increment", NamedNote.A.advance(1), NamedNote.Bb);
 		assertEquals("3 interval increment", NamedNote.Db.advance(3), NamedNote.E);
 		assertEquals("wrapping around failed", NamedNote.C.advance(NamedNote.values().length + 1), NamedNote.Db);
+	}
+	
+	/**
+	 * produces correct string representation of all notes
+	 */
+	@Test
+	public void named_note_strings_correct(){
+		LinkedList<String> notes =  new LinkedList<String>();
+		String[] tmp_notes = {"A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab"};
+		for(String note : tmp_notes){ notes.add(note); }
+		
+		NamedNote start = NamedNote.A;
+		NamedNote note = start;
+		do{
+			assertTrue("failed to pop note "+note, note.toString().equals(notes.remove()));		
+			note = note.advance(1);
+		} while (!note.equals(start));
+		
+		assertTrue("a match failed", notes.size() == 0);
+	}
+	
+	/**
+	 * interval representation of octave length and looping is correct
+	 */
+	@Test
+	public void intervals_in_octave(){
+		assertEquals("number of notes named", NamedNote.values().length, 12);
+		
+		assertEquals("octave interval increment", NamedNote.A.advance(12), NamedNote.A);
+		assertEquals("octave + single interval increment", NamedNote.A.advance(13), NamedNote.Bb);
 	}
 }
