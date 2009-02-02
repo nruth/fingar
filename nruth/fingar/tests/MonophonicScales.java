@@ -38,7 +38,7 @@ public class MonophonicScales {
 	}
 	
 	/**
-	 * check soultions are ranked
+	 * check solutions are ranked
 	 */
 	@Test
 	public void are_solutions_ranked(){
