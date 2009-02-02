@@ -1,6 +1,3 @@
-/**
-	 
- */
 package nruth.fingar.domain.tests;
 
 import static org.junit.Assert.*;
