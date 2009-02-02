@@ -133,10 +133,15 @@ public class ScoreSpec {
 //	}
 	
 	private Score fixture;
-	Note[] fixture_notes = new Note[5];
-	float[][] fixture_timing;
+	static Note[] fixture_notes = new Note[5];
+	static float[][] fixture_timing;
 	@Before
 	public void setUp(){
+		this.fixture = get_test_score();
+		
+	}
+	
+	public static Score get_test_score(){
 		for(int i=0; i<fixture_notes.length; i++){fixture_notes[i] = NoteSpec.NoteFactory.getRandomNote();}
 		fixture_timing = new float[][]{
 				{0f,3f},
@@ -145,6 +150,6 @@ public class ScoreSpec {
 				{10f,0.5f},
 				{10.5f,1.5f}
 		};
-		fixture = new Score(fixture_notes, fixture_timing);
+		return new Score(fixture_notes, fixture_timing);
 	}
 }
