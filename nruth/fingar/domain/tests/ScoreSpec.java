@@ -4,7 +4,6 @@
 package nruth.fingar.domain.tests;
 import static org.junit.Assert.*;
 import org.junit.*;
-import org.junit.runner.JUnitCore;
 import nruth.fingar.domain.*;
 
 public class ScoreSpec {
@@ -59,12 +58,7 @@ public class ScoreSpec {
 	@Test
 	public void note_start_timings_are_progressive(){
 		float[] times = fixture.get_note_start_times();
-		
-		for(int n=1; n<times.length; n++){
-//			fixture.getNote(n).equals(fixture.getNoteAtTime(times[n]));
-			
-			assertTrue(times[n] > times[n-1]);
-		}	
+		for(int n=1; n<times.length; n++){	assertTrue(times[n] > times[n-1]);	}	
 	}
 	
 	/**
