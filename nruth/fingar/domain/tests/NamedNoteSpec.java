@@ -4,7 +4,6 @@
 package nruth.fingar.domain.tests;
 
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.junit.*;
