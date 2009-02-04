@@ -96,8 +96,6 @@ public class ScoreSpec {
 		//and test the calculation code gives the same result
 		
 		Note highnote, lownote;		
-		Note[] notes;
-		float[][] timing;
 		Score score;
 		
 		//0 range
