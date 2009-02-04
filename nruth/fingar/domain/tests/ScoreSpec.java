@@ -12,8 +12,8 @@ public class ScoreSpec {
 	 */
 	@Test
 	public void each_note_has_name_and_octave(){
-		assertEquals(fixture_notes[1].getOctave(),fixture.getNote(2).getOctave());
-		assertEquals(fixture_notes[2].toString(), fixture.getNote(3).toString());
+		assertEquals(fixture_notes[1].getOctave(),fixture.get_nth_note(2).getOctave());
+		assertEquals(fixture_notes[2].toString(), fixture.get_nth_note(3).toString());
 	}
 	
 	/**
@@ -26,31 +26,41 @@ public class ScoreSpec {
 	}
 	
 	/**
+	 * returns the number of notes in the score
+	 */
+	@Test
+	public void get_number_of_notes_in_score(){
+		assertEquals(40, new Score(ArrangedNoteSpec.create_random_monophonic_arranged_notes(40)).size());
+		assertEquals(1, new Score(ArrangedNoteSpec.create_random_monophonic_arranged_notes(1)).size());
+		assertFalse(12 == new Score(ArrangedNoteSpec.create_random_monophonic_arranged_notes(6)).size());
+	}
+	
+	/**
 	 * an ordered list of notes, indexed by time played from start
 	 */
 	@Test
 	public void ordered_list_of_notes(){
 		//check notes match in order
-		for(int i=0; i<fixture_notes.length; i++){assertEquals(fixture_notes[i], fixture.getNote(i+1));}		
+		for(int i=0; i<fixture_notes.length; i++){assertEquals(fixture_notes[i], fixture.get_nth_note(i+1));}		
 	}
 
 	/**
 	 * an ordered list of notes, indexed by time played from start
 	 */
 	@Test(expected=IndexOutOfBoundsException.class)
-	public void check_list_index_bounds_start(){ fixture.getNote(0); }
+	public void check_list_index_bounds_start(){ fixture.get_nth_note(0); }
 	
 	/**
 	 * an ordered list of notes, indexed by time played from start
 	 */
 	@Test(expected=IndexOutOfBoundsException.class)
-	public void check_list_index_bounds_negative(){ fixture.getNote(-1); }
+	public void check_list_index_bounds_negative(){ fixture.get_nth_note(-1); }
 	
 	/**
 	 * an ordered list of notes, indexed by time played from start
 	 */
 	@Test(expected=IndexOutOfBoundsException.class)
-	public void check_list_index_bounds_end(){fixture.getNote(fixture_notes.length+1);}
+	public void check_list_index_bounds_end(){fixture.get_nth_note(fixture_notes.length+1);}
 
 	/**
 	 * an ordered list of notes, indexed by time played from start
@@ -155,4 +165,6 @@ public class ScoreSpec {
 		
 		return new Score(arranged_notes);
 	}
+	
+	
 }

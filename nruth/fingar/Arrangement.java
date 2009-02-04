@@ -15,28 +15,28 @@ import nruth.fingar.domain.Assumptions.STRINGS;
  * @author nicholasrutherford
  *
  */
-public class Arrangement implements Iterable<ArrangedNote>{
-	private ArrangedNote[] notes; 
+public class Arrangement implements Iterable<FingeredNote>{
+	private final Score score; 
 	
 	public Arrangement(Score score) {
-		for()
+		this.score = score;
 	}
+	
+	public Score score(){ return score; }
 
-	public Iterator<ArrangedNote> iterator() {
-		return new Iterator<ArrangedNote>() {
-			public void remove() {
-				// TODO Auto-generated method stub
-		
-			}
-		
-			public ArrangedNote next() {
-				// TODO Auto-generated method stub
-				return null;
+	public Iterator<FingeredNote> iterator() {
+		return new Iterator<FingeredNote>() {
+			private int n = 1;
+			public FingeredNote next() {
+				return new FingeredNote(score.get_nth_note(n++));
 			}
 		
 			public boolean hasNext() {
-				// TODO Auto-generated method stub
-				return false;
+				return n <= score.size(); 
+			}
+
+			public void remove() {
+				throw new UnsupportedOperationException("this collection is immutable");
 			}
 		};
 	}

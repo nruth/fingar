@@ -8,7 +8,7 @@ import java.util.HashMap;
 /**
 	@author nicholasrutherford
  */
-public class Score {
+public final class Score {
 	private HashMap<Float, Note> notes; //quick lookup of note at time
 	private HashMap<Float, Float> durations; //quick lookup of note duration at time
 	private float[] start_beats;//order the starting times for use in the above maps
@@ -36,8 +36,9 @@ public class Score {
     	@param index notes in score, indexed from 1
     	@return the note at index
      */
-    public Note getNote(int index) {
-	    return notes.get(start_beats[index-1]);
+    public ArrangedNote get_nth_note(int index) {
+    	float start_beat = start_beats[index-1];
+	    return new ArrangedNote(notes.get(start_beat), start_beat, durations.get(start_beat));
     }
 
 	/**
@@ -78,4 +79,8 @@ public class Score {
      * @return float time values (from 0) marking note positions. This is copy by value, not reference, so changes are not passed on to the Score object (which would corrupt it)  
      */
 	public float[] get_note_start_times() {	return start_beats.clone();	}
+
+	public int size() {
+		return notes.size();
+	}
 }

@@ -30,4 +30,23 @@ public final class ArrangedNote {
 	public float duration() {
 		return duration;
 	}
+	
+	@Override
+	public boolean equals(Object object_to_check) {
+		if(object_to_check == null) return false;
+    	if(object_to_check == this) return true;
+    	ArrangedNote note_to_check = (ArrangedNote) object_to_check;
+    	
+    	return (
+			note_to_check.note().equals(note())
+			&& (note_to_check.start_beat() == start_beat())
+			&& (note_to_check.duration() == duration())
+    	);
+    	
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "["+ note() +"|"+ start_beat() +"|"+ duration() +"]";
+	}
 }
