@@ -1,6 +1,7 @@
 package nruth.fingar;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -24,6 +25,8 @@ public class Arrangement implements Iterable<FingeredNote>{
 	
 	public Score score(){ return score; }
 
+	public int size() { return score.size(); }
+	
 	public Iterator<FingeredNote> iterator() {
 		return new Iterator<FingeredNote>() {
 			private int n = 1;
@@ -39,5 +42,5 @@ public class Arrangement implements Iterable<FingeredNote>{
 				throw new UnsupportedOperationException("this collection is immutable");
 			}
 		};
-	}
+	}	
 }

@@ -21,7 +21,7 @@ public final class FingeredNote {
 		this.note = note;
 	}
 
-	public int getFinger() {
+	public int finger() {
 		return finger;
 	}
 
@@ -29,7 +29,7 @@ public final class FingeredNote {
 		this.finger = finger;
 	}
 
-	public int getFret() {
+	public int fret() {
 		return fret;
 	}
 
@@ -37,7 +37,7 @@ public final class FingeredNote {
 		this.fret = fret;
 	}
 
-	public Assumptions.STRINGS getString() {
+	public Assumptions.STRINGS string() {
 		return string;
 	}
 
