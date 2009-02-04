@@ -66,15 +66,15 @@ public class ScoreSpec {
 	 */
 	@Test(expected=IndexOutOfBoundsException.class)
 	public void muddled_note_start_timings_are_rejected(){
-		for(int i=0; i<fixture_notes.length; i++){fixture_notes[i] = NoteSpec.NoteFactory.getRandomNote();}
-		fixture_timing = new float[][]{
-				{0f,3f},
-				{10f,0.5f},
-				{4f,2f},
-				{6f,4f},
-				{10.5f,1.5f}
+		ArrangedNote[] notes = {
+				new ArrangedNote(NoteSpec.NoteFactory.getRandomNote(), 0f, 3f),
+				new ArrangedNote(NoteSpec.NoteFactory.getRandomNote(), 10f, 0.5f),
+				new ArrangedNote(NoteSpec.NoteFactory.getRandomNote(), 4f, 2f),
+				new ArrangedNote(NoteSpec.NoteFactory.getRandomNote(), 6f, 4f),
+				new ArrangedNote(NoteSpec.NoteFactory.getRandomNote(), 10.5f, 1.5f)
 		};
-		fixture = new Score(fixture_notes, fixture_timing);
+		
+		fixture = new Score(notes);
 	}
 	
 	/**
@@ -92,34 +92,33 @@ public class ScoreSpec {
 		
 		//0 range
 		lownote = new Note(NamedNote.A, 1);
-		highnote = new Note(NamedNote.A, 1);		
-		notes = new Note[] {lownote,highnote};
-		timing = new float[][] {{0f,1f},{1f,1f}};		
-		score = new Score(notes, timing);
+		highnote = new Note(NamedNote.A, 1);				
+		score = new Score( new ArrangedNote[] {new ArrangedNote(lownote, 0, 1), new ArrangedNote(highnote, 1, 1)} );
 		assertEquals(0, score.getIntervalRange());
 		
 		//small range
 		lownote = new Note(NamedNote.A, 1);
-		highnote = new Note(NamedNote.C, 1);		
-		notes = new Note[] {lownote,highnote};
-		timing = new float[][] {{0f,1f},{1f,1f}};		
-		score = new Score(notes, timing);
+		highnote = new Note(NamedNote.C, 1);				
+		score = new Score( new ArrangedNote[] {new ArrangedNote(lownote, 0, 1), new ArrangedNote(highnote, 1, 1)} );
 		assertEquals(3, score.getIntervalRange());
 		
 		//octave range
 		lownote = new Note(NamedNote.A, 1);
 		highnote = new Note(NamedNote.A, 2);		
-		notes = new Note[] {highnote,lownote};
-		timing = new float[][] {{0f,1f},{1f,1f}};		
-		score = new Score(notes, timing);
+		score = new Score( new ArrangedNote[] {new ArrangedNote(lownote, 0, 1), new ArrangedNote(highnote, 1, 1)} );
 		assertEquals(12, score.getIntervalRange());
 		
 		//mixed range
 		lownote = new Note(NamedNote.D, 1);
-		highnote = new Note(NamedNote.C, 3);		
-		notes = new Note[] {lownote, new Note(NamedNote.A, 2), highnote, new Note(NamedNote.G, 2)};
-		timing = new float[][] {{0f,1f},{1f,1f},{2f,1f}, {3f, 1f}};		
-		score = new Score(notes, timing);
+		highnote = new Note(NamedNote.C, 3);				
+		score = new Score( 
+				new ArrangedNote[] {
+						new ArrangedNote(lownote, 0, 1), 
+						new ArrangedNote(new Note(NamedNote.A, 2), 1, 1),
+						new ArrangedNote(highnote, 2, 1),
+						new ArrangedNote(new Note(NamedNote.G, 2), 3, 1),
+				} 
+		);
 		assertEquals(22, score.getIntervalRange());
 	}
 	
@@ -136,10 +135,7 @@ public class ScoreSpec {
 	static Note[] fixture_notes = new Note[5];
 	static float[][] fixture_timing;
 	@Before
-	public void setUp(){
-		this.fixture = get_test_score();
-		
-	}
+	public void setUp(){ this.fixture = get_test_score(); }
 	
 	public static Score get_test_score(){
 		for(int i=0; i<fixture_notes.length; i++){fixture_notes[i] = NoteSpec.NoteFactory.getRandomNote();}
@@ -150,6 +146,13 @@ public class ScoreSpec {
 				{10f,0.5f},
 				{10.5f,1.5f}
 		};
-		return new Score(fixture_notes, fixture_timing);
+		
+		ArrangedNote[] arranged_notes = new ArrangedNote[5];
+		
+		for(int i=0; i<arranged_notes.length; i++){
+			arranged_notes[i] = new ArrangedNote(fixture_notes[i], fixture_timing[i][0], fixture_timing[i][1]);
+		}
+		
+		return new Score(arranged_notes);
 	}
 }

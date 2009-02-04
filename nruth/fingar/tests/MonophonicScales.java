@@ -48,18 +48,15 @@ public class MonophonicScales {
 	}
 	
 	public Score c_major_scale(){
-		LinkedList<Note> notes = new LinkedList<Note>();
-		float[][] timing = new float[8][1];
+		ArrangedNote[] notes = new ArrangedNote[8];
 		int time = 0;
 		for(NamedNote name : new NamedNote[]{C,D,E,F,G}){
-			notes.add(new Note(name, 1));
-			timing[time] = new float[]{time++, 1f};
+			notes[time] = new ArrangedNote(new Note(name, 1), time++, 1f);
 		}
 		for(NamedNote name : new NamedNote[]{A,B,C}){
-			notes.add(new Note(name, 2));
-			timing[time] = new float[]{time++, 1f};
+			notes[time] = new ArrangedNote(new Note(name, 2), time++, 1f);
 		}
-		
-		return new Score(notes.toArray(new Note[notes.size()]), timing);
+				
+		return new Score(notes);
 	}
 }

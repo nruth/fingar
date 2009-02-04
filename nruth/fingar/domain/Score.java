@@ -13,31 +13,24 @@ public class Score {
 	private HashMap<Float, Float> durations; //quick lookup of note duration at time
 	private float[] start_beats;//order the starting times for use in the above maps
 
-	/** 
-    	@param notes
-	 * @param timing 2d array of {start_beat, beats_duration} where start_beat is ordered incrementally
-     */
-    public Score(Note[] notes, float[][] timing) {
-    	if(timing.length != notes.length){ throw new IndexOutOfBoundsException("notes and durations mismatched, "+notes.length+" notes, "+timing.length +"durations");}
+	public Score(ArrangedNote[] arranged_notes) {
+		this.start_beats = new float[arranged_notes.length];
+    	this.durations = new HashMap<Float, Float>(arranged_notes.length, 1.0f);    	
+    	this.notes = new HashMap<Float, Note>(arranged_notes.length, 1.0f);
     	
-    	this.start_beats = new float[timing.length];
-    	this.durations = new HashMap<Float, Float>(notes.length, 1.0f);    	
-    	this.notes = new HashMap<Float, Note>(notes.length, 1.0f);
-    	
-    	for(int idx=0; idx<notes.length; idx++){ 
-    		float start_beat = timing[idx][0];
-    		float duration = timing[idx][1];
-    		Note note = notes[idx];
-    		
-    		if(idx>0 && start_beat < this.start_beats[idx-1]){
+    	int idx=0;
+		for(ArrangedNote note : arranged_notes){
+			if(idx>0 && note.start_beat() < this.start_beats[idx-1]){
     			throw new IndexOutOfBoundsException("Invalid start time: note "+note+" begins at "+start_beats+" and lasts for "+durations+". Previous note began at " + this.start_beats[idx-1]);
     		}
     		
-    		this.start_beats[idx] = start_beat; 
-    		this.durations.put(start_beat, duration);
-    		this.notes.put(start_beat,note);
-    	}
-    }
+    		this.start_beats[idx] = note.start_beat(); 
+    		this.durations.put(note.start_beat(), note.duration());
+    		this.notes.put(note.start_beat(),note.note());
+			
+			idx++;
+		}
+	}
 
 	/**
     	@param index notes in score, indexed from 1
