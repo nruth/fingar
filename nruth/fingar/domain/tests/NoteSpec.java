@@ -9,7 +9,7 @@ import org.junit.*;
 public class NoteSpec {	
 	@Test
 	public void belongs_to_an_octave(){
-		assertEquals(fixture_octave, fixture.getOctave());
+		assertEquals(fixture_octave, fixture.octave());
 	}
 	
 	@Test
@@ -52,7 +52,7 @@ public class NoteSpec {
 		assertEquals(0, fixture.compareTo(fixture));
 		
 		//same note different object
-		assertEquals(0, fixture.compareTo(new Note(fixture.getNote(),fixture.getOctave())));
+		assertEquals(0, fixture.compareTo(new Note(fixture.getNote(),fixture.octave())));
 
 		//compare_higher_note
 		assertEquals(2, new Note(NamedNote.A, 2).compareTo(new Note(NamedNote.B, 2)));

@@ -20,7 +20,7 @@ public final class Note implements Comparable<Note>{
 
 
 	/**	@return the note's octave (in the piece's range) */
-    public int getOctave() {
+    public int octave() {
 	    return octave;
     }
 
@@ -35,7 +35,7 @@ public final class Note implements Comparable<Note>{
     	Note note_to_check = (Note) object_to_check;
     	
     	if(note_to_check.getNote().equals(getNote())
-    			&& (note_to_check.getOctave() == getOctave())
+    			&& (note_to_check.octave() == octave())
     	) return true;
     	else return false;    		
     }
@@ -48,12 +48,12 @@ public final class Note implements Comparable<Note>{
 		if(cmp == null) throw new NullPointerException();
     	if(cmp == this) return 0;
     	
-    	if(cmp.getOctave() < this.getOctave()){
+    	if(cmp.octave() < this.octave()){
     		//this note is in a higher octave
     		//interval difference = complete octaves * 12 + ordinal difference
     		int octave_diff = this.octave - cmp.octave;
     		return -((octave_diff*12) - get_ordinal_diff(cmp));
-    	} else if (cmp.getOctave() > this.getOctave()){
+    	} else if (cmp.octave() > this.octave()){
     		//this note is in a lower octave
     		int octave_diff = cmp.octave - this.octave;
     		return +((octave_diff*12) + get_ordinal_diff(cmp));

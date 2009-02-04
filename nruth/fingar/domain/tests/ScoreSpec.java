@@ -12,8 +12,8 @@ public class ScoreSpec {
 	 */
 	@Test
 	public void each_note_has_name_and_octave(){
-		assertEquals(fixture_notes[1].getOctave(),fixture.get_nth_note(2).getOctave());
-		assertEquals(fixture_notes[2].toString(), fixture.get_nth_note(3).toString());
+		assertEquals(fixture_notes[1].octave(),fixture.get_nth_note(2).note().octave());
+		assertEquals(fixture_notes[2].toString(), fixture.get_nth_note(3).note().toString());
 	}
 	
 	/**
@@ -41,7 +41,7 @@ public class ScoreSpec {
 	@Test
 	public void ordered_list_of_notes(){
 		//check notes match in order
-		for(int i=0; i<fixture_notes.length; i++){assertEquals(fixture_notes[i], fixture.get_nth_note(i+1));}		
+		for(int i=0; i<fixture_notes.length; i++){assertEquals(fixture_notes[i], fixture.get_nth_note(i+1).note());}		
 	}
 
 	/**
