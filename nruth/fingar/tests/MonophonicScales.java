@@ -36,7 +36,7 @@ public class MonophonicScales {
 		//and check the list contains a known solution
 		FINGAR ga = new FINGAR(c_major_scale);
 		List<Arrangement> results = ga.getArrangements();
-		assertTrue(results.size()>0);
+		assertTrue(results.size() > 0);
 	}
 	
 	/**

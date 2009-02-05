@@ -8,6 +8,14 @@ import nruth.fingar.domain.*;
 
 public class ScoreSpec {
 	/**
+	 * refactor to be simpler
+	 */
+	@Test
+	public void refactor(){
+		fail("refactor to be simpler, less parallel collections?");
+	}
+	
+	/**
 	 * 	Each note in the score has a name and octave
 	 */
 	@Test

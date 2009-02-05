@@ -26,6 +26,9 @@ public class ArrangementSpec {
 		}
 	}
 	
+	@Test(expected=UnsupportedOperationException.class)
+	public void collection_is_immutable(){ arrangement.iterator().remove();	}
+	
 	/**
 	 * given a score
 	 * 	will store string, fret and finger allocations for each note in the score

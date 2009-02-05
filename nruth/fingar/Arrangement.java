@@ -19,15 +19,14 @@ import nruth.fingar.domain.Assumptions.STRINGS;
  */
 public class Arrangement implements Iterable<FingeredNote>{
 	private final Score score;
-	private List<FingeredNote> notes;
+	private HashMap<ArrangedNote, FingeredNote> note_fingerings;
 	
 	public Arrangement(Score score) {
 		this.score = score;
-		
-		this.notes = new LinkedList<FingeredNote>();
+		this.note_fingerings = new HashMap<ArrangedNote, FingeredNote>(score.size(), 1f);
 		
 		for(ArrangedNote note : score){
-			notes.add(new FingeredNote(note));
+			note_fingerings.put(note, new FingeredNote(note));
 		}
 	}
 	
@@ -39,13 +38,16 @@ public class Arrangement implements Iterable<FingeredNote>{
 		return new Iterator<FingeredNote>() {
 			private int n = 1;
 			public FingeredNote next() {
-				return new FingeredNote(score.get_nth_note(n++));
+				return note_fingerings.get(score.get_nth_note(n++));
 			}
 		
 			public boolean hasNext() {
-				return n <= score.size(); 
+				return n <= note_fingerings.size(); 
 			}
 
+			/**
+			 * Not supported: this collection is immutable
+			 */
 			public void remove() {
 				throw new UnsupportedOperationException("this collection is immutable");
 			}
