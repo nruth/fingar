@@ -1,6 +1,7 @@
 package nruth.fingar.ga;
 
-import nruth.fingar.domain.Score;
+import nruth.fingar.Arrangement;
+import nruth.fingar.domain.music.Score;
 
 public class Population {
 
@@ -9,7 +10,8 @@ public class Population {
 	 * @param score
 	 */
 	public Population(Score score, int successor_generations) {
-		// TODO Auto-generated constructor stub
+		population = new Arrangement(score);
+		population.randomise();
 	}
 
 	/**
@@ -17,6 +19,8 @@ public class Population {
 	 * @param parent
 	 */
 	private Population(Population parent, int successor_generations){
-		
+		population.evolve(new FitnessFunction());
 	}
+	
+	private Arrangement population;
 }

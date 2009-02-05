@@ -1,14 +1,19 @@
 package nruth.fingar.specs;
 
 import static org.junit.Assert.*;
-import static nruth.fingar.domain.NamedNote.*;
+import static nruth.fingar.domain.music.NamedNote.*;
+
 import java.util.*;
 
 import nruth.fingar.Arrangement;
 import nruth.fingar.FINGAR;
 import nruth.fingar.FingeredNote;
 import nruth.fingar.domain.*;
-import nruth.fingar.domain.Assumptions.STRINGS;
+import nruth.fingar.domain.guitar.Guitar.GuitarString;
+import nruth.fingar.domain.music.NamedNote;
+import nruth.fingar.domain.music.Note;
+import nruth.fingar.domain.music.Score;
+import nruth.fingar.domain.music.TimedNote;
 
 import org.junit.*;
 
@@ -69,14 +74,14 @@ public class MonophonicScales {
 	private Arrangement known_solution(){
 		Arrangement sol = new Arrangement(c_major_scale());
 		for(FingeredNote note : sol){
-			if(note.note().equals(new Note(NamedNote.C, 1))){	note.setFinger(2); note.setString(STRINGS.A); note.setFret(3);	}
-			else if(note.note().equals(new Note(NamedNote.D, 1))){	note.setFinger(2); note.setString(STRINGS.A); note.setFret(5);	}
-			else if(note.note().equals(new Note(NamedNote.E, 1))){	note.setFinger(2); note.setString(STRINGS.D); note.setFret(2);	}
-			else if(note.note().equals(new Note(NamedNote.F, 1))){	note.setFinger(2); note.setString(STRINGS.D); note.setFret(3);	}
-			else if(note.note().equals(new Note(NamedNote.G, 1))){	note.setFinger(2); note.setString(STRINGS.D); note.setFret(5);	}
-			else if(note.note().equals(new Note(NamedNote.A, 2))){	note.setFinger(2); note.setString(STRINGS.G); note.setFret(2);	}
-			else if(note.note().equals(new Note(NamedNote.B, 2))){	note.setFinger(2); note.setString(STRINGS.G); note.setFret(4);	}
-			else if(note.note().equals(new Note(NamedNote.C, 2))){	note.setFinger(2); note.setString(STRINGS.G); note.setFret(5);	}		
+			if(note.note().equals(new Note(NamedNote.C, 1))){	note.setFinger(2); note.setString(GuitarString.A); note.setFret(3);	}
+			else if(note.note().equals(new Note(NamedNote.D, 1))){	note.setFinger(2); note.setString(GuitarString.A); note.setFret(5);	}
+			else if(note.note().equals(new Note(NamedNote.E, 1))){	note.setFinger(2); note.setString(GuitarString.D); note.setFret(2);	}
+			else if(note.note().equals(new Note(NamedNote.F, 1))){	note.setFinger(2); note.setString(GuitarString.D); note.setFret(3);	}
+			else if(note.note().equals(new Note(NamedNote.G, 1))){	note.setFinger(2); note.setString(GuitarString.D); note.setFret(5);	}
+			else if(note.note().equals(new Note(NamedNote.A, 2))){	note.setFinger(2); note.setString(GuitarString.G); note.setFret(2);	}
+			else if(note.note().equals(new Note(NamedNote.B, 2))){	note.setFinger(2); note.setString(GuitarString.G); note.setFret(4);	}
+			else if(note.note().equals(new Note(NamedNote.C, 2))){	note.setFinger(2); note.setString(GuitarString.G); note.setFret(5);	}		
 		}
 		
 		return sol;

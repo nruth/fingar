@@ -4,7 +4,7 @@ import java.util.List;
 
 import nruth.fingar.Arrangement;
 import nruth.fingar.FINGAR;
-import nruth.fingar.domain.Score;
+import nruth.fingar.domain.music.Score;
 import static org.junit.Assert.*;
 import org.junit.*;
 

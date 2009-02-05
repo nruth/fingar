@@ -6,8 +6,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import nruth.fingar.domain.TimedNote;
-import nruth.fingar.domain.Note;
+import nruth.fingar.domain.music.Note;
+import nruth.fingar.domain.music.TimedNote;
 
 public class TimedNoteSpec {
 	public static TimedNote[] create_random_monophonic_arranged_notes(int note_length){

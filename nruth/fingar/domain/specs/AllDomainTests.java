@@ -15,6 +15,8 @@ import org.junit.runners.Suite;
   ScoreSpec.class,
   NoteFactory.class,
   TimedNoteSpec.class,
+  GuitarStringTest.class,
+  GuitarTest.class
 })
 
 

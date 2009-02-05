@@ -8,8 +8,13 @@ import java.util.List;
 import java.util.Random;
 import nruth.fingar.*;
 import nruth.fingar.domain.*;
-import nruth.fingar.domain.Assumptions.STRINGS;
+import nruth.fingar.domain.guitar.Guitar;
+import nruth.fingar.domain.guitar.Guitar.GuitarString;
+import nruth.fingar.domain.music.Note;
+import nruth.fingar.domain.music.Score;
+import nruth.fingar.domain.music.TimedNote;
 import nruth.fingar.domain.specs.ScoreSpec;
+import nruth.fingar.domain.specs.NoteSpec.NoteFactory;
 
 import org.junit.*;
 
@@ -44,14 +49,14 @@ public class ArrangementSpec {
 	 */
 	@Test
 	public void stores_string_allocations(){
-		List<STRINGS> strings = new LinkedList<STRINGS>();
+		List<GuitarString> strings = new LinkedList<GuitarString>();
 		for(FingeredNote note : arrangement){
-			STRINGS string = STRINGS.values()[seed.nextInt(STRINGS.values().length)];
+			GuitarString string = GuitarString.values()[seed.nextInt(GuitarString.values().length)];
 			note.setString(string); 
 			strings.add(string);
 		}
 		
-		Iterator<STRINGS> string_iterator = strings.iterator();
+		Iterator<GuitarString> string_iterator = strings.iterator();
 		for(FingeredNote note : arrangement){
 			assertEquals(string_iterator.next(), note.string());
 		}
@@ -65,7 +70,7 @@ public class ArrangementSpec {
 	public void stores_finger_allocations(){		
 		List<Integer> fingers = new LinkedList<Integer>();
 		for(FingeredNote note : arrangement){ 
-			int finger = seed.nextInt(Assumptions.FINGERS.length);
+			int finger = seed.nextInt(Guitar.FINGERS.length);
 			note.setFinger(finger);
 			fingers.add(finger);
 		}
@@ -84,7 +89,7 @@ public class ArrangementSpec {
 	public void stores_fret_allocations(){	
 		List<Integer> frets = new LinkedList<Integer>();
 		for(FingeredNote note : arrangement){
-			int fret = seed.nextInt(Assumptions.FRETS+1);
+			int fret = seed.nextInt(Guitar.FRETS+1);
 			frets.add(fret);
 			note.setFret(fret); 
 		}
@@ -93,6 +98,24 @@ public class ArrangementSpec {
 		for(FingeredNote note : arrangement){
 			assertEquals(fret_iterator.next(), note.fret());
 		}
+	}
+	
+	/**
+	 * can randomise all fingering data, e.g. for an initial population
+	 */
+	@Test
+	public void randomise_entire_fingering_arrangement(){
+		Note random_note = NoteFactory.getRandomNote();
+		arrangement = new Arrangement(new Score(new TimedNote[]{
+				new TimedNote(random_note, 1f, 1f), new TimedNote(random_note, 2f, 1f), new TimedNote(random_note, 3f, 1f)
+		}));
+		arrangement.randomise();
+		FingeredNote[] notes = new FingeredNote[arrangement.size()];
+		int n=0;
+		for(FingeredNote note : arrangement ){	notes[n++] = note; System.out.println(note);	}
+		
+		assertFalse(notes[0].equals(notes[1]) && notes[0].equals(notes[2]));
+		assertFalse(notes[1].equals(notes[2]) && notes[0].equals(notes[2]));
 	}
 	
 	private Arrangement arrangement;

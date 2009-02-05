@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import nruth.fingar.domain.Score;
+import nruth.fingar.domain.music.Score;
 import nruth.fingar.ga.Population;
 
 /**

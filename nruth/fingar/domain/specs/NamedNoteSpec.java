@@ -8,7 +8,7 @@ import java.util.LinkedList;
 
 import org.junit.*;
 import static org.junit.Assert.*;
-import nruth.fingar.domain.NamedNote;
+import nruth.fingar.domain.music.NamedNote;
 
 public class NamedNoteSpec {
 	/**

@@ -3,10 +3,15 @@ package nruth.fingar.domain.specs;
 import static org.junit.Assert.*;
 import java.util.*;
 import nruth.fingar.domain.*;
+import nruth.fingar.domain.guitar.Guitar;
+import nruth.fingar.domain.music.NamedNote;
+import nruth.fingar.domain.music.Note;
+import nruth.gitfga.Notes;
 
 import org.junit.*;
 
 public class NoteSpec {	
+	
 	@Test
 	public void belongs_to_an_octave(){
 		assertEquals(fixture_octave, fixture.octave());
@@ -23,7 +28,7 @@ public class NoteSpec {
 	
 	@Test
 	public void is_distinct_from_notes_in_other_octaves_with_the_same_name(){
-		assertFalse(fixture.equals(new Note(fixture_note, (fixture_octave%Assumptions.OCTAVE_RANGE)+1 )));
+		assertFalse(fixture.equals(new Note(fixture_note, (fixture_octave%Guitar.OCTAVE_RANGE)+1 )));
 		
 		//general equality tests
 		assertFalse(fixture.equals(NoteFactory.getRandomNote()) && fixture.equals(NoteFactory.getRandomNote()));
@@ -71,7 +76,7 @@ public class NoteSpec {
 	 */
 	@Test
 	public void check_each_octave(){
-		for(int i=1; i<=Assumptions.OCTAVE_RANGE; i++){ NoteFactory.getRandomNoteInOctave(i); }
+		for(int i=1; i<=Guitar.OCTAVE_RANGE; i++){ NoteFactory.getRandomNoteInOctave(i); }
 		//passes if no exceptions thrown
 	}
 	
@@ -91,7 +96,7 @@ public class NoteSpec {
 	 * validates its octave is in a possible range (1..4)
 	 */
 	@Test(expected=IndexOutOfBoundsException.class)
-	public void octave_out_of_range_off_end(){ NoteFactory.getRandomNoteInOctave(Assumptions.OCTAVE_RANGE+1); }
+	public void octave_out_of_range_off_end(){ NoteFactory.getRandomNoteInOctave(Guitar.OCTAVE_RANGE+1); }
 	
 	@Before
 	public void setUp() throws Exception {
@@ -106,12 +111,12 @@ public class NoteSpec {
 	
 	public static class NoteFactory{
 		public static Note getRandomNoteInOctave(int octave){ return new Note(getRandomNamedNote(), octave);}
-		public static Note getRandomNoteWithName(NamedNote note_name){ return new Note(note_name, seed.nextInt(Assumptions.OCTAVE_RANGE)+1);}
+		public static Note getRandomNoteWithName(NamedNote note_name){ return new Note(note_name, seed.nextInt(Guitar.OCTAVE_RANGE)+1);}
 		/**
 		 * generates a random valid note, within assumptions' octave range
 		 * @return a valid random note (namednote & octave)
 		 */
-		public static Note getRandomNote(){ return new Note(getRandomNamedNote(), seed.nextInt(Assumptions.OCTAVE_RANGE)+1); }
+		public static Note getRandomNote(){ return new Note(getRandomNamedNote(), seed.nextInt(Guitar.OCTAVE_RANGE)+1); }
 
 		
 		/**
@@ -126,7 +131,7 @@ public class NoteSpec {
 		}
 		
 		public static int getRandomOctave(){
-			return seed.nextInt(Assumptions.OCTAVE_RANGE)+1;
+			return seed.nextInt(Guitar.OCTAVE_RANGE)+1;
 		}
 		
 		private static Random seed = new Random();

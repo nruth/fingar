@@ -7,9 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-import nruth.fingar.domain.TimedNote;
-import nruth.fingar.domain.Score;
-import nruth.fingar.domain.Assumptions.STRINGS;
+import nruth.fingar.domain.guitar.Guitar.GuitarString;
+import nruth.fingar.domain.music.Score;
+import nruth.fingar.domain.music.TimedNote;
 
 /**
  * holds an individual solution to the guitar fingering problem
@@ -50,5 +50,15 @@ public class Arrangement implements Iterable<FingeredNote>{
 				throw new UnsupportedOperationException("this collection is immutable");
 			}
 		};
-	}	
+	}
+
+	/**
+	 * stochastically allocates valid fingering data for the score
+	 */
+	public void randomise() {
+		for(FingeredNote note : note_fingerings.values()){
+			note.randomise_fingering();
+		}
+		
+	}
 }
