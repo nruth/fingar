@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-import nruth.fingar.domain.ArrangedNote;
+import nruth.fingar.domain.TimedNote;
 import nruth.fingar.domain.Score;
 import nruth.fingar.domain.Assumptions.STRINGS;
 
@@ -19,13 +19,13 @@ import nruth.fingar.domain.Assumptions.STRINGS;
  */
 public class Arrangement implements Iterable<FingeredNote>{
 	private final Score score;
-	private HashMap<ArrangedNote, FingeredNote> note_fingerings;
+	private HashMap<TimedNote, FingeredNote> note_fingerings;
 	
 	public Arrangement(Score score) {
 		this.score = score;
-		this.note_fingerings = new HashMap<ArrangedNote, FingeredNote>(score.size(), 1f);
+		this.note_fingerings = new HashMap<TimedNote, FingeredNote>(score.size(), 1f);
 		
-		for(ArrangedNote note : score){
+		for(TimedNote note : score){
 			note_fingerings.put(note, new FingeredNote(note));
 		}
 	}

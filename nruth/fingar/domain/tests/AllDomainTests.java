@@ -14,7 +14,7 @@ import org.junit.runners.Suite;
   NamedNoteSpec.class,
   ScoreSpec.class,
   NoteFactory.class,
-  ArrangedNoteSpec.class,
+  TimedNoteSpec.class,
 })
 
 

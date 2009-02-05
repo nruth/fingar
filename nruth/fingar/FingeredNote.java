@@ -1,6 +1,6 @@
 package nruth.fingar;
 
-import nruth.fingar.domain.ArrangedNote;
+import nruth.fingar.domain.TimedNote;
 import nruth.fingar.domain.Assumptions;
 import nruth.fingar.domain.Note;
 import nruth.fingar.domain.Assumptions.STRINGS;
@@ -8,16 +8,16 @@ import nruth.fingar.domain.Assumptions.STRINGS;
 public final class FingeredNote {
 	private int finger, fret;
 	private Assumptions.STRINGS string;
-	private final ArrangedNote note;
+	private final TimedNote note;
 	
-	public FingeredNote(int finger, int fret, STRINGS string, ArrangedNote note) {
+	public FingeredNote(int finger, int fret, STRINGS string, TimedNote note) {
 		this(note);
 		this.finger = finger;
 		this.fret = fret;
 		this.string = string;
 	}
 
-	public FingeredNote(ArrangedNote note) {
+	public FingeredNote(TimedNote note) {
 		this.note = note;
 	}
 
@@ -45,7 +45,7 @@ public final class FingeredNote {
 		this.string = string;
 	}
 
-	public ArrangedNote getNote() {
+	public TimedNote getNote() {
 		return note;
 	}
 }

@@ -30,9 +30,9 @@ public class ScoreSpec {
 	 */
 	@Test
 	public void get_number_of_notes_in_score(){
-		assertEquals(40, new Score(ArrangedNoteSpec.create_random_monophonic_arranged_notes(40)).size());
-		assertEquals(1, new Score(ArrangedNoteSpec.create_random_monophonic_arranged_notes(1)).size());
-		assertFalse(12 == new Score(ArrangedNoteSpec.create_random_monophonic_arranged_notes(6)).size());
+		assertEquals(40, new Score(TimedNoteSpec.create_random_monophonic_arranged_notes(40)).size());
+		assertEquals(1, new Score(TimedNoteSpec.create_random_monophonic_arranged_notes(1)).size());
+		assertFalse(12 == new Score(TimedNoteSpec.create_random_monophonic_arranged_notes(6)).size());
 	}
 	
 	/**
@@ -41,16 +41,16 @@ public class ScoreSpec {
 	@Test
 	public void iterable_collection_of_arranged_notes(){		
 		//test for a known sequence
-		ArrangedNote[] notes = new ArrangedNote[] {
-				new ArrangedNote(new Note(NamedNote.A, 1), 0, 1), 
-				new ArrangedNote(new Note(NamedNote.B, 2), 1, 1),
-				new ArrangedNote(new Note(NamedNote.A, 3), 2, 1),
-				new ArrangedNote(new Note(NamedNote.G, 2), 3, 1),
+		TimedNote[] notes = new TimedNote[] {
+				new TimedNote(new Note(NamedNote.A, 1), 0, 1), 
+				new TimedNote(new Note(NamedNote.B, 2), 1, 1),
+				new TimedNote(new Note(NamedNote.A, 3), 2, 1),
+				new TimedNote(new Note(NamedNote.G, 2), 3, 1),
 		} ;
 		
 		Score score = new Score(notes);		
 		int n=0;
-		for(ArrangedNote note : score){
+		for(TimedNote note : score){
 			assertEquals("start-time ordering not maintained", notes[n++], note);
 		}
 	}
@@ -88,7 +88,7 @@ public class ScoreSpec {
 	@Test
 	public void note_start_timings_are_progressive(){
 		float previous = 0f;
-		for(ArrangedNote note : fixture){
+		for(TimedNote note : fixture){
 			assertTrue("timing order failure",previous <= note.start_beat());
 		}
 	}
@@ -98,12 +98,12 @@ public class ScoreSpec {
 	 */
 	@Test(expected=IndexOutOfBoundsException.class)
 	public void muddled_note_start_timings_are_rejected(){
-		ArrangedNote[] notes = {
-				new ArrangedNote(NoteSpec.NoteFactory.getRandomNote(), 0f, 3f),
-				new ArrangedNote(NoteSpec.NoteFactory.getRandomNote(), 10f, 0.5f),
-				new ArrangedNote(NoteSpec.NoteFactory.getRandomNote(), 4f, 2f),
-				new ArrangedNote(NoteSpec.NoteFactory.getRandomNote(), 6f, 4f),
-				new ArrangedNote(NoteSpec.NoteFactory.getRandomNote(), 10.5f, 1.5f)
+		TimedNote[] notes = {
+				new TimedNote(NoteSpec.NoteFactory.getRandomNote(), 0f, 3f),
+				new TimedNote(NoteSpec.NoteFactory.getRandomNote(), 10f, 0.5f),
+				new TimedNote(NoteSpec.NoteFactory.getRandomNote(), 4f, 2f),
+				new TimedNote(NoteSpec.NoteFactory.getRandomNote(), 6f, 4f),
+				new TimedNote(NoteSpec.NoteFactory.getRandomNote(), 10.5f, 1.5f)
 		};
 		
 		fixture = new Score(notes);
@@ -123,30 +123,30 @@ public class ScoreSpec {
 		//0 range
 		lownote = new Note(NamedNote.A, 1);
 		highnote = new Note(NamedNote.A, 1);				
-		score = new Score( new ArrangedNote[] {new ArrangedNote(lownote, 0, 1), new ArrangedNote(highnote, 1, 1)} );
+		score = new Score( new TimedNote[] {new TimedNote(lownote, 0, 1), new TimedNote(highnote, 1, 1)} );
 		assertEquals(0, score.getIntervalRange());
 		
 		//small range
 		lownote = new Note(NamedNote.A, 1);
 		highnote = new Note(NamedNote.C, 1);				
-		score = new Score( new ArrangedNote[] {new ArrangedNote(lownote, 0, 1), new ArrangedNote(highnote, 1, 1)} );
+		score = new Score( new TimedNote[] {new TimedNote(lownote, 0, 1), new TimedNote(highnote, 1, 1)} );
 		assertEquals(3, score.getIntervalRange());
 		
 		//octave range
 		lownote = new Note(NamedNote.A, 1);
 		highnote = new Note(NamedNote.A, 2);		
-		score = new Score( new ArrangedNote[] {new ArrangedNote(lownote, 0, 1), new ArrangedNote(highnote, 1, 1)} );
+		score = new Score( new TimedNote[] {new TimedNote(lownote, 0, 1), new TimedNote(highnote, 1, 1)} );
 		assertEquals(12, score.getIntervalRange());
 		
 		//mixed range
 		lownote = new Note(NamedNote.D, 1);
 		highnote = new Note(NamedNote.C, 3);				
 		score = new Score( 
-				new ArrangedNote[] {
-						new ArrangedNote(lownote, 0, 1), 
-						new ArrangedNote(new Note(NamedNote.A, 2), 1, 1),
-						new ArrangedNote(highnote, 2, 1),
-						new ArrangedNote(new Note(NamedNote.G, 2), 3, 1),
+				new TimedNote[] {
+						new TimedNote(lownote, 0, 1), 
+						new TimedNote(new Note(NamedNote.A, 2), 1, 1),
+						new TimedNote(highnote, 2, 1),
+						new TimedNote(new Note(NamedNote.G, 2), 3, 1),
 				} 
 		);
 		assertEquals(22, score.getIntervalRange());
@@ -177,10 +177,10 @@ public class ScoreSpec {
 				{10.5f,1.5f}
 		};
 		
-		ArrangedNote[] arranged_notes = new ArrangedNote[5];
+		TimedNote[] arranged_notes = new TimedNote[5];
 		
 		for(int i=0; i<arranged_notes.length; i++){
-			arranged_notes[i] = new ArrangedNote(fixture_notes[i], fixture_timing[i][0], fixture_timing[i][1]);
+			arranged_notes[i] = new TimedNote(fixture_notes[i], fixture_timing[i][0], fixture_timing[i][1]);
 		}
 		
 		return new Score(arranged_notes);

@@ -4,12 +4,12 @@ package nruth.fingar.domain;
 /**
  * contains a note (name & octave), its start beat, and its duration
  */
-public final class ArrangedNote {
+public final class TimedNote {
 	private Note note;
 	private float start_beat;
 	private float duration;
 	
-	public ArrangedNote(Note note, float start_beat, float duration) {
+	public TimedNote(Note note, float start_beat, float duration) {
 		if(note == null){
 			throw new NullPointerException("Note must be provided");
 		}
@@ -35,7 +35,7 @@ public final class ArrangedNote {
 	public boolean equals(Object object_to_check) {
 		if(object_to_check == null) return false;
     	if(object_to_check == this) return true;
-    	ArrangedNote note_to_check = (ArrangedNote) object_to_check;
+    	TimedNote note_to_check = (TimedNote) object_to_check;
     	
     	return (
 			note_to_check.note().equals(note())

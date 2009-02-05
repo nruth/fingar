@@ -10,18 +10,18 @@ import java.util.Iterator;
 /**
 	@author nicholasrutherford
  */
-public final class Score implements Iterable<ArrangedNote>{
-	private ArrayList<ArrangedNote> arranged_notes; //could use a tree sorted by start_beat ?
+public final class Score implements Iterable<TimedNote>{
+	private ArrayList<TimedNote> arranged_notes; //could use a tree sorted by start_beat ?
 	
-	public Score(ArrangedNote[] arranged_notes) {
-		this.arranged_notes = new ArrayList<ArrangedNote>(arranged_notes.length);
+	public Score(TimedNote[] arranged_notes) {
+		this.arranged_notes = new ArrayList<TimedNote>(arranged_notes.length);
     	
     	int idx=0;
-		for(ArrangedNote note : arranged_notes){
+		for(TimedNote note : arranged_notes){
 			if(idx>0 && note.start_beat() < this.arranged_notes.get(idx-1).start_beat()){
     			throw new IndexOutOfBoundsException("Invalid start time: note "+note+" begins at "+note.start_beat()+" and lasts for "+note.duration()+". Previous note began at " + this.arranged_notes.get(idx-1));
     		}
-			this.arranged_notes.add(new ArrangedNote(note.note(), note.start_beat(), note.duration()));
+			this.arranged_notes.add(new TimedNote(note.note(), note.start_beat(), note.duration()));
 			idx++;
 		}
 	}
@@ -30,7 +30,7 @@ public final class Score implements Iterable<ArrangedNote>{
     	@param index notes in score, indexed from 1
     	@return the note at index
      */
-    public ArrangedNote get_nth_note(int index) {
+    public TimedNote get_nth_note(int index) {
     	return arranged_notes.get(index-1);
     }
 
@@ -38,8 +38,8 @@ public final class Score implements Iterable<ArrangedNote>{
     	@param beats_from_start
     	@return the note at given beat (time from start)
      */
-    public ArrangedNote getNoteAtTime(float beats_from_start) {
-	    for(ArrangedNote note : arranged_notes){
+    public TimedNote getNoteAtTime(float beats_from_start) {
+	    for(TimedNote note : arranged_notes){
 	    	if(note.start_beat() == beats_from_start) return note;
 	    }
 	    throw new IndexOutOfBoundsException("no note found at this time");
@@ -62,7 +62,7 @@ public final class Score implements Iterable<ArrangedNote>{
 		Note highest = arranged_notes.get(1).note();
 		Note lowest = arranged_notes.get(1).note();
 		
-		for (ArrangedNote note : arranged_notes){
+		for (TimedNote note : arranged_notes){
 			if(note.note().compareTo(highest) < 0) highest = note.note();
 			if(note.note().compareTo(lowest) > 0) lowest = note.note();
 		}
@@ -73,16 +73,16 @@ public final class Score implements Iterable<ArrangedNote>{
 		return arranged_notes.size();
 	}
 
-	public Iterator<ArrangedNote> iterator() {
-		return new Iterator<ArrangedNote>() {
-			private Iterator<ArrangedNote> itr = arranged_notes.iterator();
+	public Iterator<TimedNote> iterator() {
+		return new Iterator<TimedNote>() {
+			private Iterator<TimedNote> itr = arranged_notes.iterator();
 			
 			/**
 			 * not supported for this collection
 			 */
 			public void remove() { throw new UnsupportedOperationException();	}
 		
-			public ArrangedNote next() {	return itr.next();	}
+			public TimedNote next() {	return itr.next();	}
 		
 			public boolean hasNext() {	return itr.hasNext();	}
 		};
