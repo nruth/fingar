@@ -31,7 +31,7 @@ public class ArrangementSpec {
 	public void is_iterable_correctly(){
 		int n=1;
 		for(FingeredNote note : arrangement){
-			assertEquals(score.get_nth_note(n++), note.getNote());
+			assertEquals(score.get_nth_note(n++).note(), note.note());
 		}
 	}
 	

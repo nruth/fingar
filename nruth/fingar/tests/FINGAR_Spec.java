@@ -44,7 +44,15 @@ public class FINGAR_Spec {
 		assertFalse(ga.process());
 	}
 	
-
+	/**
+	 * 	returned results set should be nonzero size
+	 */
+	@Test
+	public void nonzero_results_size(){
+		List<Arrangement> results = ga.getArrangements();
+		assertTrue(results.size() > 0);
+	}
+	
 	/**
 	 * when I ask for results I should be given a non-null list of arrangements
 	 */

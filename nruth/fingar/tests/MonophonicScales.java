@@ -40,8 +40,12 @@ public class MonophonicScales {
 		List<Arrangement> results = ga.getArrangements();
 		assertTrue(results.size() > 0);
 		
-		fail("pending: check for a known solution");
-		
+		boolean found_match=false;
+		Arrangement known = known_solution();
+		for(Arrangement result : results){
+			if(result.equals(known)) found_match = true;
+		}
+		assertTrue("known result was not found in results",found_match);
 	}
 	
 	/**
