@@ -4,11 +4,12 @@
 package nruth.fingar.domain;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
 	@author nicholasrutherford
  */
-public final class Score {
+public final class Score implements Iterable<ArrangedNote>{
 	private HashMap<Float, Note> notes; //quick lookup of note at time
 	private HashMap<Float, Float> durations; //quick lookup of note duration at time
 	private float[] start_beats;//order the starting times for use in the above maps
@@ -82,5 +83,26 @@ public final class Score {
 
 	public int size() {
 		return notes.size();
+	}
+
+	public Iterator<ArrangedNote> iterator() {
+		return new Iterator<ArrangedNote>() {
+			private int n=0;
+			
+			/**
+			 * not supported for this collection
+			 */
+			public void remove() { throw new UnsupportedOperationException();	}
+		
+			public ArrangedNote next() {
+				float start_beat = start_beats[n];
+				Note note = notes.get(start_beat);
+				float duration = durations.get(start_beat);
+				n++;
+				return new ArrangedNote(note, start_beat, duration);
+			}
+		
+			public boolean hasNext() {	return start_beats.length < n;	}
+		};
 	}
 }
