@@ -8,14 +8,6 @@ import nruth.fingar.domain.*;
 
 public class ScoreSpec {
 	/**
-	 * refactor to be simpler
-	 */
-	@Test
-	public void refactor(){
-		fail("refactor to be simpler, less parallel collections?");
-	}
-	
-	/**
 	 * 	Each note in the score has a name and octave
 	 */
 	@Test
@@ -29,7 +21,7 @@ public class ScoreSpec {
 	 */
 	@Test
 	public void note_start_time_and_durations_recorded(){
-		assertEquals(fixture_notes[2],fixture.getNoteAtTime(fixture_timing[2][0]));
+		assertEquals(fixture_notes[2],fixture.getNoteAtTime(fixture_timing[2][0]).note());
 		assertEquals(fixture_timing[3][1], fixture.get_duration_of_note_at_time(fixture_timing[3][0]));
 	}
 	
@@ -47,12 +39,7 @@ public class ScoreSpec {
 	 * an iterable, ordered by start_beat, collection of (note, start beat, duration)
 	 */
 	@Test
-	public void iterable_collection_of_arranged_notes(){
-		float previous = 0f;
-		for(ArrangedNote note : fixture){
-			assertTrue("timing order failure",previous <= note.start_beat());
-		}
-		
+	public void iterable_collection_of_arranged_notes(){		
 		//test for a known sequence
 		ArrangedNote[] notes = new ArrangedNote[] {
 				new ArrangedNote(new Note(NamedNote.A, 1), 0, 1), 
@@ -100,8 +87,10 @@ public class ScoreSpec {
 	 */
 	@Test
 	public void note_start_timings_are_progressive(){
-		float[] times = fixture.get_note_start_times();
-		for(int n=1; n<times.length; n++){	assertTrue(times[n] > times[n-1]);	}	
+		float previous = 0f;
+		for(ArrangedNote note : fixture){
+			assertTrue("timing order failure",previous <= note.start_beat());
+		}
 	}
 	
 	/**
@@ -196,6 +185,4 @@ public class ScoreSpec {
 		
 		return new Score(arranged_notes);
 	}
-	
-	
 }

@@ -3,6 +3,7 @@
  */
 package nruth.fingar.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -10,25 +11,17 @@ import java.util.Iterator;
 	@author nicholasrutherford
  */
 public final class Score implements Iterable<ArrangedNote>{
-	private HashMap<Float, Note> notes; //quick lookup of note at time
-	private HashMap<Float, Float> durations; //quick lookup of note duration at time
-	private float[] start_beats;//order the starting times for use in the above maps
-
+	private ArrayList<ArrangedNote> arranged_notes; //could use a tree sorted by start_beat ?
+	
 	public Score(ArrangedNote[] arranged_notes) {
-		this.start_beats = new float[arranged_notes.length];
-    	this.durations = new HashMap<Float, Float>(arranged_notes.length, 1.0f);    	
-    	this.notes = new HashMap<Float, Note>(arranged_notes.length, 1.0f);
+		this.arranged_notes = new ArrayList<ArrangedNote>(arranged_notes.length);
     	
     	int idx=0;
 		for(ArrangedNote note : arranged_notes){
-			if(idx>0 && note.start_beat() < this.start_beats[idx-1]){
-    			throw new IndexOutOfBoundsException("Invalid start time: note "+note+" begins at "+start_beats+" and lasts for "+durations+". Previous note began at " + this.start_beats[idx-1]);
+			if(idx>0 && note.start_beat() < this.arranged_notes.get(idx-1).start_beat()){
+    			throw new IndexOutOfBoundsException("Invalid start time: note "+note+" begins at "+note.start_beat()+" and lasts for "+note.duration()+". Previous note began at " + this.arranged_notes.get(idx-1));
     		}
-    		
-    		this.start_beats[idx] = note.start_beat(); 
-    		this.durations.put(note.start_beat(), note.duration());
-    		this.notes.put(note.start_beat(),note.note());
-			
+			this.arranged_notes.add(new ArrangedNote(note.note(), note.start_beat(), note.duration()));
 			idx++;
 		}
 	}
@@ -38,16 +31,18 @@ public final class Score implements Iterable<ArrangedNote>{
     	@return the note at index
      */
     public ArrangedNote get_nth_note(int index) {
-    	float start_beat = start_beats[index-1];
-	    return new ArrangedNote(notes.get(start_beat), start_beat, durations.get(start_beat));
+    	return arranged_notes.get(index-1);
     }
 
 	/**
     	@param beats_from_start
     	@return the note at given beat (time from start)
      */
-    public Note getNoteAtTime(float beats_from_start) {
-	    return notes.get(beats_from_start); 
+    public ArrangedNote getNoteAtTime(float beats_from_start) {
+	    for(ArrangedNote note : arranged_notes){
+	    	if(note.start_beat() == beats_from_start) return note;
+	    }
+	    throw new IndexOutOfBoundsException("no note found at this time");
     }
 
 	/**
@@ -56,7 +51,7 @@ public final class Score implements Iterable<ArrangedNote>{
     	@return the duration (beats) of the note found starting at start_beat
      */
     public float get_duration_of_note_at_time(float start_beat) {
-	    return durations.get(start_beat);
+	    return getNoteAtTime(start_beat).duration();
     }
 	
     /**
@@ -64,45 +59,32 @@ public final class Score implements Iterable<ArrangedNote>{
      * @return the number of intervals between the highest and lowest note in the score
      */
     public int getIntervalRange(){
-		Note highest = notes.get(start_beats[0]);
-		Note lowest = notes.get(start_beats[0]);
+		Note highest = arranged_notes.get(1).note();
+		Note lowest = arranged_notes.get(1).note();
 		
-		for (Note note : notes.values()){
-			if(note.compareTo(highest) < 0) highest = note;
-			if(note.compareTo(lowest) > 0) lowest = note;
+		for (ArrangedNote note : arranged_notes){
+			if(note.note().compareTo(highest) < 0) highest = note.note();
+			if(note.note().compareTo(lowest) > 0) lowest = note.note();
 		}
-		
 		return lowest.compareTo(highest);
     }
 
-    /**
-     * get note start times for the score
-     * @return float time values (from 0) marking note positions. This is copy by value, not reference, so changes are not passed on to the Score object (which would corrupt it)  
-     */
-	public float[] get_note_start_times() {	return start_beats.clone();	}
-
 	public int size() {
-		return notes.size();
+		return arranged_notes.size();
 	}
 
 	public Iterator<ArrangedNote> iterator() {
 		return new Iterator<ArrangedNote>() {
-			private int n=0;
+			private Iterator<ArrangedNote> itr = arranged_notes.iterator();
 			
 			/**
 			 * not supported for this collection
 			 */
 			public void remove() { throw new UnsupportedOperationException();	}
 		
-			public ArrangedNote next() {
-				float start_beat = start_beats[n];
-				Note note = notes.get(start_beat);
-				float duration = durations.get(start_beat);
-				n++;
-				return new ArrangedNote(note, start_beat, duration);
-			}
+			public ArrangedNote next() {	return itr.next();	}
 		
-			public boolean hasNext() {	return start_beats.length < n;	}
+			public boolean hasNext() {	return itr.hasNext();	}
 		};
 	}
 }
