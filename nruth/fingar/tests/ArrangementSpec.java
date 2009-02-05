@@ -16,13 +16,22 @@ import org.junit.*;
 public class ArrangementSpec {
 	/**
 	 * given a score
+	 */
+	@Before
+	public void arrangement_constructor_given_a_score(){
+		score = ScoreSpec.get_test_score();
+		arrangement = new Arrangement(score);
+	}
+	
+	/**
+	 * given a score
 	 * 	will store string, fret and finger allocations for each note in the score
 	 */
 	@Test
 	public void is_iterable_correctly(){
 		int n=1;
 		for(FingeredNote note : arrangement){
-			assertEquals(arrangement.score().get_nth_note(n++), note.getNote());
+			assertEquals(score.get_nth_note(n++), note.getNote());
 		}
 	}
 	
@@ -86,14 +95,7 @@ public class ArrangementSpec {
 		}
 	}
 	
-	/**
-	 * given a score
-	 */
-	@Before
-	public void arrangement_constructor_given_a_score(){
-		arrangement = new Arrangement(ScoreSpec.get_test_score());
-	}
-	
 	private Arrangement arrangement;
+	private Score score;
 	Random seed = new Random();
 }

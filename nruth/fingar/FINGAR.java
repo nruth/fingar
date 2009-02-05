@@ -27,7 +27,7 @@ public final class FINGAR {
 	}
 
 	public List<Arrangement> getArrangements() {
-		if(!finished){	process();	}
+		process();
 		return results;
 	}
 
@@ -35,13 +35,21 @@ public final class FINGAR {
 
 	public boolean is_processing_finished() {	return finished;	}
 
-	public void process() {
-		//1. do the processing here
+	/**
+	 * runs the optimisation process, if required
+	 * @return true if processing occurred
+	 */
+	public boolean process() {
+		if(!finished){
+			//1. do the processing here
 		
-		//2. store the results
+			//2. store the results
 		
 			
-		//3. update the processing done flag
-		this.finished = true;
+			//3. update the processing done flag
+			this.finished = true;
+			return true;
+		}
+		else return false;
 	}
 }

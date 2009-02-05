@@ -39,9 +39,11 @@ public class FINGAR_Spec {
 	@Test
 	public void get_has_calculated_result(){
 		assertFalse(ga.is_processing_finished());
-		ga.process();
+		assertTrue(ga.process());
 		assertTrue(ga.is_processing_finished());
+		assertFalse(ga.process());
 	}
+	
 
 	/**
 	 * when I ask for results I should be given a non-null list of arrangements

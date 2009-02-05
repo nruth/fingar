@@ -30,8 +30,6 @@ public class Arrangement implements Iterable<FingeredNote>{
 		}
 	}
 	
-	public Score score(){ return score; }
-
 	public int size() { return score.size(); }
 	
 	public Iterator<FingeredNote> iterator() {

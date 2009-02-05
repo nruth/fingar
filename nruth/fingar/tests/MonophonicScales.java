@@ -51,17 +51,20 @@ public class MonophonicScales {
 	}
 	
 	public Score c_major_scale(){
-		ArrangedNote[] notes = new ArrangedNote[8];
+		TimedNote[] notes = new TimedNote[8];
 		int time = 0;
 		for(NamedNote name : new NamedNote[]{C,D,E,F,G}){
-			notes[time] = new ArrangedNote(new Note(name, 1), time++, 1f);
+			notes[time] = new TimedNote(new Note(name, 1), time++, 1f);
 		}
 		for(NamedNote name : new NamedNote[]{A,B,C}){
-			notes[time] = new ArrangedNote(new Note(name, 2), time++, 1f);
+			notes[time] = new TimedNote(new Note(name, 2), time++, 1f);
 		}
 				
 		return new Score(notes);
 	}
 	
-	private Arrangement
+	private Arrangement known_solution(){
+		Arrangement sol = new Arrangement(c_major_scale());
+		sol.
+	}
 }
