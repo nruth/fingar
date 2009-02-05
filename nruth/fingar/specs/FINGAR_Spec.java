@@ -1,4 +1,4 @@
-package nruth.fingar.tests;
+package nruth.fingar.specs;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class FINGAR_Spec {
 	
 	@Before 
 	public void remember_score_provided(){
-		score = nruth.fingar.domain.tests.ScoreSpec.get_test_score();
+		score = nruth.fingar.domain.specs.ScoreSpec.get_test_score();
 		ga = new FINGAR(score);
 	}
 	
@@ -49,7 +49,7 @@ public class FINGAR_Spec {
 	 */
 	@Test
 	public void nonzero_results_size(){
-		List<Arrangement> results = ga.getArrangements();
+		List<Arrangement> results = ga.results();
 		assertTrue(results.size() > 0);
 	}
 	
@@ -58,7 +58,7 @@ public class FINGAR_Spec {
 	 */
 	@Test
 	public void results_give_non_null_list_of_arrangements(){
-		List<Arrangement> result = ga.getArrangements();
+		List<Arrangement> result = ga.results();
 		assertNotNull(result);
 	}
 }

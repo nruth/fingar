@@ -1,7 +1,7 @@
 /**
 	 
  */
-package nruth.fingar.domain.tests;
+package nruth.fingar.domain.specs;
 import static org.junit.Assert.*;
 import org.junit.*;
 import nruth.fingar.domain.*;

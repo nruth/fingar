@@ -1,4 +1,4 @@
-package nruth.fingar.tests;
+package nruth.fingar.specs;
 
 
 /**
@@ -13,7 +13,7 @@ import org.junit.runners.Suite;
 	ArrangementSpec.class,
 	FINGAR_Spec.class,
 	MonophonicScales.class,
-	nruth.fingar.domain.tests.AllDomainTests.class
+	nruth.fingar.domain.specs.AllDomainTests.class
 })
 
 public class AllTests {

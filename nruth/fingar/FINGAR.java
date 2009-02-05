@@ -1,9 +1,12 @@
 package nruth.fingar;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import nruth.fingar.domain.Score;
+import nruth.fingar.ga.Population;
 
 /**
  * this class sets the GA in motion
@@ -15,18 +18,24 @@ import nruth.fingar.domain.Score;
  *
  */
 public final class FINGAR {
-	private static final int POPULATION_SIZE = 20;
 	
 	private final Score score;
 	private boolean finished = false;
 	private List<Arrangement> results;
+	private List<Population> islands;
+	
 	
 	public FINGAR(Score score) {
 		this.score = score;
-		this.results = new ArrayList<Arrangement>(POPULATION_SIZE);
+		
 	}
 
-	public List<Arrangement> getArrangements() {
+	/**
+	 * Gets the fingering solutions.
+	 * If processing has not yet occured it will be done before results are returned
+	 * @return fingering solutions for the Score given at construction
+	 */
+	public List<Arrangement> results() {
 		process();
 		return results;
 	}
@@ -41,12 +50,9 @@ public final class FINGAR {
 	 */
 	public boolean process() {
 		if(!finished){
-			//1. do the processing here
-		
-			//2. store the results
-		
+			islands = new LinkedList<Population>();
+			islands.add(new Population(score, 10));
 			
-			//3. update the processing done flag
 			this.finished = true;
 			return true;
 		}

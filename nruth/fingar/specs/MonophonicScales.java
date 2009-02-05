@@ -1,4 +1,4 @@
-package nruth.fingar.tests;
+package nruth.fingar.specs;
 
 import static org.junit.Assert.*;
 import static nruth.fingar.domain.NamedNote.*;
@@ -11,9 +11,6 @@ import nruth.fingar.domain.*;
 import nruth.fingar.domain.Assumptions.STRINGS;
 
 import org.junit.*;
-
-import sun.security.util.PendingException;
-
 
 /**
  * High level GA prototype feature testing will go here
@@ -37,7 +34,7 @@ public class MonophonicScales {
 		//process alternatives		
 		//and check the list contains a known solution
 		FINGAR ga = new FINGAR(c_major_scale);
-		List<Arrangement> results = ga.getArrangements();
+		List<Arrangement> results = ga.results();
 		assertTrue(results.size() > 0);
 		
 		boolean found_match=false;

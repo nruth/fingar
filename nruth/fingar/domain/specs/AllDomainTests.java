@@ -1,9 +1,9 @@
 /**
 	 
  */
-package nruth.fingar.domain.tests;
+package nruth.fingar.domain.specs;
 
-import nruth.fingar.domain.tests.NoteSpec.NoteFactory;
+import nruth.fingar.domain.specs.NoteSpec.NoteFactory;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

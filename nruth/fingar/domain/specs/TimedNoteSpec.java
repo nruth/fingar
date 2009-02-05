@@ -1,4 +1,4 @@
-package nruth.fingar.domain.tests;
+package nruth.fingar.domain.specs;
 
 import java.util.LinkedList;
 

@@ -1,4 +1,4 @@
-package nruth.fingar.tests;
+package nruth.fingar.specs;
 
 import static org.junit.Assert.*;
 
@@ -9,7 +9,7 @@ import java.util.Random;
 import nruth.fingar.*;
 import nruth.fingar.domain.*;
 import nruth.fingar.domain.Assumptions.STRINGS;
-import nruth.fingar.domain.tests.ScoreSpec;
+import nruth.fingar.domain.specs.ScoreSpec;
 
 import org.junit.*;
 
