@@ -17,6 +17,6 @@ import org.junit.runners.Suite;
 })
 
 public class AllTests {
-    // the class remains completely empty, 
+    // the class remains empty, 
     // being used only as a holder for the above annotations	
 }

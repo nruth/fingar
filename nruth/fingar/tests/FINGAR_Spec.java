@@ -29,7 +29,7 @@ public class FINGAR_Spec {
 	 */
 	@After
 	public void check_score_remains_same(){
-		assertEquals(score, ga.getScore());
+		assertEquals(score, ga.get_score());
 	}
 	
 	/**

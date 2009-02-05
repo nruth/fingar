@@ -37,6 +37,9 @@ public class MonophonicScales {
 		FINGAR ga = new FINGAR(c_major_scale);
 		List<Arrangement> results = ga.getArrangements();
 		assertTrue(results.size() > 0);
+		
+		fail("pending: check for a known solution");
+		
 	}
 	
 	/**
@@ -59,4 +62,6 @@ public class MonophonicScales {
 				
 		return new Score(notes);
 	}
+	
+	private Arrangement
 }
