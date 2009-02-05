@@ -1,8 +1,6 @@
 package nruth.fingar;
 
-import nruth.fingar.domain.TimedNote;
-import nruth.fingar.domain.Assumptions;
-import nruth.fingar.domain.Note;
+import nruth.fingar.domain.*;
 import nruth.fingar.domain.Assumptions.STRINGS;
 
 public final class FingeredNote {
@@ -16,36 +14,14 @@ public final class FingeredNote {
 		this.fret = fret;
 		this.string = string;
 	}
-
-	public FingeredNote(TimedNote note) {
-		this.note = note;
-	}
-
-	public int finger() {
-		return finger;
-	}
-
-	public void setFinger(int finger) {
-		this.finger = finger;
-	}
-
-	public int fret() {
-		return fret;
-	}
-
-	public void setFret(int fret) {
-		this.fret = fret;
-	}
-
-	public Assumptions.STRINGS string() {
-		return string;
-	}
-
-	public void setString(Assumptions.STRINGS string) {
-		this.string = string;
-	}
-
-	public TimedNote getNote() {
-		return note;
-	}
+	
+	public FingeredNote(TimedNote note) {	this.note = note;	}
+	public Note note(){	return note.note();	}
+	public int finger() {	return finger;  }
+	public int fret() {	return fret; }
+	public Assumptions.STRINGS string() { 	return string;	}
+	
+	public void setFret(int fret) {	this.fret = fret;	}	
+	public void setFinger(int finger) {	this.finger = finger;	}
+	public void setString(Assumptions.STRINGS string) {	this.string = string;	}
 }
