@@ -3,6 +3,7 @@ package nruth.fingar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -17,10 +18,17 @@ import nruth.fingar.domain.Assumptions.STRINGS;
  *
  */
 public class Arrangement implements Iterable<FingeredNote>{
-	private final Score score; 
+	private final Score score;
+	private List<FingeredNote> notes;
 	
 	public Arrangement(Score score) {
 		this.score = score;
+		
+		this.notes = new LinkedList<FingeredNote>();
+		
+		for(ArrangedNote note : score){
+			notes.add(new FingeredNote(note));
+		}
 	}
 	
 	public Score score(){ return score; }

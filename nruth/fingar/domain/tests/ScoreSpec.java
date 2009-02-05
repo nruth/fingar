@@ -36,6 +36,17 @@ public class ScoreSpec {
 	}
 	
 	/**
+	 * an iterable, ordered by start_beat, collection of (note, start beat, duration)
+	 */
+	@Test
+	public void iterable_collection_of_arranged_notes(){
+		float previous = 0f;
+		for(ArrangedNote note : fixture){
+			assertTrue(previous <= note.start_beat());
+		}
+	}
+	
+	/**
 	 * an ordered list of notes, indexed by time played from start
 	 */
 	@Test
