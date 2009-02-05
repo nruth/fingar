@@ -35,8 +35,8 @@ public class NamedNoteSpec {
 	 */
 	@Test
 	public void able_to_resolve_the_next_note(){
-		assertEquals("simple progression check",NamedNote.A.getNext(), NamedNote.Bb);
-		assertEquals("new scale octave check",NamedNote.Ab.getNext(), NamedNote.A);
+		assertEquals("simple progression check",NamedNote.A.next(), NamedNote.Bb);
+		assertEquals("new scale octave check",NamedNote.Ab.next(), NamedNote.A);
 	}
 	
 	/**

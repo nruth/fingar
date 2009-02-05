@@ -13,7 +13,7 @@ public enum NamedNote{
 	/**
     	@return the next note in the scale
      */
-    public NamedNote getNext() {
+    public NamedNote next() {
     	int next = this.ordinal()+1;
     	if(next>=NamedNote.values().length){next=0;}
         return getNote(next);
@@ -29,7 +29,7 @@ public enum NamedNote{
     public NamedNote advance(int interval) {
 	    interval %= 12; //remove octaves
 	    NamedNote note = this;
-	    while(interval-- > 0){ note = note.getNext(); }
+	    while(interval-- > 0){ note = note.next(); }
 	    return note;
     }
 

@@ -25,7 +25,7 @@ public final class Note implements Comparable<Note>{
     }
 
 	/**	@return the note's name */
-    public NamedNote getNote() {
+    public NamedNote named_note() {
 	    return named_note;
     }
 	
@@ -34,7 +34,7 @@ public final class Note implements Comparable<Note>{
     	if(object_to_check == this) return true;
     	Note note_to_check = (Note) object_to_check;
     	
-    	if(note_to_check.getNote().equals(getNote())
+    	if(note_to_check.named_note().equals(named_note())
     			&& (note_to_check.octave() == octave())
     	) return true;
     	else return false;    		
@@ -64,6 +64,6 @@ public final class Note implements Comparable<Note>{
 	}
 	
 	private int get_ordinal_diff(Note cmp){
-		return cmp.getNote().ordinal() - this.getNote().ordinal();
+		return cmp.named_note().ordinal() - this.named_note().ordinal();
 	}
 }

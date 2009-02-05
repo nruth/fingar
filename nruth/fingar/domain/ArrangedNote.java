@@ -42,7 +42,6 @@ public final class ArrangedNote {
 			&& (note_to_check.start_beat() == start_beat())
 			&& (note_to_check.duration() == duration())
     	);
-    	
 	}
 	
 	@Override

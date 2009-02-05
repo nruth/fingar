@@ -16,7 +16,7 @@ public class NoteSpec {
 	public void has_a_name_from_named_notes(){
 		boolean contains = false;
 		for(NamedNote namedNote : NamedNote.values()){
-			if(namedNote.toString().equals(fixture.getNote().toString())) contains=true;
+			if(namedNote.toString().equals(fixture.named_note().toString())) contains=true;
 		}
 		assertTrue("note not valid", contains);
 	}
@@ -32,7 +32,7 @@ public class NoteSpec {
 	
 	@Test 
 	public void assesses_equality_of_notes(){
-		assertEquals(fixture.getNote(), fixture_note);
+		assertEquals(fixture.named_note(), fixture_note);
 	}
 	
 	/**
@@ -52,7 +52,7 @@ public class NoteSpec {
 		assertEquals(0, fixture.compareTo(fixture));
 		
 		//same note different object
-		assertEquals(0, fixture.compareTo(new Note(fixture.getNote(),fixture.octave())));
+		assertEquals(0, fixture.compareTo(new Note(fixture.named_note(),fixture.octave())));
 
 		//compare_higher_note
 		assertEquals(2, new Note(NamedNote.A, 2).compareTo(new Note(NamedNote.B, 2)));
@@ -107,6 +107,10 @@ public class NoteSpec {
 	public static class NoteFactory{
 		public static Note getRandomNoteInOctave(int octave){ return new Note(getRandomNamedNote(), octave);}
 		public static Note getRandomNoteWithName(NamedNote note_name){ return new Note(note_name, seed.nextInt(Assumptions.OCTAVE_RANGE)+1);}
+		/**
+		 * generates a random valid note, within assumptions' octave range
+		 * @return a valid random note (namednote & octave)
+		 */
 		public static Note getRandomNote(){ return new Note(getRandomNamedNote(), seed.nextInt(Assumptions.OCTAVE_RANGE)+1); }
 
 		

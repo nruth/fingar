@@ -42,7 +42,21 @@ public class ScoreSpec {
 	public void iterable_collection_of_arranged_notes(){
 		float previous = 0f;
 		for(ArrangedNote note : fixture){
-			assertTrue(previous <= note.start_beat());
+			assertTrue("timing order failure",previous <= note.start_beat());
+		}
+		
+		//test for a known sequence
+		ArrangedNote[] notes = new ArrangedNote[] {
+				new ArrangedNote(new Note(NamedNote.A, 1), 0, 1), 
+				new ArrangedNote(new Note(NamedNote.B, 2), 1, 1),
+				new ArrangedNote(new Note(NamedNote.A, 3), 2, 1),
+				new ArrangedNote(new Note(NamedNote.G, 2), 3, 1),
+		} ;
+		
+		Score score = new Score(notes);		
+		int n=0;
+		for(ArrangedNote note : score){
+			assertEquals("start-time ordering not maintained", notes[n++], note);
 		}
 	}
 	
