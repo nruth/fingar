@@ -23,10 +23,13 @@ public final class FingeredNote {
 	}
 	
 	public FingeredNote(TimedNote note) {	this.note = note;	}
+	
 	public Note note(){	return note.note();	}
 	public int finger() {	return finger;  }
 	public int fret() {	return fret; }
 	public Guitar.GuitarString string() { 	return string;	}
+	public float start_beat() {	return note.start_beat(); }
+	public float duration() {	return note.duration(); }
 	
 	public void setFret(int fret) {	this.fret = fret;	}	
 	public void setFinger(int finger) {	this.finger = finger;	}

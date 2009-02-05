@@ -27,7 +27,6 @@ public final class FINGAR {
 	
 	public FINGAR(Score score) {
 		this.score = score;
-		
 	}
 
 	/**
@@ -52,6 +51,8 @@ public final class FINGAR {
 		if(!finished){
 			islands = new LinkedList<Population>();
 			islands.add(new Population(score, 10));
+			
+			results = islands.get(0).process();
 			
 			this.finished = true;
 			return true;

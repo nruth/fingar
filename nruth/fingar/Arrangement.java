@@ -1,6 +1,9 @@
 package nruth.fingar;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -50,6 +53,21 @@ public class Arrangement implements Iterable<FingeredNote>{
 				throw new UnsupportedOperationException("this collection is immutable");
 			}
 		};
+	}
+	
+	public String toString(){
+		StringBuilder str = new StringBuilder();
+		ArrayList<FingeredNote> notes = new ArrayList<FingeredNote>(note_fingerings.values());;
+		Collections.sort(notes, new Comparator<FingeredNote>() {
+			public int compare(FingeredNote a, FingeredNote b) {
+				return (int)(b.start_beat() - a.start_beat());
+			}
+		});
+		Collections.reverse(notes);
+		for(FingeredNote note : notes){
+			str.append(note.toString()+"\n");
+		}
+		return str.toString();
 	}
 
 	/**
