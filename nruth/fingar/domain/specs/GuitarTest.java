@@ -31,17 +31,15 @@ public class GuitarTest {
 		assertEquality(possible_E2_positions, produced_E2_positions);
 		
 		Position[] possible_A3_positions = new Position[]{
-				new Position(12, GuitarString.LOW_E), 
-				new Position(7, GuitarString.A),
-				new Position(2, GuitarString.D)
+				new Position(24, GuitarString.A), 
+				new Position(19, GuitarString.D),
+				new Position(14, GuitarString.G),
+				new Position(5, GuitarString.HIGH_E),
+				new Position(10, GuitarString.B)
 		};
 		LinkedList<Position> produced_A3_positions = Guitar.get_positions_for_note(new Note(NamedNote.A, 3));
 		assertEquality(possible_A3_positions, produced_A3_positions);
-		
-		
-		
-		fail("pending, add more boundary checks to be sure");
-		
+				
 	//visual checking
 	//	for(Position p : possible_e_positions){System.out.print(p+", ");}
 	//	System.out.println("\nProduced:");
@@ -66,8 +64,25 @@ public class GuitarTest {
 
 	@Test
 	public void are_notes_resolved_correctly_on_string(){
-		Position pos = Guitar.note_on_string(new Note(NamedNote.A,3),GuitarString.A);
-		assertEquals(new Position(12,GuitarString.A),pos);
+		Note note = new Note(NamedNote.A,3);
+		
+		Position pos = Guitar.note_on_string(note,GuitarString.LOW_E);
+		assertNull(pos);
+		
+		pos = Guitar.note_on_string(note,GuitarString.A);
+		assertEquals(new Position(24,GuitarString.A),pos);
+		
+		pos = Guitar.note_on_string(note,GuitarString.D);
+		assertEquals(new Position(19,GuitarString.D),pos);
+		
+		pos = Guitar.note_on_string(note,GuitarString.G);
+		assertEquals(new Position(14,GuitarString.G),pos);
+		
+		pos = Guitar.note_on_string(note,GuitarString.B);
+		assertEquals(new Position(10,GuitarString.B),pos);
+		
+		pos = Guitar.note_on_string(note,GuitarString.HIGH_E);
+		assertEquals(new Position(5,GuitarString.HIGH_E),pos);		
 	}
 	
 	@Test

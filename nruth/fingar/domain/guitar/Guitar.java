@@ -4,6 +4,8 @@
 package nruth.fingar.domain.guitar;
 
 import java.util.LinkedList;
+
+import nruth.Helpers;
 import nruth.fingar.domain.music.NamedNote;
 import nruth.fingar.domain.music.Note;
 
@@ -24,10 +26,10 @@ public final class Guitar {
 		public Note open_string_note(){
 			switch(this){
 				case LOW_E: return new Note(NamedNote.E, 1);
-				case A: return new Note(NamedNote.A, 2);
-				case D: return new Note(NamedNote.D, 2);
+				case A: return new Note(NamedNote.A, 1);
+				case D: return new Note(NamedNote.D, 1);
 				case G: return new Note(NamedNote.G, 2);
-				case B: return new Note(NamedNote.B, 3);
+				case B: return new Note(NamedNote.B, 2);
 				case HIGH_E: return new Note(NamedNote.E, 3);
 				default: throw new RuntimeException("undefined guitar string referenced, update Position class if changing number of strings");
 			}
@@ -91,7 +93,7 @@ public final class Guitar {
 	public static Position note_on_string(Note note, GuitarString string){
 		Note open_string = string.open_string_note();			
 		int fret = open_string.compareTo(note);
-		if (fret >= 0){ return new Position(fret, string); }
+		if (Helpers.in_range(0, fret, FRETS)){ return new Position(fret, string); }
 		else return null;
 	}
 }

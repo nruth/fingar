@@ -8,7 +8,7 @@ package nruth.fingar.domain.music;
 	
  */
 public enum NamedNote{
-	A, Bb, B, C, Db, D, Eb, E, F, Gb, G, Ab;
+	E, F, Gb, G, Ab, A, Bb, B, C, Db, D, Eb; 
 
 	/**
     	@return the next note in the scale

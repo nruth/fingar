@@ -44,7 +44,7 @@ public final class FingeredNote {
 	}
 	
 	public String toString(){
-		return note.toString() + " at fi"+finger+";fr"+fret+"; st"+string;
+		return note.toString() + " at fi"+finger+";fr"+fret+"; str:"+string;
 	}
 	
 	static final Random seed = new Random();

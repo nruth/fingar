@@ -56,9 +56,6 @@ public class Arrangement implements Iterable<FingeredNote>{
 	 * stochastically allocates valid fingering data for the score
 	 */
 	public void randomise() {
-		for(FingeredNote note : note_fingerings.values()){
-			note.randomise_fingering();
-		}
-		
+		for(FingeredNote note : note_fingerings.values()){	note.randomise_fingering();	}
 	}
 }

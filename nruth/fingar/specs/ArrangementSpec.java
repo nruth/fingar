@@ -112,7 +112,7 @@ public class ArrangementSpec {
 		arrangement.randomise();
 		FingeredNote[] notes = new FingeredNote[arrangement.size()];
 		int n=0;
-		for(FingeredNote note : arrangement ){	notes[n++] = note; System.out.println(note);	}
+		for(FingeredNote note : arrangement ){	notes[n++] = note;	}
 		
 		assertFalse(notes[0].equals(notes[1]) && notes[0].equals(notes[2]));
 		assertFalse(notes[1].equals(notes[2]) && notes[0].equals(notes[2]));

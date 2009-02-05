@@ -19,8 +19,14 @@ public class Population {
 	 * @param parent
 	 */
 	private Population(Population parent, int successor_generations){
-		population.evolve(new FitnessFunction());
+		population = parent.evolve();
 	}
 	
+	private Arrangement evolve() {
+		// TODO Auto-generated method stub
+		this.population.randomise();
+		return population;
+	}
+
 	private Arrangement population;
 }

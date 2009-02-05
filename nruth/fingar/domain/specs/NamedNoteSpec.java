@@ -25,9 +25,9 @@ public class NamedNoteSpec {
 	 */
 	@Test
 	public void can_state_the_degree_of_a_note_in_the_scale(){
-		assertEquals(1, NamedNote.A.getDegree());
-		assertEquals(2, NamedNote.Bb.getDegree());
-		assertEquals(12, NamedNote.Ab.getDegree());
+		assertEquals(6, NamedNote.A.getDegree());
+		assertEquals(7, NamedNote.Bb.getDegree());
+		assertEquals(5, NamedNote.Ab.getDegree());
 	}
 	
 	/**
