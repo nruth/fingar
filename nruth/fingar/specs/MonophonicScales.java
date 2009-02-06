@@ -69,7 +69,7 @@ public class MonophonicScales {
 		for(NamedNote name : new NamedNote[]{E,F,G,A,B,C}){
 			notes[time] = new TimedNote(new Note(name, 2), time++, 1f);
 		}
-				
+		
 		return new Score(notes);
 	}
 	
