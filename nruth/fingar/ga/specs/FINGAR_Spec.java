@@ -63,12 +63,11 @@ public class FINGAR_Spec {
 	}
 	
 	/**
-	 * when I ask for n generations to be processed before giving an answer
-	 * 	at least that many should be processed before completion
+	 * I should be able to specify which evolution mechanism to use
 	 */
 	@Test
-	public void minimum_generations_exceeded(){
-//		ga.process();
-		fail("not implemented");
+	public void specify_evolution_mechanism(){
+		Evolver evolver = new NDeepEvolver(5);
+		new FINGAR(score, evolver);
 	}
 }
