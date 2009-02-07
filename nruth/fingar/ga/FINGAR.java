@@ -1,12 +1,12 @@
-package nruth.fingar;
+package nruth.fingar.ga;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import nruth.fingar.Arrangement;
 import nruth.fingar.domain.music.Score;
-import nruth.fingar.ga.Population;
 import nruth.fingar.ga.evolvers.Evolver;
 import nruth.fingar.ga.evolvers.NDeepRandomEvolver;
 

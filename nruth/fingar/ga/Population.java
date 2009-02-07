@@ -1,12 +1,15 @@
 package nruth.fingar.ga;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import nruth.fingar.Arrangement;
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.ga.evolvers.Evolver;
 
+/**
+ * a population of genetic individuals
+ * i.e. encapsulates a set of atomic solutions to the domain problem
+ */
 public final class Population {
 	/**
 	 * seeds an initial population
@@ -17,22 +20,26 @@ public final class Population {
 		this.population = evolver.initial_population(score);	
 	}
 
-	public List<Arrangement> process(){
-		if(evolver.finished()) return results();
-		else return new Population(this, evolver).process();
-	}
+//	public List<Arrangement> results(){ return population; }
 	
-	/**
-	 * creates a successor generation for the given parent generation
-	 * @param parent
-	 */
-	private Population(Population forebears, Evolver evolver){
-		population = evolver.evolve(forebears);
-	}
+//	public List<Arrangement> process(){
+//		if(evolver.finished()) return results();
+//		else return successor().process();
+//	}
+	
+	public Population successor() {	return evolver.create_successor_population(this); }
+	
+//	/**
+//	 * creates a successor generation for the given parent generation
+//	 * @param parent
+//	 */
+//	private Population(Population forebears, Evolver evolver){
+//		population = evolver.evolve(forebears);
+//	}
 	
 	public int size(){ return population.size(); } 
 	
-	public List<Arrangement> results(){ return population; }
+	
 	private List<Arrangement> population;
 	private Evolver evolver;
 }

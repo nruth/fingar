@@ -28,7 +28,7 @@ public class NDeepRandomEvolver extends Evolver {
 	}
 	
 	@Override
-	public List<Arrangement> evolve(Population forebears) {		
+	public Population create_successor_population(Population forebears) {		
 		for(Arrangement arr : forebears){ arr.randomise(); }		
 		return forebears;
 	}

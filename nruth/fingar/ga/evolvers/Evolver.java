@@ -28,7 +28,7 @@ public abstract class Evolver {
 	 * reports whether the current population is the final population for this phenotype
 	 * @return
 	 */
-	public boolean finished(){ return finished; }
+	public boolean is_halted(){ return finished; }
 
 	/**
 	 * use this to state that your evolver has finished, 
@@ -41,7 +41,7 @@ public abstract class Evolver {
 	 * @param forebears the parent population to evolve from
 	 * @return the child population derived from forebears
 	 */
-	public abstract List<Arrangement> evolve(Population forebears);
+	public abstract Population create_successor_population(Population forebears);
 	
 	/**
 	 * create a copy of the object
