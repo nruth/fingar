@@ -1,6 +1,8 @@
 package nruth.fingar.ga.specs;
 
 import org.junit.Test;
+
+import nruth.fingar.Arrangement;
 import nruth.fingar.domain.specs.ScoreSpec;
 import nruth.fingar.ga.Population;
 import static junit.framework.Assert.*;
@@ -13,6 +15,14 @@ public class PopulationSpec {
 	public void given_evolver_can_produce_successors(){
 		Population pop = test_population();
 		assertNotSame(pop, pop.successor());
+	}
+	
+	/**
+	 * is iterable by individual phenotype (Arrangement)
+	 */
+	@Test
+	public void iterable_by_individual(){
+		for(Arrangement arr : test_population()){	assertNotNull(arr);	}
 	}
 	
 	//helpers
