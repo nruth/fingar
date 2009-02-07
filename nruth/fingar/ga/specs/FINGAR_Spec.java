@@ -1,4 +1,4 @@
-package nruth.fingar.specs;
+package nruth.fingar.ga.specs;
 
 import java.util.List;
 
@@ -60,5 +60,15 @@ public class FINGAR_Spec {
 	public void results_give_non_null_list_of_arrangements(){
 		List<Arrangement> result = ga.results();
 		assertNotNull(result);
+	}
+	
+	/**
+	 * when I ask for n generations to be processed before giving an answer
+	 * 	at least that many should be processed before completion
+	 */
+	@Test
+	public void minimum_generations_exceeded(){
+//		ga.process();
+		fail("not implemented");
 	}
 }

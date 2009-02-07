@@ -6,7 +6,6 @@ import nruth.fingar.domain.*;
 import nruth.fingar.domain.guitar.Guitar;
 import nruth.fingar.domain.music.NamedNote;
 import nruth.fingar.domain.music.Note;
-import nruth.gitfga.Notes;
 
 import org.junit.*;
 
