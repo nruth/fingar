@@ -18,7 +18,7 @@ public class PopulationSpec {
 	}
 	
 	/**
-	 * is iterable by individual phenotype (Arrangement)
+	 * is iterable by individual genotypes (Arrangement)
 	 */
 	@Test
 	public void iterable_by_individual(){

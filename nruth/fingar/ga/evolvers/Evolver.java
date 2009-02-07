@@ -25,14 +25,14 @@ public abstract class Evolver {
 	}
 
 	/**
-	 * reports whether the current population is the final population for this phenotype
+	 * reports whether the current population is the final population for this island
 	 * @return
 	 */
 	public boolean is_halted(){ return finished; }
 
 	/**
 	 * use this to state that your evolver has finished, 
-	 * i.e. the current phenotype population is the final generation for this evolver
+	 * i.e. the current island population is the final generation for this evolver
 	 */
 	protected void set_have_finished(){	this.finished  = true;	}
 	
