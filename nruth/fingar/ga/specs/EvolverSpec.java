@@ -26,7 +26,13 @@ public class EvolverSpec {
 	@Test
 	public void knows_whether_halted_or_processing(){
 		assertFalse(new NDeepRandomEvolver(3).is_halted());
-		assertTrue(new NDeepRandomEvolver(0).is_halted());
+		
+		Evolver finished = new Evolver() {
+			public Population create_successor_population(Population forebears) {	set_have_finished(); return null;	}
+			public Evolver clone() {return null;}
+		};
+		finished.create_successor_population(null);
+		assertTrue(finished.is_halted());		
 	}
 	
 	//helper factory
