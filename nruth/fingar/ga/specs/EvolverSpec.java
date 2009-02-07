@@ -16,7 +16,7 @@ public class EvolverSpec {
 	@Test
 	public void can_create_a_successor_population(){
 		Evolver evolver = test_evolver();
-		Population forebears = null;
+		Population forebears = PopulationSpec.test_population();
 		assertNotSame(forebears, evolver.create_successor_population(forebears));
 	}
 	

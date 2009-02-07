@@ -28,9 +28,10 @@ public class NDeepRandomEvolver extends Evolver {
 	}
 	
 	@Override
-	public Population create_successor_population(Population forebears) {		
-		for(Arrangement arr : forebears){ arr.randomise(); }		
-		return forebears;
+	public Population create_successor_population(Population forebears) {	
+		Population successors = forebears.clone();
+		for(Arrangement arr : successors){ arr.randomise(); }		
+		return successors;
 	}
 
 	private final int generations;
