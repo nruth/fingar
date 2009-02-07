@@ -10,7 +10,7 @@ import nruth.fingar.ga.evolvers.Evolver;
  * a population of genetic individuals
  * i.e. encapsulates a set of atomic solutions to the domain problem
  */
-public final class Population {
+public final class Population implements Iterable<Arrangement>{
 	/**
 	 * seeds an initial population
 	 * @param score
@@ -39,7 +39,11 @@ public final class Population {
 	
 	public int size(){ return population.size(); } 
 	
+	@Override
+	public Iterator<Arrangement> iterator() {	return population.iterator();	}
 	
 	private List<Arrangement> population;
 	private Evolver evolver;
+	
+	
 }
