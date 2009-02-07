@@ -25,6 +25,17 @@ public class PopulationSpec {
 		for(Arrangement arr : test_population()){	assertNotNull(arr);	}
 	}
 	
+	/**
+	 * can be cloned
+	 */
+	@Test
+	public void can_be_cloned(){
+		Population initial = test_population();
+		Population clone = test_population().clone();
+		assertEquals("cloning changed values",initial, clone);
+		assertNotSame("cloning returned same object ref", initial, clone);
+	}
+	
 	//helpers
 	public static Population test_population(){	return new Population(ScoreSpec.get_test_score(), EvolverSpec.test_evolver()); }
 }
