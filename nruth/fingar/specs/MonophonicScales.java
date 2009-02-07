@@ -6,7 +6,6 @@ import static nruth.fingar.domain.music.NamedNote.*;
 import java.util.*;
 
 import nruth.fingar.Arrangement;
-import nruth.fingar.FINGAR;
 import nruth.fingar.FingeredNote;
 import nruth.fingar.domain.*;
 import nruth.fingar.domain.guitar.Guitar.GuitarString;
@@ -14,6 +13,7 @@ import nruth.fingar.domain.music.NamedNote;
 import nruth.fingar.domain.music.Note;
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.domain.music.TimedNote;
+import nruth.fingar.ga.FINGAR;
 import nruth.fingar.ga.evolvers.Evolver;
 
 import org.junit.*;

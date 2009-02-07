@@ -1,10 +1,10 @@
-package nruth.fingar.specs;
+package nruth.fingar.ga.specs;
 
 import java.util.List;
 
 import nruth.fingar.Arrangement;
-import nruth.fingar.FINGAR;
 import nruth.fingar.domain.music.Score;
+import nruth.fingar.ga.FINGAR;
 import nruth.fingar.ga.evolvers.Evolver;
 import nruth.fingar.ga.evolvers.NDeepRandomEvolver;
 import static org.junit.Assert.*;
