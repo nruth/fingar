@@ -1,10 +1,12 @@
-package nruth.fingar.ga.specs;
+package nruth.fingar.specs;
 
 import java.util.List;
 
 import nruth.fingar.Arrangement;
 import nruth.fingar.FINGAR;
 import nruth.fingar.domain.music.Score;
+import nruth.fingar.ga.evolvers.Evolver;
+import nruth.fingar.ga.evolvers.NDeepRandomEvolver;
 import static org.junit.Assert.*;
 import org.junit.*;
 
@@ -67,7 +69,7 @@ public class FINGAR_Spec {
 	 */
 	@Test
 	public void specify_evolution_mechanism(){
-		Evolver evolver = new NDeepEvolver(5);
+		Evolver evolver = new NDeepRandomEvolver(5);
 		new FINGAR(score, evolver);
 	}
 }

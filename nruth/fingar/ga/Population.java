@@ -5,24 +5,16 @@ import java.util.List;
 
 import nruth.fingar.Arrangement;
 import nruth.fingar.domain.music.Score;
+import nruth.fingar.ga.evolvers.Evolver;
 
 public final class Population {
-
-	private Evolver evolver;
 	/**
 	 * seeds an initial population
 	 * @param score
 	 */
 	public Population(Score score, Evolver evolver) {
 		this.evolver = evolver;
-		this.population = evolver.initial_population();
-//		population = new ArrayList<Arrangement>(POPULATION_SIZE);
-//		
-//		for(int i=0; i<POPULATION_SIZE; i++){
-//			Arrangement individual = new Arrangement(score);
-//			individual.randomise();
-//			population.add(individual);
-//		}		
+		this.population = evolver.initial_population(score);	
 	}
 
 	public List<Arrangement> process(){
@@ -38,6 +30,9 @@ public final class Population {
 		population = evolver.evolve(forebears);
 	}
 	
+	public int size(){ return population.size(); } 
+	
 	public List<Arrangement> results(){ return population; }
 	private List<Arrangement> population;
+	private Evolver evolver;
 }

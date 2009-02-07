@@ -7,6 +7,8 @@ import java.util.List;
 
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.ga.Population;
+import nruth.fingar.ga.evolvers.Evolver;
+import nruth.fingar.ga.evolvers.NDeepRandomEvolver;
 
 /**
  * this class sets the GA in motion
@@ -23,10 +25,18 @@ public final class FINGAR {
 	private boolean finished = false;
 	private List<Arrangement> results;
 	private List<Population> islands;
+	private Evolver evolver;
 	
-	
-	public FINGAR(Score score) {
+	/**
+	 * @param score the music to process
+	 * @param evolver the evolution mechanism to use (fitness function, crossover, etc)
+	 */
+	public FINGAR(Score score, Evolver evolver) {
 		this.score = score;
+	}
+
+	public FINGAR(Score score) {
+		this(score, new NDeepRandomEvolver(5)); //TODO: replace this with a simple evolver that uses a fitness function, or a class var for the best one to use.
 	}
 
 	/**
@@ -50,7 +60,7 @@ public final class FINGAR {
 	public boolean process() {
 		if(!finished){
 			islands = new LinkedList<Population>();
-			islands.add(new Population(score, 10));
+			islands.add(new Population(score, evolver.clone()));
 			
 			results = islands.get(0).process();
 			

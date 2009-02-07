@@ -1,6 +1,3 @@
-/**
-	 
- */
 package nruth.fingar.domain.specs;
 import static org.junit.Assert.*;
 import org.junit.*;
@@ -11,6 +8,8 @@ import nruth.fingar.domain.music.Score;
 import nruth.fingar.domain.music.TimedNote;
 
 public class ScoreSpec {
+
+	
 	/**
 	 * 	Each note in the score has a name and octave
 	 */

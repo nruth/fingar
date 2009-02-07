@@ -14,6 +14,7 @@ import nruth.fingar.domain.music.NamedNote;
 import nruth.fingar.domain.music.Note;
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.domain.music.TimedNote;
+import nruth.fingar.ga.evolvers.Evolver;
 
 import org.junit.*;
 
@@ -38,7 +39,9 @@ public class MonophonicScales {
 		
 		//process alternatives		
 		//and check the list contains a known solution
-		FINGAR ga = new FINGAR(c_major_scale);
+		Evolver evolver = null; //TODO this needs to be the production evolver, whatever that ends up being
+		
+		FINGAR ga = new FINGAR(c_major_scale, evolver);
 		List<Arrangement> results = ga.results();
 		assertTrue(results.size() > 0);
 		
