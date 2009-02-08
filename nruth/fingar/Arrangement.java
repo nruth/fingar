@@ -38,16 +38,7 @@ public class Arrangement implements Iterable<FingeredNote>{
 	public int size() { return score.size(); }
 	
 	public Iterator<FingeredNote> iterator() {
-		return new Iterator<FingeredNote>() {
-			Iterator<FingeredNote> itr = note_fingerings.iterator();
-			public FingeredNote next() { return itr.next();	}
-			public boolean hasNext() {	return itr.hasNext(); }
-
-			/**
-			 * Not supported: this collection is immutable
-			 */
-			public void remove() {	throw new UnsupportedOperationException("this collection is immutable");	}
-		};
+		return Collections.unmodifiableSet(note_fingerings).iterator();
 	}
 	
 	public String toString(){
