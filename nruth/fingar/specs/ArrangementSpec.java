@@ -118,6 +118,22 @@ public class ArrangementSpec {
 		assertFalse(notes[1].equals(notes[2]) && notes[0].equals(notes[2]));
 	}
 	
+	/**
+	 * can be tested for equality against other arrangements
+	 */
+	@Test
+	public void equality_against_other_arrangements(){
+		fail("pending");
+	}
+	
+	/**
+	 * creates hashcodes distinct from nonequal arrangements
+	 */
+	@Test
+	public void hashcode_distinctness(){
+		fail("pending");
+	}
+	
 	private Arrangement arrangement;
 	private Score score;
 	Random seed = new Random();
