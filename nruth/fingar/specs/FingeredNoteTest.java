@@ -137,7 +137,6 @@ public class FingeredNoteTest {
 		assertFalse("different finger",a.equals(b));
 		assertFalse("different finger",b.equals(a));
 		
-		
 		fail("add note checks");
 		
 		//try equality on unint object to check for exception throwing

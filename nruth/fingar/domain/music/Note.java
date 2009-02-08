@@ -9,17 +9,18 @@ import nruth.fingar.domain.guitar.Guitar;
 	@author nicholasrutherford
 	
  */
-public final class Note implements Comparable<Note>{
+public final class Note implements Comparable<Note>, Cloneable{
 	public Note(NamedNote named_note, int octave) {
 		if(! nruth.Helpers.in_range(1, octave, Guitar.OCTAVE_RANGE)){ throw new IndexOutOfBoundsException("octave :"+octave+" invalid, must be 1 to "+Guitar.OCTAVE_RANGE);}
 	    this.octave = octave;
 	    this.named_note = named_note;
     }
-
-	private final int octave;
-	private final NamedNote named_note;
 	
-
+	public Note clone(){
+		//final class so can catch the error
+		try {	return (Note) super.clone();
+		} catch (CloneNotSupportedException e) { return null; }
+	}
 
 	/**	@return the note's octave (in the piece's range) */
     public int octave() {
@@ -68,4 +69,7 @@ public final class Note implements Comparable<Note>{
 	private int get_ordinal_diff(Note cmp){
 		return cmp.named_note().ordinal() - this.named_note().ordinal();
 	}
+	
+	private final int octave;
+	private final NamedNote named_note;
 }

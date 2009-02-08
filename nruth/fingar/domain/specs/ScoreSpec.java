@@ -155,6 +155,14 @@ public class ScoreSpec {
 		assertEquals(22, score.getIntervalRange());
 	}
 	
+	/**
+	 * can be cloned correctly
+	 */
+	@Test
+	public void cloned_correctly(){
+		fail("not implemented");
+	}
+	
 //	TODO: design decision, may leave this out, stick to same frequency range as original input	
 //	/**
 //	 * may be played over a set of possible ranges (on a guitar)

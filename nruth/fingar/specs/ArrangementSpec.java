@@ -126,6 +126,11 @@ public class ArrangementSpec {
 		fail("pending");
 	}
 	
+	@Test
+	public void clones_correctly(){
+		fail("pending");
+	}
+	
 	/**
 	 * creates hashcodes distinct from nonequal arrangements
 	 */

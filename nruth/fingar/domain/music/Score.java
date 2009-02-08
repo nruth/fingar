@@ -73,6 +73,14 @@ public final class Score implements Iterable<TimedNote>{
 		return arranged_notes.size();
 	}
 
+	public Score clone(){
+		Score clone;
+		//final class so can catch the error, shouldn't happen
+		try { clone = (Score) super.clone(); } catch (CloneNotSupportedException e) { return null; }
+		clone.arranged_notes = (ArrayList<TimedNote>) arranged_notes.clone();
+		return clone;
+	}
+	
 	public Iterator<TimedNote> iterator() {
 		return new Iterator<TimedNote>() {
 			private Iterator<TimedNote> itr = arranged_notes.iterator();

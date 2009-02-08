@@ -37,4 +37,5 @@ public enum NamedNote{
     	@return the degree of the note in the e-chromatic scale
      */
     public int getDegree() {   return this.ordinal()+1;   }
+    
 }

@@ -21,8 +21,8 @@ import nruth.fingar.domain.music.TimedNote;
  * @author nicholasrutherford
  *
  */
-public class Arrangement implements Iterable<FingeredNote>{
-	private final Score score;
+public final class Arrangement implements Iterable<FingeredNote>, Cloneable{
+	private Score score;
 	private TreeSet<FingeredNote> note_fingerings;
 	
 	public Arrangement(Score score) {
@@ -55,5 +55,14 @@ public class Arrangement implements Iterable<FingeredNote>{
 	 */
 	public void randomise() {
 		for(FingeredNote note : note_fingerings){	note.randomise_fingering();	}
+	}
+	
+	public Arrangement clone(){
+		Arrangement clone;
+		//final class so can catch the error, it shouldn't happen
+		try { clone = (Arrangement)super.clone(); } catch (CloneNotSupportedException e) { return null; }
+		clone.score = score.clone();
+		clone.note_fingerings = (TreeSet<FingeredNote>) note_fingerings.clone();
+		return clone;
 	}
 }

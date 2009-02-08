@@ -4,7 +4,16 @@ package nruth.fingar.domain.music;
  * contains a note (name & octave), its start beat, and its duration.
  * Is immutable.
  */
-public final class TimedNote {
+public final class TimedNote implements Cloneable {
+	@Override
+	public TimedNote clone() {
+		TimedNote clone;
+		//final class so can catch the error
+		try { clone = (TimedNote)super.clone();	} catch (CloneNotSupportedException e) { return null; }
+		clone.note = this.note.clone();
+		return clone;
+	}
+
 	public TimedNote(Note note, float start_beat, float duration) {
 		if(note == null){
 			throw new NullPointerException("Note must be provided");
@@ -37,7 +46,7 @@ public final class TimedNote {
 		return super.toString() + " - {"+ note() +"|start:("+ start_beat() +")|dur:("+ duration() +")}";
 	}
 	
-	private final Note note;
+	private Note note;
 	private final float start_beat;
 	private final float duration;
 }

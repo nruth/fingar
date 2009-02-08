@@ -10,11 +10,20 @@ import nruth.fingar.domain.guitar.Guitar.GuitarString;
 import nruth.fingar.domain.music.Note;
 import nruth.fingar.domain.music.TimedNote;
 
-public final class FingeredNote {
+public final class FingeredNote implements Cloneable {
 	private int finger=-1, fret=-1;
 	private Guitar.GuitarString string = null;
-	private final TimedNote note;
+	private TimedNote note;
 	
+	@Override
+	public FingeredNote clone() {
+		FingeredNote clone;
+		//final class so can catch the error
+		try{	clone = (FingeredNote) super.clone();	}catch (CloneNotSupportedException e){	return null;	} 
+		clone.note = note.clone();
+		return clone;
+	}
+
 	public FingeredNote(int finger, int fret, GuitarString string, TimedNote note) {
 		this(note);
 		this.finger = finger;

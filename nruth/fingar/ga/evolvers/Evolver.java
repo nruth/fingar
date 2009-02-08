@@ -6,7 +6,7 @@ import nruth.fingar.Arrangement;
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.ga.Population;
 
-public abstract class Evolver {
+public abstract class Evolver implements Cloneable {
 	
 	/**
 	 * @param score the domain problem data to base the population on
