@@ -3,6 +3,7 @@ package nruth.fingar.ga;
 import java.util.*;
 
 import nruth.fingar.Arrangement;
+import nruth.fingar.domain.music.Note;
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.ga.evolvers.Evolver;
 
@@ -17,7 +18,8 @@ public final class Population implements Iterable<Arrangement>{
 	 */
 	public Population(Score score, Evolver evolver) {
 		this.evolver = evolver;
-		this.population = evolver.initial_population(score);	
+		this.score = score;
+		this.population = evolver.initial_population(score);		
 	}
 
 //	public List<Arrangement> results(){ return population; }
@@ -42,8 +44,22 @@ public final class Population implements Iterable<Arrangement>{
 	@Override
 	public Iterator<Arrangement> iterator() {	return population.iterator();	}
 	
-	private List<Arrangement> population;
+	@Override
+	public Population clone() {
+		return new Population(this.score, evolver.clone());
+	}
+
+	@Override
+	public boolean equals(Object object_to_check) {
+		if(object_to_check == null) return false;
+    	if(object_to_check == this) return true;
+    	Population pop_to_check = (Population) object_to_check;
+    	
+    	//TODO: this doesn't work because it relies on list order equality and this is not required for the population. List is the wrong collection type.
+    	return pop_to_check.population.equals(this.population); 
+	}
+
+	private Collection<Arrangement> population;
 	private Evolver evolver;
-	
-	
+	private Score score;
 }
