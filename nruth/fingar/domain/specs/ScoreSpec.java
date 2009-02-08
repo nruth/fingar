@@ -8,7 +8,7 @@ import nruth.fingar.domain.music.Score;
 import nruth.fingar.domain.music.TimedNote;
 
 public class ScoreSpec {
-
+	//there is only one score for the GA currently so no need to test hashcodes or equality
 	
 	/**
 	 * 	Each note in the score has a name and octave
@@ -162,7 +162,7 @@ public class ScoreSpec {
 //	@Test
 //	public void may_be_played_over_a_set_of_possible_ranges(){
 //		fail("not implemented");
-//	}
+//	} 
 	
 	private Score fixture;
 	static Note[] fixture_notes = new Note[5];
