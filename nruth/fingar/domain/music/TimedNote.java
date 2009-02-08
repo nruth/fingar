@@ -43,9 +43,12 @@ public final class TimedNote implements Cloneable {
 	
 	@Override
 	public String toString() {
-		return super.toString() + " - {"+ note() +"|start:("+ start_beat() +")|dur:("+ duration() +")}";
+		return  "{"+ note() +"|st:"+ start_beat() +"|dr:"+ duration() +"}";
 	}
 	
+	@Override
+	public int hashCode() { return toString().hashCode(); }
+
 	private Note note;
 	private final float start_beat;
 	private final float duration;
