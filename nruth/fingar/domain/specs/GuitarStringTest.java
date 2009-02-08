@@ -2,6 +2,7 @@ package nruth.fingar.domain.specs;
 
 import static org.junit.Assert.*;
 
+import nruth.fingar.domain.music.NamedNote;
 import nruth.fingar.domain.music.Note;
 
 import org.junit.*;
@@ -65,6 +66,18 @@ public class GuitarStringTest {
 		assertEquals(GuitarString.B.get_relative_fret_to_bottom_e(), 19);
 	}
 	
-	
+	/**
+	 * equality and hashcodes
+	 * done after-the-fact and implementation is via enumeration so should pass trivially
+	 */
+	@Test
+	public void equality_and_hashcodes(){
+		assertEquals(GuitarString.A, GuitarString.A);
+		assertFalse(GuitarString.A.equals(GuitarString.B));
+		assertFalse(GuitarString.B.equals(GuitarString.A));
+		
+		assertEquals(GuitarString.A.hashCode(), GuitarString.A.hashCode());
+		assertFalse(GuitarString.A.hashCode() == GuitarString.B.hashCode());
+	}
 	
 }
