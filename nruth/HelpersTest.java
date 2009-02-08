@@ -5,6 +5,14 @@ package nruth;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.swing.event.ListSelectionEvent;
+
 import org.junit.Test;
 
 /**
@@ -37,4 +45,39 @@ public class HelpersTest {
 		assertFalse("NOT 0 < 3 < 2", Helpers.in_range(0, 3, 2));
 	}
 	
+	@Test
+	public void test_content_equality(){
+		List<String> A = new LinkedList<String>();
+		A.addAll(Arrays.asList("1","2","3","4","5"));
+		
+		List<String> B = new LinkedList<String>();
+		B.addAll(A);
+		Collections.reverse(B);
+		assertTrue(Helpers.content_equality(A, B));
+		B.add("3");
+		assertFalse(Helpers.content_equality(A, B));
+	}
+	
+	@Test
+	public void same_list_content_equality(){
+		List<String> A = new LinkedList<String>();
+		A.addAll(Arrays.asList("1","2","3","4","5"));
+		assertTrue(Helpers.content_equality(A,A));
+		
+		List<String> B = new LinkedList<String>();
+		B.addAll(A);
+		assertTrue("same contents different list objects",Helpers.content_equality(A,B));
+		assertTrue("same contents different list objects",Helpers.content_equality(B,A));
+	}
+	
+	@Test
+	public void reversed_list_content_equality(){
+		List<String> A = new LinkedList<String>();
+		A.addAll(Arrays.asList("1","2","3","4","5"));
+		List<String> B = new LinkedList<String>();
+		B.addAll(A);
+		Collections.reverse(B);
+		assertTrue("reversed contents different list objects",Helpers.content_equality(A,B));
+		assertTrue("reversed contents different list objects",Helpers.content_equality(B,A));
+	}
 }
