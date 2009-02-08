@@ -107,6 +107,8 @@ public class PopulationSpec {
 		
 		assertFalse(pop_a.equals(pop_c));
 		assertFalse(pop_a.hashCode() == pop_c.hashCode());
+		
+		fail("and when the population has its contents changed it gives a different hashcode to before the changes..");
 	}
 	
 	
