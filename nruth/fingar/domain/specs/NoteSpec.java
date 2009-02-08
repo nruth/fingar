@@ -120,7 +120,14 @@ public class NoteSpec {
 		assertFalse("note difference ignored",new Note(NamedNote.C, 2).hashCode() == new Note(NamedNote.D, 2).hashCode());
 	}
 	
-	
+	@Test
+	public void clones_correctly(){
+		Note note = NoteFactory.getRandomNote();
+		Note clone = note.clone();
+		assertEquals(note, clone);
+		assertNotSame(note, clone);
+		//does not check depth of cloning
+	}
 	
 	@Before
 	public void setUp() throws Exception {

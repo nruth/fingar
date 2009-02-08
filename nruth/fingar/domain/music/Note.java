@@ -47,6 +47,9 @@ public final class Note implements Comparable<Note>, Cloneable{
     	return "["+named_note+octave+"]";
     }
 
+	@Override
+	public int hashCode() {	return this.toString().hashCode(); }
+
 	public int compareTo(Note cmp) {
 		if(cmp == null) throw new NullPointerException();
     	if(cmp == this) return 0;
