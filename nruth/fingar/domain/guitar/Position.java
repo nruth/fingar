@@ -3,6 +3,9 @@ package nruth.fingar.domain.guitar;
 import nruth.fingar.domain.guitar.Guitar.GuitarString;
 
 public final class Position {
+	@Override
+	public int hashCode() { return toString().hashCode(); }
+	
 	public Position(int fret, GuitarString string) {
 	    this.fret = fret;
 	    this.string = string;
@@ -39,6 +42,6 @@ public final class Position {
     }
     
     public String toString(){
-    	return string.toString() + "|"+fret+"|";
+    	return string.toString() + "@"+fret;
     }
 }
