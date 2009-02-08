@@ -45,15 +45,9 @@ public final class Helpers {
 		if(A == null || B == null) return false;
 		if(A.size() != B.size()) return false;
 		
-		
 		Set<N> elements = new HashSet<N>();
 		elements.addAll(A);
-		for(N e : elements){ System.out.print(e.toString()); }
-		
-		System.out.println();
-		
 		elements.addAll(B);
-		for(N e : elements){ System.out.print(e.toString()); }
 		
 		for(N element : elements){
 			if(Collections.frequency(A, element) != Collections.frequency(B,element)) return false;
