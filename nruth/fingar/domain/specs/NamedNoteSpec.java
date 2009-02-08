@@ -78,4 +78,18 @@ public class NamedNoteSpec {
 		assertEquals("octave interval increment", NamedNote.A.advance(12), NamedNote.A);
 		assertEquals("octave + single interval increment", NamedNote.A.advance(13), NamedNote.Bb);
 	}
+	
+	/**
+	 * equality and hashcodes
+	 * done after-the-fact and implementation is via enumeration so should pass trivially
+	 */
+	@Test
+	public void equality_and_hashcodes(){
+		assertEquals(NamedNote.A, NamedNote.A);
+		assertFalse(NamedNote.A.equals(NamedNote.B));
+		assertFalse(NamedNote.B.equals(NamedNote.A));
+		
+		assertEquals(NamedNote.A.hashCode(), NamedNote.A.hashCode());
+		assertFalse(NamedNote.A.hashCode() == NamedNote.B.hashCode());
+	}
 }
