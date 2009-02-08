@@ -64,22 +64,51 @@ public class PopulationSpec {
 		);
 		
 		Population pop_b = new Population(
-				new Score(
-					new TimedNote[]{	new TimedNote(new Note(NamedNote.A, 1),0f, 1f)	}
-				), EvolverSpec.test_evolver()
-			);
+			new Score(
+				new TimedNote[]{	new TimedNote(new Note(NamedNote.A, 1),0f, 1f)	}
+			), EvolverSpec.test_evolver()
+		);
 		assertEquals(pop_a, pop_b);
 		assertEquals(pop_b, pop_a);
 		
 		//different object different populations
 		Population pop_c = new Population(
-				new Score(
-					new TimedNote[]{	new TimedNote(new Note(NamedNote.C, 1),0f, 1f)	}
-				), EvolverSpec.test_evolver()
-			);
+			new Score(
+				new TimedNote[]{	new TimedNote(new Note(NamedNote.C, 1),0f, 1f)	}
+			), EvolverSpec.test_evolver()
+		);
 		assertFalse(pop_c.equals(pop_a));
 		assertFalse(pop_b.equals(pop_c));
 	}
+	
+	@Test
+	public void hashcode_contract_maintained(){
+		//different object same population values
+		Population pop_a = new Population(
+			new Score(
+				new TimedNote[]{	new TimedNote(new Note(NamedNote.A, 1),0f, 1f)	}
+			), EvolverSpec.test_evolver()
+		);
+		
+		Population pop_b = new Population(
+			new Score(
+				new TimedNote[]{	new TimedNote(new Note(NamedNote.A, 1),0f, 1f)	}
+			), EvolverSpec.test_evolver()
+		);
+		assertEquals(pop_a, pop_b);
+		assertEquals(pop_a.hashCode(), pop_b.hashCode());
+		
+		//different object different populations
+		Population pop_c = new Population(
+			new Score(
+				new TimedNote[]{	new TimedNote(new Note(NamedNote.C, 1),0f, 1f)	}
+			), EvolverSpec.test_evolver()
+		);
+		
+		assertFalse(pop_a.equals(pop_c));
+		assertFalse(pop_a.hashCode() == pop_c.hashCode());
+	}
+	
 	
 	//helpers
 	public static Population test_population(){	return new Population(ScoreSpec.get_test_score(), EvolverSpec.test_evolver()); }

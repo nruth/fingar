@@ -35,20 +35,23 @@ public final class Helpers {
 	}
 	
 	/**
-	 * this can be an expensive operation, it checks every element in a against elements in b until finding a match, for each element in a
-	 * @param <N>
-	 * @param a
-	 * @param b
-	 * @return
+	 * this can be an expensive operation, intended for testing not operating code
+	 * @param <N> the shared type of the collections, supporting a working hashCode method
+	 * @param A 
+	 * @param B
+	 * @return whether A and B have the same elements and element frequencies.
 	 */
 	public static <N> boolean content_equality(Collection<N> A, Collection<N> B){
+		if(A == B) return true;
 		if(A == null || B == null) return false;
 		if(A.size() != B.size()) return false;
 		
+		//find the elements from both collections
 		Set<N> elements = new HashSet<N>();
 		elements.addAll(A);
 		elements.addAll(B);
 		
+		//check the element frequencies are the same in both collections, any disparity = fail
 		for(N element : elements){
 			if(Collections.frequency(A, element) != Collections.frequency(B,element)) return false;
 		}
