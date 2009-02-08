@@ -1,14 +1,10 @@
 package nruth.fingar.domain.music;
 
-
 /**
- * contains a note (name & octave), its start beat, and its duration
+ * contains a note (name & octave), its start beat, and its duration.
+ * Is immutable.
  */
 public final class TimedNote {
-	private Note note;
-	private float start_beat;
-	private float duration;
-	
 	public TimedNote(Note note, float start_beat, float duration) {
 		if(note == null){
 			throw new NullPointerException("Note must be provided");
@@ -19,17 +15,9 @@ public final class TimedNote {
 		this.duration = duration;
 	}
 	
-	public Note note() {
-		return note;
-	}
-	
-	public float start_beat() {
-		return start_beat;
-	}
-	
-	public float duration() {
-		return duration;
-	}
+	public Note note() {	return note;	}
+	public float start_beat() {	return start_beat; }	
+	public float duration() {	return duration;	}
 	
 	@Override
 	public boolean equals(Object object_to_check) {
@@ -48,4 +36,8 @@ public final class TimedNote {
 	public String toString() {
 		return super.toString() + " - {"+ note() +"|start:("+ start_beat() +")|dur:("+ duration() +")}";
 	}
+	
+	private final Note note;
+	private final float start_beat;
+	private final float duration;
 }
