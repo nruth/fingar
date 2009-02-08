@@ -155,13 +155,19 @@ public class ScoreSpec {
 		assertEquals(22, score.getIntervalRange());
 	}
 	
+	//not required, removed
+//	/**
+//	 * can be cloned correctly 
+//	 */
+//	@Test
+//	public void cloned_correctly(){
+//		assertEquals(fixture, fixture.clone());
+//		assertNotSame(fixture, fixture.clone());
+//	}
+	
 	/**
-	 * can be cloned correctly
+	 * 
 	 */
-	@Test
-	public void cloned_correctly(){
-		fail("not implemented");
-	}
 	
 //	TODO: design decision, may leave this out, stick to same frequency range as original input	
 //	/**
