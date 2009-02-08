@@ -11,8 +11,8 @@ import nruth.fingar.domain.music.Note;
 import nruth.fingar.domain.music.TimedNote;
 
 public final class FingeredNote {
-	private int finger, fret;
-	private Guitar.GuitarString string;
+	private int finger=-1, fret=-1;
+	private Guitar.GuitarString string = null;
 	private final TimedNote note;
 	
 	public FingeredNote(int finger, int fret, GuitarString string, TimedNote note) {
