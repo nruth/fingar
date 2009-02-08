@@ -35,7 +35,7 @@ public class NoteSpec {
 	}
 	
 	@Test 
-	public void assesses_equality_of_notes(){
+	public void stores_given_named_note(){
 		assertEquals(fixture.named_note(), fixture_note);
 	}
 	
@@ -96,6 +96,31 @@ public class NoteSpec {
 	 */
 	@Test(expected=IndexOutOfBoundsException.class)
 	public void octave_out_of_range_off_end(){ NoteFactory.getRandomNoteInOctave(Guitar.OCTAVE_RANGE+1); }
+	
+	/**
+	 * Note equality tests 
+	 */
+	@Test
+	public void note_equality(){
+		assertEquals("same object equal",fixture, fixture);
+		assertFalse("null object equality fail",fixture.equals(null));
+		assertEquals("same values different objects",new Note(NamedNote.F, 1), new Note(NamedNote.F, 1));
+		assertFalse("octave difference ignored",new Note(NamedNote.D, 2).equals(new Note(NamedNote.D, 1)));
+		assertFalse("note difference ignored",new Note(NamedNote.C, 2).equals(new Note(NamedNote.D, 2)));
+	}
+	
+	/**
+	 * Hashcode tests
+	 */
+	@Test
+	public void hashcode_correctness(){
+		assertEquals("same object equal",fixture.hashCode(), fixture.hashCode());
+		assertEquals("same values different objects",new Note(NamedNote.F, 1).hashCode(), new Note(NamedNote.F, 1).hashCode());
+		assertFalse("octave difference ignored",new Note(NamedNote.D, 2).hashCode() == new Note(NamedNote.D, 1).hashCode());
+		assertFalse("note difference ignored",new Note(NamedNote.C, 2).hashCode() == new Note(NamedNote.D, 2).hashCode());
+	}
+	
+	
 	
 	@Before
 	public void setUp() throws Exception {
