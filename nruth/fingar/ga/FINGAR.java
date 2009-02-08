@@ -62,7 +62,7 @@ public final class FINGAR {
 			islands = new LinkedList<Population>();
 			islands.add(new Population(score, evolver.clone()));
 			
-			results = islands.get(0).process();
+			//results = islands.get(0).process();
 			
 			this.finished = true;
 			return true;

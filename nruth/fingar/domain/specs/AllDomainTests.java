@@ -10,13 +10,14 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-  NoteSpec.class,
-  NamedNoteSpec.class,
-  ScoreSpec.class,
-  NoteFactory.class,
-  TimedNoteSpec.class,
-  GuitarStringTest.class,
-  GuitarTest.class
+	GuitarStringTest.class,
+	GuitarTest.class,
+	NamedNoteSpec.class,
+	NoteSpec.class,
+	NoteFactory.class,
+	PositionSpec.class,
+	ScoreSpec.class,
+	TimedNoteSpec.class,
 })
 
 
