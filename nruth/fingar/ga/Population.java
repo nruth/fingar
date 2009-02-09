@@ -11,7 +11,7 @@ import nruth.fingar.ga.evolvers.Evolver;
  * a population of genetic individuals
  * i.e. encapsulates a set of atomic solutions to the domain problem
  */
-public final class Population implements Iterable<Arrangement>{
+public final class Population implements Iterable<Arrangement>, Cloneable{
 	/**
 	 * seeds an initial population
 	 * @param score
@@ -46,7 +46,14 @@ public final class Population implements Iterable<Arrangement>{
 	
 	@Override
 	public Population clone() {
-		return new Population(this.score, evolver.clone());
+		Population clone;
+		
+		try { clone = (Population) super.clone(); } 
+		catch (CloneNotSupportedException e) { //final class, safe to catch as should not occur
+			return null;
+		}
+		clone.evolver = evolver.clone();
+		return clone;
 	}
 
 	@Override
