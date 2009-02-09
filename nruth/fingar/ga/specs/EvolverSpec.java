@@ -2,8 +2,15 @@ package nruth.fingar.ga.specs;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.*;
 
+import nruth.fingar.Arrangement;
+import nruth.fingar.FingeredNote;
+import nruth.fingar.domain.guitar.Guitar.GuitarString;
+import nruth.fingar.domain.music.Score;
 import nruth.fingar.ga.Population;
 import nruth.fingar.ga.evolvers.Evolver;
 import nruth.fingar.ga.evolvers.NDeepRandomEvolver;
@@ -37,4 +44,35 @@ public class EvolverSpec {
 	
 	//helper factory
 	public static Evolver test_evolver(){ return new NDeepRandomEvolver(3); } 
+	/**
+	 * an evolver which always creates the same initial population
+	 * however, this population is junk data (not musically correct)
+	 * @return an evolver which always creates the same initial population
+	 */
+	public static Evolver dummy_evolver(){ 
+		return new Evolver(){
+			@Override
+			public Population create_successor_population(Population forebears) {  
+				Population pop = forebears.clone();
+				for(Arrangement arr : pop){ arr.randomise(); }
+				return pop;
+			}
+		
+			@Override
+			public List<Arrangement> initial_population(Score score) {
+				List<Arrangement> pop = Arrays.asList(new Arrangement(score), new Arrangement(score), new Arrangement(score));
+				for(Arrangement arr : pop){
+					for(FingeredNote note : arr){
+						note.setFret(3);
+						note.setFinger(3);
+						note.setString(GuitarString.A);
+					}
+				}
+				return pop;
+			}
+			
+			@Override
+			public Evolver clone() { return this; }
+		};
+	}
 }
