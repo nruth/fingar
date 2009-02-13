@@ -89,7 +89,7 @@ public class HelpersTest {
 		A.addAll(Arrays.asList("1","2","3","4","5"));
 		
 		List<String> B = new LinkedList<String>();
-		B.addAll(Arrays.asList("9", "100", "3"));
+		B.addAll(Arrays.asList("3"));
 		assertFalse(Helpers.content_equality(A, B));
 		assertFalse(Helpers.content_equality(B, A));
 	}

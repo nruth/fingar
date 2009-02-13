@@ -53,7 +53,9 @@ public final class Helpers {
 		
 		//check the element frequencies are the same in both collections, any disparity = fail
 		for(N element : elements){
-			if(Collections.frequency(A, element) != Collections.frequency(B,element)) return false;
+			if(Collections.frequency(A, element) != Collections.frequency(B,element)) {
+				return false;
+			}
 		}
 		
 		return true;
