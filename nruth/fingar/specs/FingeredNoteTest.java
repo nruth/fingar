@@ -104,8 +104,8 @@ public class FingeredNoteTest {
 		assertFalse(random.finger() == initial.finger());
 		assertFalse(random.fret() == initial.fret());
 		assertFalse(random.string().equals(initial.string()));
-		assertFalse(random.duration() == initial.duration());
-		assertFalse(random.start_beat() == initial.start_beat());
+		assertEquals("timing should not change",random.duration(), initial.duration());
+		assertEquals("timing should not change",random.start_beat(), initial.start_beat());
 	}
 
 	/**
@@ -138,7 +138,8 @@ public class FingeredNoteTest {
 		assertFalse("different finger",a.equals(b));
 		assertFalse("different finger",b.equals(a));
 		
-		b = a.clone(); b.setString(b.string().values()[b.string().ordinal()+1]);
+		b = a.clone(); b.string();
+		b.setString(GuitarString.values()[b.string().ordinal()+1]);
 		assertFalse("different finger",a.equals(b));
 		assertFalse("different finger",b.equals(a));
 		
@@ -157,13 +158,45 @@ public class FingeredNoteTest {
 		assertFalse("different note", a.equals(b));
 		assertFalse("different note", b.equals(a));
 		
-		//try equality on unint object to check for exception throwing
+		//TODO try equality on unint object to check for exception throwing
 //		assertFalse(initialised_fingered_note().equals(uninitialised_fingered_note()));
 	}
 	
 	@Test
 	public void testHashCode() {
-		fail("Not yet implemented");
+		FingeredNote a = initialised_fingered_note(); 
+		assertEquals("same object different hashcode",a.hashCode(), a.hashCode());
+		
+		FingeredNote b = a.clone();
+		assertNotSame("Tests rely on working cloning mechanism",a, b);
+		assertEquals("Tests rely on working cloning mechanism, this could also be equality broken",a, b);
+		
+		
+		b = a.clone(); b.setFret(b.fret()+1);
+		assertFalse("different fret",a.hashCode() == b.hashCode());
+		assertFalse("different fret",b.hashCode() == a.hashCode());
+		
+		b = a.clone(); b.setFinger(b.finger()+1);
+		assertFalse("different finger",a.hashCode() == b.hashCode());
+		assertFalse("different finger",b.hashCode() == a.hashCode());
+		
+		b = a.clone(); b.string();
+		b.setString(GuitarString.values()[b.string().ordinal()+1]);
+		assertFalse("different finger",a.hashCode() == b.hashCode());
+		assertFalse("different finger",b.hashCode() == a.hashCode());
+		
+		//TimedNote tests
+		TimedNote note1, note2;
+		note1 = new TimedNote(new Note(NamedNote.B, 1), 1f, 1f);
+		note2 = new TimedNote(new Note(NamedNote.C, 2), 2f, 2f);
+		a = new FingeredNote(note1);
+		b = new FingeredNote(note2);
+		a.setFinger(1); b.setFinger(1);
+		a.setString(GuitarString.A); b.setString(GuitarString.A);
+		a.setFret(10); b.setFret(10);
+		
+		assertFalse("different note", a.hashCode() == b.hashCode());
+		assertFalse("different note", b.hashCode() == a.hashCode());
 	}
 
 	private FingeredNote fixture;
