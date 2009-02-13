@@ -40,8 +40,10 @@ public final class Arrangement implements Iterable<FingeredNote>, Cloneable{
 	
 	public String toString(){
 		StringBuilder str = new StringBuilder();
-		for(FingeredNote note : notes_starting_at.values()){
-			str.append(note.toString()+"\n");
+		Float[] keys = notes_starting_at.keySet().toArray(new Float[notes_starting_at.size()]);
+		Arrays.sort(keys);
+		for(Float key : keys){
+			str.append(notes_starting_at.get(key).toString()+"\n");
 		}
 		return str.toString();
 	}
