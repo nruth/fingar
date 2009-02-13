@@ -125,7 +125,12 @@ public class FingeredNoteTest {
 		assertEquals("same object",a,a);
 		assertFalse("null object", a.equals(null));
 		
-		FingeredNote b = a.clone(); b.setFret(b.fret()+1);
+		FingeredNote b = a.clone();
+		assertNotSame("Tests rely on working cloning mechanism",a, b);
+		assertEquals("Tests rely on working cloning mechanism, this could also be equality broken",a, b);
+		
+		
+		b = a.clone(); b.setFret(b.fret()+1);
 		assertFalse("different fret",a.equals(b));
 		assertFalse("different fret",b.equals(a));
 		
@@ -137,7 +142,6 @@ public class FingeredNoteTest {
 		assertFalse("different finger",a.equals(b));
 		assertFalse("different finger",b.equals(a));
 		
-		fail("add note checks");
 		//TimedNote tests
 		TimedNote note1, note2;
 		note1 = new TimedNote(new Note(NamedNote.B, 1), 1f, 1f);
@@ -146,6 +150,12 @@ public class FingeredNoteTest {
 		a = new FingeredNote(note1);
 		b = new FingeredNote(note2);
 		
+		a.setFinger(1); b.setFinger(1);
+		a.setString(GuitarString.A); b.setString(GuitarString.A);
+		a.setFret(10); b.setFret(10);
+		
+		assertFalse("different note", a.equals(b));
+		assertFalse("different note", b.equals(a));
 		
 		//try equality on unint object to check for exception throwing
 //		assertFalse(initialised_fingered_note().equals(uninitialised_fingered_note()));
@@ -164,5 +174,7 @@ public class FingeredNoteTest {
 	public static FingeredNote initialised_fingered_note(){
 		return new FingeredNote(1, 2, GuitarString.A, TimedNoteSpec.create_random_monophonic_arranged_notes(1)[0]);
 	}
+	
+	//TODO: doesn't reject being given invalid fingering positions for the note, e.g. E first fret for G (should be F)
 }
 

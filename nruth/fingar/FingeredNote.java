@@ -24,6 +24,18 @@ public final class FingeredNote implements Cloneable {
 		return clone;
 	}
 
+	@Override
+	public boolean equals(Object obj_to_chk) {
+		if(obj_to_chk == null) return false;
+		if(obj_to_chk == this) return true;
+		FingeredNote note_to_chk = (FingeredNote) obj_to_chk;
+		
+		return (note_to_chk.finger == this.finger) && 
+			( note_to_chk.fret == this.fret ) &&
+			( note_to_chk.string == this.string) &&
+			( note_to_chk.note.equals(this.note));
+	}
+
 	public FingeredNote(int finger, int fret, GuitarString string, TimedNote note) {
 		this(note);
 		this.finger = finger;
