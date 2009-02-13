@@ -1,6 +1,7 @@
 package nruth.fingar.ga;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,23 +21,21 @@ import nruth.fingar.ga.evolvers.NDeepRandomEvolver;
  *
  */
 public final class FINGAR {
-	
-	private final Score score;
-	private boolean finished = false;
-	private List<Arrangement> results;
-	private List<Population> islands;
-	private Evolver evolver;
-	
 	/**
 	 * @param score the music to process
 	 * @param evolver the evolution mechanism to use (fitness function, crossover, etc)
 	 */
 	public FINGAR(Score score, Evolver evolver) {
 		this.score = score;
+		this.evolver = evolver;
 	}
 
+	/**
+	 * Uses the default evolultion mechanism
+	 * @param score the music to process
+	 */
 	public FINGAR(Score score) {
-		this(score, new NDeepRandomEvolver(5)); //TODO: replace this with a simple evolver that uses a fitness function, or a class var for the best one to use.
+		this(score, new NDeepRandomEvolver(3)); //TODO: replace this with a simple evolver that uses a fitness function, or a class var for the best one to use.
 	}
 
 	/**
@@ -59,14 +58,22 @@ public final class FINGAR {
 	 */
 	public boolean process() {
 		if(!finished){
-			islands = new LinkedList<Population>();
-			islands.add(new Population(score, evolver.clone()));
-			
-			//results = islands.get(0).process();
+			Population population = new Population(score, evolver);
+			boolean finished = false;
+			while(!finished){ 
+				population = population.successor();
+				finished = population.evolver().is_halted();
+			}
+			results = population.view_arrangements();
 			
 			this.finished = true;
 			return true;
 		}
 		else return false;
 	}
+	
+	private final Score score;
+	private boolean finished = false;
+	private List<Arrangement> results;
+	private Evolver evolver;
 }

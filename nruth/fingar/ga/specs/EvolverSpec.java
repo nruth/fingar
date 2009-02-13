@@ -1,5 +1,7 @@
 package nruth.fingar.ga.specs;
 
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotSame;
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
@@ -28,6 +30,16 @@ public class EvolverSpec {
 	}
 	
 	/**
+	 * when producing a successor the associated evolver knows its state in the evolution history
+	 */
+	@Test
+	public void evolver_knows_state_in_evolution(){
+		Evolver evolver = test_evolver();
+		Population forebears = PopulationSpec.test_population();
+		assertFalse(forebears.evolver().generation() == evolver.create_successor_population(forebears).evolver().generation());
+	}
+	
+	/**
 	 * knows whether it has halted or is still processing
 	 */
 	@Test
@@ -37,6 +49,7 @@ public class EvolverSpec {
 		Evolver finished = new Evolver() {
 			public Population create_successor_population(Population forebears) {	set_have_finished(); return null;	}
 			public Evolver clone() {return null;}
+			public int generation() {return 0;	}
 		};
 		finished.create_successor_population(null);
 		assertTrue(finished.is_halted());		
@@ -70,6 +83,8 @@ public class EvolverSpec {
 				}
 				return pop;
 			}
+			
+			public int generation() {return 0;	}
 			
 			@Override
 			public Evolver clone() { return this; }

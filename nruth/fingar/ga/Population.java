@@ -18,16 +18,10 @@ public final class Population implements Iterable<Arrangement>, Cloneable{
 	 */
 	public Population(Score score, Evolver evolver) {
 		this.evolver = evolver;
-		//this.score = score;
 		this.population = evolver.initial_population(score);		
 	}
 	
 //	public List<Arrangement> results(){ return population; }
-	
-//	public List<Arrangement> process(){
-//		if(evolver.finished()) return results();
-//		else return successor().process();
-//	}
 	
 	public Population successor() {	return evolver.create_successor_population(this); }
 	
@@ -66,14 +60,20 @@ public final class Population implements Iterable<Arrangement>, Cloneable{
 	}
 
 	@Override
-	public int hashCode() {
-		return population.toString().hashCode();
+	public int hashCode() {	return population.toString().hashCode(); }
+	
+	public String toString(){ return population.toString(); }
+
+	public Evolver evolver(){ return evolver; }
+	
+	/**
+	 * creates an immutable view of the population's contents
+	 * @return
+	 */
+	public List<Arrangement> view_arrangements() {
+		return Collections.unmodifiableList(population);
 	}
 	
-	public String toString(){
-		return population.toString();
-	}
-
-	private Collection<Arrangement> population;
+	private List<Arrangement> population;
 	private Evolver evolver;
 }

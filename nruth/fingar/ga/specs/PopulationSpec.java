@@ -104,6 +104,16 @@ public class PopulationSpec {
 		assertFalse(pop_a.hashCode() == successor.hashCode());
 	}
 	
+	@Test(expected=UnsupportedOperationException.class)
+	public void can_produce_immutable_view(){ test_population().view_arrangements().remove(1); }
+	
+	@Test
+	public void gives_current_evolver_access(){
+		Population p1 = test_population();
+		Population p2 = p1.successor();
+		assertFalse(p1.equals(p2));
+		assertNotSame(p1.evolver(), p2.evolver());
+	}
 	
 	//helpers
 	public static Population test_population(){	return new Population(ScoreSpec.get_test_score(), EvolverSpec.test_evolver()); }

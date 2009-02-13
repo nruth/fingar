@@ -14,12 +14,9 @@ import nruth.fingar.domain.specs.NoteSpec.NoteFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-public class FingeredNoteTest {
-	/**
-	 * can create for a note with blank default fingering values
-	 */
+public class FingeredNoteSpec {
 	@Test
-	public void fingered_note_blank_fingering_values() {	uninitialised_fingered_note();	}
+	public void can_create_for_a_note_with_blank_default_fingering_values() {	uninitialised_fingered_note();	}
 	
 	/**
 	 * causes errors if read before values assigned
@@ -31,12 +28,8 @@ public class FingeredNoteTest {
 	@Test(expected=NullPointerException.class)
 	public void fret_not_initialised_error(){	this.fixture.fret(); }
 	
-	
-	/**
-	 * can create with known fingering data
-	 */
 	@Test
-	public void testFingeredNoteIntIntGuitarStringTimedNote() {
+	public void can_create_with_known_fingering_data() {
 		FingeredNote fixture = new FingeredNote(1, 2, GuitarString.A, TimedNoteSpec.create_random_monophonic_arranged_notes(1)[0]); 
 		try{		//should be initialised, so try and pull values without exceptions thrown
 			assertEquals(fixture.finger(),1);
@@ -48,14 +41,11 @@ public class FingeredNoteTest {
 	}
 
 	@Test
-	public void testNote() {
+	public void note_can_be_retrieved() {
 		Note note = NoteSpec.NoteFactory.getRandomNote();
 		assertEquals(note, new FingeredNote(new TimedNote(note, 1f, 2f)).note());
 	}
 
-	/**
-	 * the finger can be set
-	 */
 	@Test
 	public void finger_can_be_set() {
 		FingeredNote note = uninitialised_fingered_note();
@@ -63,9 +53,6 @@ public class FingeredNoteTest {
 		assertEquals(1, note.finger());
 	}
 
-	/**
-	 * the fret can be set
-	 */
 	@Test
 	public void fret_can_be_set() {
 		FingeredNote note = uninitialised_fingered_note();
@@ -73,9 +60,6 @@ public class FingeredNoteTest {
 		assertEquals(12, note.fret());
 	}
 
-	/**
-	 * the string can be set
-	 */
 	@Test
 	public void string_can_be_set() {
 		FingeredNote note = uninitialised_fingered_note();
@@ -83,21 +67,18 @@ public class FingeredNoteTest {
 		assertEquals(GuitarString.B, note.string());
 	}
 
-	/**
-	 * the start beat is correctly accessible
-	 */
 	@Test
-	public void start_beat_access() {
+	public void start_beat_accessible() {
 		assertEquals(4f,new FingeredNote(new TimedNote(NoteFactory.getRandomNote(), 4f, 2f)).start_beat());
 	}
 
 	@Test
-	public void duration_access() {
+	public void beat_duration_accessible() {
 		assertEquals(2f,new FingeredNote(new TimedNote(NoteFactory.getRandomNote(), 4f, 2f)).duration());
 	}
 
 	@Test
-	public void testRandomise_fingering() {
+	public void fingering_values_can_be_randomised() {
 		FingeredNote initial = initialised_fingered_note();
 		FingeredNote random = initial.clone();
 		random.randomise_fingering();
@@ -108,11 +89,8 @@ public class FingeredNoteTest {
 		assertEquals("timing should not change",random.start_beat(), initial.start_beat());
 	}
 
-	/**
-	 * can be cloned and retain correct values
-	 */
 	@Test
-	public void clone_supported_and_correct(){
+	public void clone_supported_correctly(){
 		FingeredNote original = initialised_fingered_note();
 		FingeredNote clone = original.clone();
 		assertNotSame(original, clone);
@@ -159,7 +137,7 @@ public class FingeredNoteTest {
 		assertFalse("different note", b.equals(a));
 		
 		//TODO try equality on unint object to check for exception throwing
-//		assertFalse(initialised_fingered_note().equals(uninitialised_fingered_note()));
+		assertFalse(initialised_fingered_note().equals(uninitialised_fingered_note()));
 	}
 	
 	@Test

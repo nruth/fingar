@@ -28,7 +28,7 @@ public abstract class Evolver implements Cloneable {
 	 * reports whether the current population is the final population for this island
 	 * @return
 	 */
-	public boolean is_halted(){ return finished; }
+	public boolean is_halted(){ return this.finished; }
 
 	/**
 	 * use this to state that your evolver has finished, 
@@ -42,6 +42,12 @@ public abstract class Evolver implements Cloneable {
 	 * @return the child population derived from forebears
 	 */
 	public abstract Population create_successor_population(Population forebears);
+	
+	/**
+	 * gives some indication of the state of the population, e.g. its generation gap from the original population
+	 * @return a number representing the population's evolver state history in some way
+	 */
+	public abstract int generation();
 	
 	/**
 	 * create a copy of the object
