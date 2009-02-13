@@ -53,6 +53,9 @@ public final class Arrangement implements Iterable<FingeredNote>, Cloneable{
 		for(FingeredNote note : notes_starting_at.values()){	note.randomise_fingering();	}
 	}
 	
+	@Override
+	public int hashCode() { return toString().hashCode(); }
+
 	public Arrangement clone(){
 		Arrangement clone;
 		//final class so can catch the error, it shouldn't happen

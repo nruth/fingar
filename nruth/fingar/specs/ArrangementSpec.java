@@ -164,7 +164,10 @@ public class ArrangementSpec {
 	 */
 	@Test
 	public void hashcode_distinctness(){
-		fail("pending");
+		assertEquals("same object hashcode production inconsistent",arrangement.hashCode(), arrangement.hashCode());
+		assertEquals("clone object hashcode production inconsistent",arrangement.hashCode(), arrangement.clone().hashCode());
+		Arrangement a2 = arrangement.clone();	a2.randomise();
+		assertFalse("different values producing same hashcode", arrangement.equals(a2));
 	}
 	
 	private Arrangement arrangement;
