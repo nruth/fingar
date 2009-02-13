@@ -148,7 +148,15 @@ public class ArrangementSpec {
 	
 	@Test
 	public void clones_correctly(){
-		fail("pending");
+		Arrangement a, b;
+		a = arrangement; b = arrangement.clone();
+		assertNotSame(a,b);
+		assertEquals(a,b);
+		
+		b.randomise();
+		assertFalse("fingered note collection has been shallow copied, so arrangements are not atomic as intended",a.equals(b));
+		b.randomise();
+		assertFalse("fingered note collection has been shallow copied, so arrangements are not atomic as intended",b.equals(a));
 	}
 	
 	/**
