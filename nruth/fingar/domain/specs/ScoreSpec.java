@@ -184,6 +184,10 @@ public class ScoreSpec {
 	@Before
 	public void setUp(){ this.fixture = get_test_score(); }
 	
+	/**
+	 * produces a random score for testing purposes
+	 * @return a random score of internally determined length
+	 */
 	public static Score get_test_score(){
 		for(int i=0; i<fixture_notes.length; i++){fixture_notes[i] = NoteSpec.NoteFactory.getRandomNote();}
 		fixture_timing = new float[][]{

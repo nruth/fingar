@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import nruth.fingar.FingeredNote;
 import nruth.fingar.domain.guitar.Guitar.GuitarString;
+import nruth.fingar.domain.music.NamedNote;
 import nruth.fingar.domain.music.Note;
 import nruth.fingar.domain.music.TimedNote;
 import nruth.fingar.domain.specs.NoteSpec;
@@ -120,7 +121,6 @@ public class FingeredNoteTest {
 	
 	@Test
 	public void testEquals() {
-		fail("Not yet implemented");
 		FingeredNote a = initialised_fingered_note();
 		assertEquals("same object",a,a);
 		assertFalse("null object", a.equals(null));
@@ -129,18 +129,26 @@ public class FingeredNoteTest {
 		assertFalse("different fret",a.equals(b));
 		assertFalse("different fret",b.equals(a));
 		
-		FingeredNote b = a.clone(); b.setFinger(b.finger()+1);
+		b = a.clone(); b.setFinger(b.finger()+1);
 		assertFalse("different finger",a.equals(b));
 		assertFalse("different finger",b.equals(a));
 		
-		FingeredNote b = a.clone(); b.setString(b.string().values()[b.string().ordinal()+1]);
+		b = a.clone(); b.setString(b.string().values()[b.string().ordinal()+1]);
 		assertFalse("different finger",a.equals(b));
 		assertFalse("different finger",b.equals(a));
 		
 		fail("add note checks");
+		//TimedNote tests
+		TimedNote note1, note2;
+		note1 = new TimedNote(new Note(NamedNote.B, 1), 1f, 1f);
+		note2 = new TimedNote(new Note(NamedNote.C, 2), 2f, 2f);
+		
+		a = new FingeredNote(note1);
+		b = new FingeredNote(note2);
+		
 		
 		//try equality on unint object to check for exception throwing
-		assertFalse(initialised_fingered_note().equals(uninitialised_fingered_note()));
+//		assertFalse(initialised_fingered_note().equals(uninitialised_fingered_note()));
 	}
 	
 	@Test

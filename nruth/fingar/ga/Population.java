@@ -2,6 +2,7 @@ package nruth.fingar.ga;
 
 import java.util.*;
 
+import nruth.Helpers;
 import nruth.fingar.Arrangement;
 import nruth.fingar.domain.music.Note;
 import nruth.fingar.domain.music.Score;

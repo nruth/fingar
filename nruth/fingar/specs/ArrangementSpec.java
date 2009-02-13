@@ -36,6 +36,7 @@ public class ArrangementSpec {
 	public void is_iterable_correctly(){
 		int n=1;
 		for(FingeredNote note : arrangement){
+			//no statement about ordering was made so this is failing currently - need to fix this
 			assertEquals(score.get_nth_note(n++).note(), note.note());
 		}
 	}
@@ -123,7 +124,26 @@ public class ArrangementSpec {
 	 */
 	@Test
 	public void equality_against_other_arrangements(){
-		fail("pending");
+		/*
+		 * a score object
+		 * a collection of fingered notes
+		 * 
+		 * equality if score same & fingered notes same
+		 */
+		Score score1, score2;
+		score1 = ScoreSpec.get_test_score();
+		score2 = ScoreSpec.get_test_score();
+		Arrangement arr1, arr2, arr3;
+		arr1 = new Arrangement(score1);
+		arr2 = new Arrangement(score2);
+		arr3 = arr1.clone();
+		assertFalse("different score, but considered equal", arr1.equals(arr2));
+		assertEquals("same object equality fail", arr1, arr1);
+		assertEquals("same object equality fail", arr2, arr2);
+		
+		assertEquals("different object same arrangement", arr1, arr3);
+		arr3.randomise();
+		assertFalse("different values, randomised (rerun to check), considered equal ",arr3.equals(arr1));
 	}
 	
 	@Test
