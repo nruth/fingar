@@ -36,7 +36,7 @@ public class PopulationSpec {
 	@Test
 	public void can_be_cloned(){
 		Population initial = test_population();
-		Population clone = test_population().clone();
+		Population clone = initial.clone();
 		assertNotSame("cloning returned same object ref", initial, clone);
 		assertEquals("cloning changed values",initial, clone);		
 	}
@@ -52,21 +52,19 @@ public class PopulationSpec {
 		
 		//same object
 		Population pop = test_population();
-		assertTrue("same object considered different", pop.equals(pop));
-		
-		fail("the below tests don't work because the population individuals are random and they are what need testing");
+		assertEquals("same object considered different", pop,pop);
 		
 		//different object same population values
 		Population pop_a = new Population(
 			new Score(
 				new TimedNote[]{	new TimedNote(new Note(NamedNote.A, 1),0f, 1f)	}
-			), EvolverSpec.test_evolver()
+			), EvolverSpec.dummy_evolver()
 		);
 		
 		Population pop_b = new Population(
 			new Score(
 				new TimedNote[]{	new TimedNote(new Note(NamedNote.A, 1),0f, 1f)	}
-			), EvolverSpec.test_evolver()
+			), EvolverSpec.dummy_evolver()
 		);
 		assertEquals(pop_a, pop_b);
 		assertEquals(pop_b, pop_a);
@@ -75,7 +73,7 @@ public class PopulationSpec {
 		Population pop_c = new Population(
 			new Score(
 				new TimedNote[]{	new TimedNote(new Note(NamedNote.C, 1),0f, 1f)	}
-			), EvolverSpec.test_evolver()
+			), EvolverSpec.dummy_evolver()
 		);
 		assertFalse(pop_c.equals(pop_a));
 		assertFalse(pop_b.equals(pop_c));
@@ -84,31 +82,26 @@ public class PopulationSpec {
 	@Test
 	public void hashcode_contract_maintained(){
 		//different object same population values
-		Population pop_a = new Population(
-			new Score(
-				new TimedNote[]{	new TimedNote(new Note(NamedNote.A, 1),0f, 1f)	}
-			), EvolverSpec.test_evolver()
-		);
-		
-		Population pop_b = new Population(
-			new Score(
-				new TimedNote[]{	new TimedNote(new Note(NamedNote.A, 1),0f, 1f)	}
-			), EvolverSpec.test_evolver()
-		);
-		assertEquals(pop_a, pop_b);
+		Population pop_a, pop_b;
+		pop_a = test_population();
+		pop_b = pop_a.clone();
+		assertEquals("not equal, cloning or equality is broken",pop_a, pop_b);
+		assertNotSame("same object, invalid test",pop_a, pop_b);
 		assertEquals(pop_a.hashCode(), pop_b.hashCode());
 		
 		//different object different populations
 		Population pop_c = new Population(
 			new Score(
 				new TimedNote[]{	new TimedNote(new Note(NamedNote.C, 1),0f, 1f)	}
-			), EvolverSpec.test_evolver()
+			), EvolverSpec.dummy_evolver()
 		);
 		
 		assertFalse(pop_a.equals(pop_c));
 		assertFalse(pop_a.hashCode() == pop_c.hashCode());
 		
-		fail("and when the population has its contents changed it gives a different hashcode to before the changes..");
+		Population successor = pop_a.successor();
+		assertFalse(pop_a.equals(successor));
+		assertFalse(pop_a.hashCode() == successor.hashCode());
 	}
 	
 	

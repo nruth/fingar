@@ -136,6 +136,7 @@ public class ArrangementSpec {
 		Arrangement arr1, arr2, arr3;
 		arr1 = new Arrangement(score1);
 		arr2 = new Arrangement(score2);
+		
 		arr3 = arr1.clone();
 		assertFalse("different score, but considered equal", arr1.equals(arr2));
 		assertEquals("same object equality fail", arr1, arr1);

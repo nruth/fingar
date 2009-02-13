@@ -20,9 +20,7 @@ public final class Arrangement implements Iterable<FingeredNote>, Cloneable{
 		if(obj_to_check == null) return false;
 		if(this == obj_to_check) return true;
 		Arrangement arr_to_check = (Arrangement) obj_to_check;
-		return (arr_to_check.score.equals(this.score) && 
-				arr_to_check.notes_starting_at.equals(this.notes_starting_at)
-		);
+		return (arr_to_check.notes_starting_at.equals(this.notes_starting_at));
 	}
 
 	public Arrangement(Score score) {
