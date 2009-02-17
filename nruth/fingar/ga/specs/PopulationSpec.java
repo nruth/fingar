@@ -1,15 +1,20 @@
 package nruth.fingar.ga.specs;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.junit.Test;
 
-import nruth.fingar.Arrangement;
 import nruth.fingar.domain.music.NamedNote;
 import nruth.fingar.domain.music.Note;
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.domain.music.TimedNote;
 import nruth.fingar.domain.specs.ScoreSpec;
+import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
 import nruth.fingar.ga.evolvers.Evolver;
+import nruth.fingar.ga.evolvers.MonophonicFretGapEvolver;
+import nruth.fingar.ga.evolvers.specs.EvolverSpec;
 import static junit.framework.Assert.*;
 
 public class PopulationSpec {
@@ -40,6 +45,10 @@ public class PopulationSpec {
 		assertNotSame("cloning returned same object ref", initial, clone);
 		assertEquals("cloning changed values",initial, clone);		
 	}
+	
+	/**
+	 * can produce an empty copy of a population (i.e. same size)
+	 */
 	
 	/**
 	 * can determine equality
@@ -107,12 +116,33 @@ public class PopulationSpec {
 	@Test(expected=UnsupportedOperationException.class)
 	public void can_produce_immutable_view(){ test_population().view_arrangements().remove(1); }
 	
+	//this is not good OOP design but reduces the number of wrapper methods I will have to write to pass evolution requests on to the evolver object
 	@Test
 	public void gives_current_evolver_access(){
 		Population p1 = test_population();
 		Population p2 = p1.successor();
 		assertFalse(p1.equals(p2));
 		assertNotSame(p1.evolver(), p2.evolver());
+	}
+	
+	@Test
+	public void can_provide_an_increasing_cost_ranked_view(){
+		Population pop = test_population();
+		MonophonicFretGapEvolver.rank_population_by_fretgap(pop);
+		List<Arrangement> rankview = pop.ranked();
+		Iterator<Arrangement> itr = rankview.iterator();
+		Arrangement arr1, arr2 = itr.next();
+		while(itr.hasNext()){ //increasing, so start with low values
+			arr1 = arr2;
+			arr2 = itr.next();
+			assertTrue("ordering error", arr1.cost() <= arr2.cost());
+//			System.out.println(arr1 + "\n cost: "+arr1.cost()+"\n\n");
+		}
+	}
+	
+	@Test(expected=NullPointerException.class)
+	public void undefined_cost_throws_exception(){
+		test_population().ranked();
 	}
 	
 	//helpers

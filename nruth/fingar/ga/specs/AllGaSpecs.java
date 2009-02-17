@@ -1,11 +1,14 @@
 package nruth.fingar.ga.specs;
 
+import nruth.fingar.ga.evolvers.specs.AllEvolverSpecs;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-  EvolverSpec.class,
+	ArrangementSpec.class,
+	AllEvolverSpecs.class,
   PopulationSpec.class,
   FINGAR_Spec.class,
 })

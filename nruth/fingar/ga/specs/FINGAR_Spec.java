@@ -2,8 +2,8 @@ package nruth.fingar.ga.specs;
 
 import java.util.List;
 
-import nruth.fingar.Arrangement;
 import nruth.fingar.domain.music.Score;
+import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.FINGAR;
 import nruth.fingar.ga.evolvers.Evolver;
 import nruth.fingar.ga.evolvers.NDeepRandomEvolver;

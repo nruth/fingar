@@ -1,6 +1,8 @@
-package nruth.fingar;
+package nruth.fingar.ga;
 
 import java.util.*;
+
+import nruth.fingar.FingeredNote;
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.domain.music.TimedNote;
 
@@ -13,7 +15,7 @@ import nruth.fingar.domain.music.TimedNote;
 public final class Arrangement implements Iterable<FingeredNote>, Cloneable{
 	private Score score;
 	private TreeMap<Float, FingeredNote> notes_starting_at;
-//	private TreeSet<FingeredNote> note_fingerings;
+	private int cost=-1;
 	
 	@Override
 	public boolean equals(Object obj_to_check) {
@@ -23,6 +25,11 @@ public final class Arrangement implements Iterable<FingeredNote>, Cloneable{
 		return (arr_to_check.notes_starting_at.equals(this.notes_starting_at));
 	}
 
+	/**
+	 * creates a mapping of fingerednotes for the timednotes in the score
+	 * does not populate the mapping with values. for an initial population call randomise() on the instance
+	 * @param score
+	 */
 	public Arrangement(Score score) {
 		this.score = score;
 		
@@ -66,8 +73,16 @@ public final class Arrangement implements Iterable<FingeredNote>, Cloneable{
 			//makes use of the starting beat (which is the map key) being in each FingeredNote object
 			clone.notes_starting_at.put(note.start_beat(), note.clone());
 		}
+		//may need to reset the cost to -1 at some point, but not now
 
 		//no need to clone score, it's immutable
 		return clone;
+	}
+
+	public void assign_cost(int cost) { 	this.cost = cost;	}
+	
+	public int cost(){ 
+		if(this.cost == -1) throw new NullPointerException("cost not initialised");
+		else return this.cost; 
 	}
 }

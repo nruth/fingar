@@ -1,4 +1,4 @@
-package nruth.fingar.specs;
+package nruth.fingar.ga.specs;
 
 import static org.junit.Assert.*;
 
@@ -15,6 +15,7 @@ import nruth.fingar.domain.music.Score;
 import nruth.fingar.domain.music.TimedNote;
 import nruth.fingar.domain.specs.ScoreSpec;
 import nruth.fingar.domain.specs.NoteSpec.NoteFactory;
+import nruth.fingar.ga.Arrangement;
 
 import org.junit.*;
 
@@ -36,7 +37,6 @@ public class ArrangementSpec {
 	public void is_iterable_correctly(){
 		int n=1;
 		for(FingeredNote note : arrangement){
-			//no statement about ordering was made so this is failing currently - need to fix this
 			assertEquals(score.get_nth_note(n++).note(), note.note());
 		}
 	}
@@ -169,6 +169,15 @@ public class ArrangementSpec {
 		assertEquals("clone object hashcode production inconsistent",arrangement.hashCode(), arrangement.clone().hashCode());
 		Arrangement a2 = arrangement.clone();	a2.randomise();
 		assertFalse("different values producing same hashcode", arrangement.equals(a2));
+	}
+	
+	/**
+	 * holds some ranking metadata for the evolution algorithms
+	 */
+	@Test
+	public void holds_ranking_metadata_for_evolution(){
+		arrangement.assign_cost(100);
+		assertEquals(100, arrangement.cost());
 	}
 	
 	private Arrangement arrangement;

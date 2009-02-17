@@ -3,7 +3,6 @@ package nruth.fingar.ga;
 import java.util.*;
 
 import nruth.Helpers;
-import nruth.fingar.Arrangement;
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.ga.evolvers.Evolver;
 
@@ -15,23 +14,25 @@ public final class Population implements Iterable<Arrangement>, Cloneable{
 	/**
 	 * seeds an initial population
 	 * @param score
+	 * @param evolver
 	 */
 	public Population(Score score, Evolver evolver) {
-		this.evolver = evolver;
-		this.population = evolver.initial_population(score);		
+		this(evolver,  evolver.initial_population(score), score);
 	}
 	
-//	public List<Arrangement> results(){ return population; }
+	/**
+	 * used for repopulating
+	 * @param evolver
+	 * @param population
+	 * @param score
+	 */
+	public Population(Evolver evolver, List<Arrangement> population, Score score){
+		this.evolver = evolver;
+		this.population = population;
+		this.score = score;
+	}
 	
 	public Population successor() {	return evolver.create_successor_population(this); }
-	
-//	/**
-//	 * creates a successor generation for the given parent generation
-//	 * @param parent
-//	 */
-//	private Population(Population forebears, Evolver evolver){
-//		population = evolver.evolve(forebears);
-//	}
 	
 	public int size(){ return population.size(); } 
 	
@@ -70,10 +71,23 @@ public final class Population implements Iterable<Arrangement>, Cloneable{
 	 * creates an immutable view of the population's contents
 	 * @return
 	 */
-	public List<Arrangement> view_arrangements() {
-		return Collections.unmodifiableList(population);
+	public List<Arrangement> view_arrangements() {	return Collections.unmodifiableList(population);	}
+	
+	public List<Arrangement> ranked() {
+		List<Arrangement> view = new ArrayList<Arrangement>(population.size());
+		view.addAll(population);
+		Collections.sort(view, new Comparator<Arrangement>() {
+			@Override
+			public int compare(Arrangement o1, Arrangement o2) {
+				return o1.cost() - o2.cost();
+			}
+		});
+		return view;
 	}
+	
+	public Score score() { return score; }
 	
 	private List<Arrangement> population;
 	private Evolver evolver;
+	private Score score;
 }

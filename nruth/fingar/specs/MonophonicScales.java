@@ -5,7 +5,6 @@ import static nruth.fingar.domain.music.NamedNote.*;
 
 import java.util.*;
 
-import nruth.fingar.Arrangement;
 import nruth.fingar.FingeredNote;
 import nruth.fingar.domain.*;
 import nruth.fingar.domain.guitar.Guitar.GuitarString;
@@ -13,8 +12,10 @@ import nruth.fingar.domain.music.NamedNote;
 import nruth.fingar.domain.music.Note;
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.domain.music.TimedNote;
+import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.FINGAR;
 import nruth.fingar.ga.evolvers.Evolver;
+import nruth.fingar.ga.evolvers.MonophonicFretGapEvolver;
 
 import org.junit.*;
 
@@ -39,7 +40,7 @@ public class MonophonicScales {
 		
 		//process alternatives		
 		//and check the list contains a known solution
-		Evolver evolver = null; //TODO this needs to be the production evolver, whatever that ends up being
+		Evolver evolver = new MonophonicFretGapEvolver(8); //TODO this needs to be the production evolver, whatever that ends up being
 		
 		FINGAR ga = new FINGAR(c_major_scale, evolver);
 		List<Arrangement> results = ga.results();
@@ -49,7 +50,8 @@ public class MonophonicScales {
 		Arrangement known = known_solution();
 		for(Arrangement result : results){
 			if(result.equals(known)) found_match = true;
-			System.out.println(result+"\n----\n\n");
+			
+			System.out.println(result+"Cost: "+result.cost()+"\n----\n\n");
 		}
 				
 		assertTrue("known result was not found in results",found_match);
@@ -63,7 +65,7 @@ public class MonophonicScales {
 		fail("not implemented");
 	}
 	
-	public Score c_major_scale(){
+	public static Score c_major_scale(){
 		TimedNote[] notes = new TimedNote[8];
 		int time = 0;
 		for(NamedNote name : new NamedNote[]{C,D}){

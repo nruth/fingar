@@ -2,8 +2,9 @@ package nruth.fingar.ga.evolvers;
 
 import java.util.*;
 
-import nruth.fingar.Arrangement;
+import nruth.fingar.FingeredNote;
 import nruth.fingar.domain.music.Score;
+import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
 
 public abstract class Evolver implements Cloneable {
@@ -13,7 +14,7 @@ public abstract class Evolver implements Cloneable {
 	 * @return a stochastic initial population of problem solutions
 	 */
 	public List<Arrangement> initial_population(Score score){
-		int POPULATION_SIZE = 20;
+		int POPULATION_SIZE = 200;
 		ArrayList<Arrangement> population = new ArrayList<Arrangement>(POPULATION_SIZE);
 		
 		for(int i=0; i<POPULATION_SIZE; i++){

@@ -2,7 +2,7 @@ package nruth.fingar.ga.evolvers;
 
 import java.security.InvalidAlgorithmParameterException;
 
-import nruth.fingar.Arrangement;
+import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
 
 /**

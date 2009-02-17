@@ -6,9 +6,9 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import nruth.fingar.Arrangement;
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.ga.evolvers.Evolver;
+import nruth.fingar.ga.evolvers.MonophonicFretGapEvolver;
 import nruth.fingar.ga.evolvers.NDeepRandomEvolver;
 
 /**
@@ -35,7 +35,7 @@ public final class FINGAR {
 	 * @param score the music to process
 	 */
 	public FINGAR(Score score) {
-		this(score, new NDeepRandomEvolver(3)); //TODO: replace this with a simple evolver that uses a fitness function, or a class var for the best one to use.
+		this(score, new MonophonicFretGapEvolver(10)); 
 	}
 
 	/**

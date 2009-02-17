@@ -1,4 +1,4 @@
-package nruth.fingar.ga.specs;
+package nruth.fingar.ga.evolvers.specs;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotSame;
@@ -9,13 +9,14 @@ import java.util.List;
 
 import org.junit.*;
 
-import nruth.fingar.Arrangement;
 import nruth.fingar.FingeredNote;
 import nruth.fingar.domain.guitar.Guitar.GuitarString;
 import nruth.fingar.domain.music.Score;
+import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
 import nruth.fingar.ga.evolvers.Evolver;
 import nruth.fingar.ga.evolvers.NDeepRandomEvolver;
+import nruth.fingar.ga.specs.PopulationSpec;
 
 public class EvolverSpec {
 	/**
