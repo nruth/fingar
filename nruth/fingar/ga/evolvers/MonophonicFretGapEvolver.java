@@ -1,6 +1,7 @@
 package nruth.fingar.ga.evolvers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,11 +35,22 @@ public final class MonophonicFretGapEvolver extends Evolver {
 		successors.addAll(ranked.subList(0, fittest_half));
 		
 		//randomise the other half of the array
-		for(int n=fittest_half; n<forebears.size(); n++){
+		//TODO this isn't being done right either, pairs should be random not by ordering
+		for(int n=fittest_half; (n+1)<forebears.size(); n+=2){
+//			Arrangement arr = new Arrangement(forebears.score());
+//			arr.randomise();
+			Arrangement x = ranked.get(n);
+			Arrangement y = ranked.get(n+1);
+			successors.addAll(Arrays.asList(Breeder.crossover_arrangements(x, y)));
+		}
+		
+		//check sizes match because of the +2step may have issues with odd/even size lists
+		if(successors.size()<forebears.size()){
+			
 			Arrangement arr = new Arrangement(forebears.score());
 			arr.randomise();
-			successors.add(arr); 
-		} 
+			successors.add(arr);
+		}
 		
 		MonophonicFretGapEvolver ev = this.clone();
 		if(++ev.current_generation >= target_generations){ ev.set_have_finished(); }

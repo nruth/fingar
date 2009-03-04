@@ -26,7 +26,7 @@ public class ArrangementSpec {
 	@Before
 	public void arrangement_constructor_given_a_score(){
 		score = ScoreSpec.get_test_score();
-		arrangement = new Arrangement(score);
+		arrangement = test_arranger(score);
 	}
 	
 	/**
@@ -180,7 +180,19 @@ public class ArrangementSpec {
 		assertEquals(100, arrangement.cost());
 	}
 	
+	/**
+	 * provides access to fingered notes for replacement by crossover/breeding mechanism
+	 */
+	@Test
+	public void provides_list_access_to_fingered_notes(){
+		assertTrue(arrangement.fingered_notes().size()>0);
+	}
+	
 	private Arrangement arrangement;
 	private Score score;
 	Random seed = new Random();
+	
+	public static Arrangement test_arranger(Score score){
+		return new Arrangement(score);
+	}
 }

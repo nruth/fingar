@@ -70,6 +70,9 @@ public final class Score implements Iterable<TimedNote>{
 		return lowest.compareTo(highest);
     }
 
+    /**
+     * @return the number of distinct timed notes in the score
+     */
 	public int size() {
 		return timed_notes.size();
 	}

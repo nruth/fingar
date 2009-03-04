@@ -37,6 +37,9 @@ public final class Arrangement implements Iterable<FingeredNote>, Cloneable{
 		for(TimedNote note : score){ notes_starting_at.put(note.start_beat(), new FingeredNote(note)); }
 	}
 	
+	/**
+	 * @return the number of distinct timed notes in the arrangement 
+	 */
 	public int size() { return score.size(); }
 	
 	public Iterator<FingeredNote> iterator() {
@@ -84,5 +87,13 @@ public final class Arrangement implements Iterable<FingeredNote>, Cloneable{
 	public int cost(){ 
 		if(this.cost == -1) throw new NullPointerException("cost not initialised");
 		else return this.cost; 
+	}
+
+	/**
+	 * - be careful with this! does not prevent list changes
+	 * @return mutable access to the notes
+	 */
+	public SortedMap<Float, FingeredNote> fingered_notes() {
+		return notes_starting_at;
 	}
 }

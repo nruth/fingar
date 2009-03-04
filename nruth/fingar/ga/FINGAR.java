@@ -35,7 +35,7 @@ public final class FINGAR {
 	 * @param score the music to process
 	 */
 	public FINGAR(Score score) {
-		this(score, new MonophonicFretGapEvolver(10)); 
+		this(score, new MonophonicFretGapEvolver(50)); 
 	}
 
 	/**

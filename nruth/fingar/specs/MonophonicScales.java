@@ -47,13 +47,19 @@ public class MonophonicScales {
 		assertTrue(results.size() > 0);
 		
 		boolean found_match=false;
-		Arrangement known = known_solution();
+		
+		Arrangement known = known_solution();		
 		for(Arrangement result : results){
-			if(result.equals(known)) found_match = true;
+			if(result.equals(known)) found_match = true;				
+		}
 			
+		List<Arrangement> rev_results = new ArrayList<Arrangement>(results.size());
+		rev_results.addAll(results);
+		Collections.reverse(rev_results);
+		for(Arrangement result : rev_results){
 			System.out.println(result+"Cost: "+result.cost()+"\n----\n\n");
 		}
-				
+		
 		assertTrue("known result was not found in results",found_match);
 	}
 	
@@ -82,13 +88,13 @@ public class MonophonicScales {
 		Arrangement sol = new Arrangement(c_major_scale());
 		for(FingeredNote note : sol){
 			if(note.note().equals(new Note(NamedNote.C, 1))){	note.setFinger(2); note.setString(GuitarString.A); note.setFret(3);	}
-			else if(note.note().equals(new Note(NamedNote.D, 1))){	note.setFinger(2); note.setString(GuitarString.A); note.setFret(5);	}
-			else if(note.note().equals(new Note(NamedNote.E, 2))){	note.setFinger(2); note.setString(GuitarString.D); note.setFret(2);	}
+			else if(note.note().equals(new Note(NamedNote.D, 1))){	note.setFinger(4); note.setString(GuitarString.A); note.setFret(5);	}
+			else if(note.note().equals(new Note(NamedNote.E, 2))){	note.setFinger(1); note.setString(GuitarString.D); note.setFret(2);	}
 			else if(note.note().equals(new Note(NamedNote.F, 2))){	note.setFinger(2); note.setString(GuitarString.D); note.setFret(3);	}
-			else if(note.note().equals(new Note(NamedNote.G, 2))){	note.setFinger(2); note.setString(GuitarString.D); note.setFret(5);	}
-			else if(note.note().equals(new Note(NamedNote.A, 2))){	note.setFinger(2); note.setString(GuitarString.G); note.setFret(2);	}
-			else if(note.note().equals(new Note(NamedNote.B, 2))){	note.setFinger(2); note.setString(GuitarString.G); note.setFret(4);	}
-			else if(note.note().equals(new Note(NamedNote.C, 2))){	note.setFinger(2); note.setString(GuitarString.G); note.setFret(5);	}		
+			else if(note.note().equals(new Note(NamedNote.G, 2))){	note.setFinger(4); note.setString(GuitarString.D); note.setFret(5);	}
+			else if(note.note().equals(new Note(NamedNote.A, 2))){	note.setFinger(1); note.setString(GuitarString.G); note.setFret(2);	}
+			else if(note.note().equals(new Note(NamedNote.B, 2))){	note.setFinger(3); note.setString(GuitarString.G); note.setFret(4);	}
+			else if(note.note().equals(new Note(NamedNote.C, 2))){	note.setFinger(4); note.setString(GuitarString.G); note.setFret(5);	}		
 		}
 		
 		return sol;
