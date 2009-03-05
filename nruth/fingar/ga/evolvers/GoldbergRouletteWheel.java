@@ -20,10 +20,20 @@ public final class GoldbergRouletteWheel {
 		}	
 	}
 	
-	public Arrangement spin() {
-		Double p = spinner.nextDouble(); 
-		Arrangement individual = wheel.get(wheel.tailMap(p).firstKey());	
-		if(individual == null){ throw new NullPointerException("GoldbergRouletteWheel failed to find element at "+p); }
+	/**
+	 * get a random individual according to the wheel's probability distribution
+	 * @return an individual from the population provided to the wheel at construction, selected randomly according to fitness
+	 */
+	public Arrangement spin() {	return get_individual_at_cpd(spinner.nextDouble()); }
+	
+	/**
+	 * select an individual given a particular cpd value (between 0 and 1)
+	 * @param cpd the cumulative probability value to look up, between 0 and 1.
+	 * @return the individual whose wheel region the cpd is within
+	 */
+	public Arrangement get_individual_at_cpd(double cpd){
+		Arrangement individual = wheel.get(wheel.tailMap(cpd).firstKey());	
+		if(individual == null){ throw new NullPointerException("GoldbergRouletteWheel failed to find element at "+cpd); }
 		return individual;
 	}
 	
@@ -35,6 +45,5 @@ public final class GoldbergRouletteWheel {
 	private Double fitness(Arrangement i){ return (1.0/i.cost()); }
 	
 	private SortedMap<Double, Arrangement> wheel;
-	private Random spinner = new Random();
-	
+	private Random spinner = new Random();	
 }

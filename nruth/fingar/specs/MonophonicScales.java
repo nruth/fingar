@@ -56,9 +56,9 @@ public class MonophonicScales {
 		List<Arrangement> rev_results = new ArrayList<Arrangement>(results.size());
 		rev_results.addAll(results);
 		Collections.reverse(rev_results);
-		for(Arrangement result : rev_results){
-			System.out.println(result+"Cost: "+result.cost()+"\n----\n\n");
-		}
+//		for(Arrangement result : rev_results){
+//			System.out.println(result+"Cost: "+result.cost()+"\n----\n\n");
+//		}
 		
 		assertTrue("known result was not found in results",found_match);
 	}
