@@ -3,7 +3,9 @@ package nruth.fingar.ga.evolvers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import nruth.fingar.FingeredNote;
 import nruth.fingar.ga.Arrangement;
@@ -26,37 +28,37 @@ public final class MonophonicFretGapEvolver extends Evolver {
 	@Override
 	public Population create_successor_population(Population forebears) {
 		if(current_generation >= target_generations){ throw new RuntimeException("too many generations produced"); }
-		rank_population_by_fretgap(forebears);
 		
-		//TODO this should be stochastic, not fixed to pick the best
-		ArrayList<Arrangement> successors = new ArrayList<Arrangement>(forebears.size());
-		int fittest_half = forebears.size()/2;
-		List<Arrangement> ranked = forebears.ranked();
-		successors.addAll(ranked.subList(0, fittest_half));
+		//1. allocate cost to each individual
+		assign_costs_to_population_by_fretgap(forebears);
 		
-		//randomise the other half of the array
-		//TODO this isn't being done right either, pairs should be random not by ordering
-		for(int n=fittest_half; (n+1)<forebears.size(); n+=2){
-//			Arrangement arr = new Arrangement(forebears.score());
-//			arr.randomise();
-			Arrangement x = ranked.get(n);
-			Arrangement y = ranked.get(n+1);
-			successors.addAll(Arrays.asList(Breeder.crossover_arrangements(x, y)));
+		//2. use weights to construct Goldberg's roulette wheel
+		//this should be delegated to a selection object which constructs the wheel once only, or *is* the wheel
+		GoldbergRouletteWheel wheel = new GoldbergRouletteWheel(forebears);
+		
+	/*	3. produce parent pairs by:
+		while pairs < (popsize/2) 
+			3.1. spin the wheel twice to get parents X and Y 
+			3.2. crossover X and Y to produce offspring M and N.
+			3.3 add M and N to the successor population
+	*/
+		int popsize = forebears.size();
+		LinkedList<Arrangement> successors = new LinkedList<Arrangement>();
+		while(successors.size() < popsize){
+			Arrangement y = wheel.spin();
+			Arrangement x = wheel.spin();
+			successors.addAll(Arrays.asList(Breeder.twist_about_random_locus(x, y)));
 		}
 		
-		//check sizes match because of the +2step may have issues with odd/even size lists
-		if(successors.size()<forebears.size()){
-			
-			Arrangement arr = new Arrangement(forebears.score());
-			arr.randomise();
-			successors.add(arr);
+		//4. if size(sucessor_population) > fixed population size then drop 1 individual at random from successor_population
+		if(successors.size() > popsize ){ //got an even number, need the odd number 1 below it
+			successors.remove(new Random().nextInt(successors.size())); //drop 1 randomly with uniform distribution over successor population
 		}
 		
+		//5. mutation, or move it into 3
 		MonophonicFretGapEvolver ev = this.clone();
 		if(++ev.current_generation >= target_generations){ ev.set_have_finished(); }
-		Population successor_pop = new Population(ev, successors, forebears.score()); 
-		rank_population_by_fretgap(successor_pop); //TODO: optimise this, it's being done twice for all in the middle of the population chain, once at their creation and once when their successors are created
-		return successor_pop;
+		return new Population(ev, successors, forebears.score()); 
 	}
 	
 	
@@ -92,7 +94,7 @@ public final class MonophonicFretGapEvolver extends Evolver {
 	 * assigns cost values to each individual in the population
 	 * @param pop
 	 */
-	public static void rank_population_by_fretgap(Population pop){
+	public static void assign_costs_to_population_by_fretgap(Population pop){
 		for(Arrangement arr : pop){
 			arr.assign_cost(cost_by_fretgap(arr));
 		}

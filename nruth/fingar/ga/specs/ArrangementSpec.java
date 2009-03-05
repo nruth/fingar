@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+
+import nruth.Helpers;
 import nruth.fingar.*;
 import nruth.fingar.domain.*;
 import nruth.fingar.domain.guitar.Guitar;
@@ -145,19 +147,21 @@ public class ArrangementSpec {
 		assertEquals("different object same arrangement", arr1, arr3);
 		arr3.randomise();
 		assertFalse("different values, randomised (rerun to check), considered equal ",arr3.equals(arr1));
+		
+		Arrangement arr4 = arr3.clone();
+		float key = arr4.fingered_notes().firstKey();
+		arr4.fingered_notes().put(key, arr1.fingered_notes().get(key));
+		assertFalse("should not be equal, since a fingered note has changed",arr3.equals(arr4));
 	}
 	
 	@Test
 	public void clones_correctly(){
-		Arrangement a, b;
-		a = arrangement; b = arrangement.clone();
-		assertNotSame(a,b);
-		assertEquals(a,b);
+		Arrangement clone = arrangement.clone();
+		assertNotSame("same object returned by clone",clone, arrangement);
+		assertEquals("cloning should maintain equality", clone, arrangement);
 		
-		b.randomise();
-		assertFalse("fingered note collection has been shallow copied, so arrangements are not atomic as intended",a.equals(b));
-		b.randomise();
-		assertFalse("fingered note collection has been shallow copied, so arrangements are not atomic as intended",b.equals(a));
+		assertNotSame("fingered notes should be deep collection",clone.fingered_notes(), arrangement.fingered_notes());
+		assertEquals("fingered notes collection contents should not be changed by cloning", clone.fingered_notes(), arrangement.fingered_notes());
 	}
 	
 	/**

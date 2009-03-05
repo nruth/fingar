@@ -14,7 +14,7 @@ public abstract class Evolver implements Cloneable {
 	 * @return a stochastic initial population of problem solutions
 	 */
 	public List<Arrangement> initial_population(Score score){
-		int POPULATION_SIZE = 500;
+		int POPULATION_SIZE = 10;
 		ArrayList<Arrangement> population = new ArrayList<Arrangement>(POPULATION_SIZE);
 		
 		for(int i=0; i<POPULATION_SIZE; i++){

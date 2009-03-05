@@ -75,7 +75,7 @@ public class MonophonicFretGapEvolverSpec {
 	
 	@Test
 	public void rank_population(){
-		MonophonicFretGapEvolver.rank_population_by_fretgap(pop);
+		MonophonicFretGapEvolver.assign_costs_to_population_by_fretgap(pop);
 		List<Arrangement> rankview = pop.ranked();
 		Iterator<Arrangement> itr = rankview.iterator();
 		Arrangement arr1, arr2 = itr.next();
@@ -105,15 +105,10 @@ public class MonophonicFretGapEvolverSpec {
 		
 		int gen5_cost = 0;
 		
-		MonophonicFretGapEvolver.rank_population_by_fretgap(pop5);
+		MonophonicFretGapEvolver.assign_costs_to_population_by_fretgap(pop5);
 		for(Arrangement arr : pop5.ranked()){ gen5_cost += arr.cost();}
 		assertTrue("cost should reduce",gen2_cost > gen5_cost);
 		//System.out.println(gen5_cost);
-	}
-	
-	@Test
-	public void make_selection_stochastic(){
-		fail("currently it's just picking the top n fittest individuals");
 	}
 	
 	private Population pop;
