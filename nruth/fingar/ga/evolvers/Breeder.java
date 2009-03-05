@@ -50,9 +50,10 @@ public final class Breeder {
 	 * @param mask boolean mask to apply in deciding whether to take a gene from a or b
 	 * @return clone pair of [a][b] where a and b have had crossover applied
 	 */
-	public static Arrangement[] masked_switch(Arrangement a, Arrangement b, boolean[] mask ){
+	public static Arrangement[] masked_switch(Arrangement a, Arrangement b, boolean[] mask){
 		Arrangement x = a.clone();
 		Arrangement y = b.clone();
+		
 		int n=0;
 		for(float start_beat : x.fingered_notes().keySet()){
 			if(mask[n++]){ //interchange x and y
@@ -61,6 +62,7 @@ public final class Breeder {
 				y.fingered_notes().put(start_beat, temp);	
 			} else {} //leave unchanged
 		}
+		
 		return new Arrangement[]{x, y};
 	}
 }

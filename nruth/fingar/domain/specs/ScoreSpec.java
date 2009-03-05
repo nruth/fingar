@@ -25,7 +25,7 @@ public class ScoreSpec {
 	@Test
 	public void note_start_time_and_durations_recorded(){
 		assertEquals(fixture_notes[2],fixture.getNoteAtTime(fixture_timing[2][0]).note());
-		assertEquals(fixture_timing[3][1], fixture.get_duration_of_note_at_time(fixture_timing[3][0]));
+		assertEquals(fixture_timing[3][1], fixture.get_duration_of_note_at_time(fixture_timing[3][0]), 0.01);
 	}
 	
 	/**

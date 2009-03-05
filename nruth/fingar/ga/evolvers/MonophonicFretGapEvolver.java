@@ -29,6 +29,8 @@ public final class MonophonicFretGapEvolver extends Evolver {
 	public Population create_successor_population(Population forebears) {
 		if(current_generation >= target_generations){ throw new RuntimeException("too many generations produced"); }
 		
+		Random rand = new Random();
+		
 		//1. allocate cost to each individual
 		assign_costs_to_population_by_fretgap(forebears);
 		
@@ -46,8 +48,8 @@ public final class MonophonicFretGapEvolver extends Evolver {
 		LinkedList<Arrangement> successors = new LinkedList<Arrangement>();
 		while(successors.size() < popsize){
 			Arrangement y = wheel.spin();
-			Arrangement x = wheel.spin();
-			successors.addAll(Arrays.asList(Breeder.twist_about_random_locus(x, y)));
+			Arrangement x = wheel.spin();	
+			successors.addAll((rand.nextDouble() < p_crossover) ? Arrays.asList(Breeder.twist_about_random_locus(x, y)) : Arrays.asList(x, y));
 		}
 		
 		//4. if size(sucessor_population) > fixed population size then drop 1 individual at random from successor_population
@@ -56,6 +58,23 @@ public final class MonophonicFretGapEvolver extends Evolver {
 		}
 		
 		//5. mutation, or move it into 3
+
+//		int n_mutated = 0;
+//		int n_notmutated = 0;
+		for(Arrangement arr : successors){
+			for(FingeredNote note : arr){
+				if(rand.nextDouble() < p_mutate){ 
+//					System.out.println("before randomise "+note); 
+					note.randomise_fingering(); 
+//					System.out.println("after randomise: "+note); 
+//					n_mutated++;
+				}
+//				else{ n_notmutated++; }
+			}
+		}
+		
+//		System.out.println("mutated: "+n_mutated);
+//		System.out.println("not mutated: "+n_notmutated);
 		MonophonicFretGapEvolver ev = this.clone();
 		if(++ev.current_generation >= target_generations){ ev.set_have_finished(); }
 		return new Population(ev, successors, forebears.score()); 
@@ -102,4 +121,6 @@ public final class MonophonicFretGapEvolver extends Evolver {
 	
 	private int current_generation;
 	private int target_generations;
+	private double p_crossover = 0.5;
+	private double p_mutate = 0.05;
 }

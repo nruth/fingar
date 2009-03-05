@@ -78,11 +78,10 @@ public class ArrangementSpec {
 			fingers.add(finger);
 		}
 		
-		fail("broken");
-//		Iterator<Integer> finger_iterator = fingers.iterator();
-//		for(FingeredNote note : arrangement){
-//			(finger_iterator.next(), note.finger());
-//		}
+		Iterator<Integer> finger_iterator = fingers.iterator();
+		for(FingeredNote note : arrangement){
+			assertEquals(finger_iterator.next(), (Integer)note.finger());
+		}
 	}
 	
 	/**
@@ -98,11 +97,10 @@ public class ArrangementSpec {
 			note.setFret(fret); 
 		}
 		
-		fail("broken");
-//		Iterator<Integer> fret_iterator = frets.iterator();
-//		for(FingeredNote note : arrangement){
-//			assertEquals(fret_iterator.next(), note.fret());
-//		}
+		Iterator<Integer> fret_iterator = frets.iterator();
+		for(FingeredNote note : arrangement){
+			assertEquals(fret_iterator.next(), (Integer)note.fret());
+		}
 	}
 	
 	/**

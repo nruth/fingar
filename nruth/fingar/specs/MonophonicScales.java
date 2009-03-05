@@ -40,22 +40,21 @@ public class MonophonicScales {
 		
 		//process alternatives		
 		//and check the list contains a known solution
-		Evolver evolver = new MonophonicFretGapEvolver(8); //TODO this needs to be the production evolver, whatever that ends up being
+		Evolver evolver = new MonophonicFretGapEvolver(40); //TODO this needs to be the production evolver, whatever that ends up being
 		
 		FINGAR ga = new FINGAR(c_major_scale, evolver);
 		List<Arrangement> results = ga.results();
 		assertTrue(results.size() > 0);
 		
 		boolean found_match=false;
-		
 		Arrangement known = known_solution();		
 		for(Arrangement result : results){
 			if(result.equals(known)) found_match = true;				
 		}
 			
-		List<Arrangement> rev_results = new ArrayList<Arrangement>(results.size());
-		rev_results.addAll(results);
-		Collections.reverse(rev_results);
+//		List<Arrangement> rev_results = new ArrayList<Arrangement>(results.size());
+//		rev_results.addAll(results);
+//		Collections.reverse(rev_results);
 //		for(Arrangement result : rev_results){
 //			System.out.println(result+"Cost: "+result.cost()+"\n----\n\n");
 //		}
@@ -68,7 +67,11 @@ public class MonophonicScales {
 	 */
 	@Test
 	public void are_solutions_ranked(){
-		fail("not implemented");
+		Evolver evolver = new MonophonicFretGapEvolver(2); //TODO this needs to be the production evolver, whatever that ends up being
+		FINGAR ga = new FINGAR(c_major_scale(), evolver);
+		for(Arrangement arr: ga.results()){
+			assertTrue("cost not assigned",arr.cost()>=0);
+		}
 	}
 	
 	public static Score c_major_scale(){
