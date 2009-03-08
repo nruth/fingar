@@ -6,12 +6,17 @@ import java.util.Random;
 import nruth.fingar.FingeredNote;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
+import nruth.fingar.ga.probability.GoldbergRouletteWheel;
 import nruth.fingar.ga.probability.PdFactory;
 
 public final class MonophonicFretGapEvolver extends GeneticAlgorithmEvolver {
 	public MonophonicFretGapEvolver(int generations, double p_crossover, double p_mutate, Random rand, PdFactory pdfac, Breeder breeder) {
 		super(generations, p_crossover, p_mutate, rand, pdfac, breeder);
 		if(generations < 1){ throw new RuntimeException("must be 1 or more generations"); }		
+	}
+	
+	public MonophonicFretGapEvolver(int generations) {
+		this(generations, 0.7, 0.03, new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder());		
 	}
 
 	/**
