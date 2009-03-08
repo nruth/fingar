@@ -6,7 +6,7 @@ import java.util.Random;
 import nruth.fingar.FingeredNote;
 import nruth.fingar.ga.Arrangement;
 
-public final class Breeder {
+public class Breeder {
 	/**
 	 * given two individuals (Arrangements) produces two new arrangements
 	 * what to crossover?
@@ -19,7 +19,7 @@ public final class Breeder {
 	 * 	determine a random binary pattern for selecting the chromosome from parent X or Y
 	 * 	and create two children, one with the pattern, and one with its complement, so all notes (chromosomes) from both parents are used in the children.
 	 */
-	public static Arrangement[] random_mask_crossover(Arrangement x, Arrangement y) {
+	public Arrangement[] random_mask_crossover(Arrangement x, Arrangement y) {
 		Random seed = new Random();
 		
 		boolean[] pattern = new boolean[x.size()];
@@ -27,10 +27,10 @@ public final class Breeder {
 			pattern[n] = seed.nextBoolean(); 
 		}
 		
-		return Breeder.masked_switch(x, y, pattern);
+		return masked_switch(x, y, pattern);
 	}
 	
-	public static Arrangement[] twist_about_random_locus(Arrangement x, Arrangement y){
+	public Arrangement[] twist_about_random_locus(Arrangement x, Arrangement y){
 		int num_start_beats = x.fingered_notes().keySet().size();
 		int twist_locus = new Random().nextInt(num_start_beats);  
 		
@@ -40,7 +40,7 @@ public final class Breeder {
 		Arrays.fill(pattern, false);
 		Arrays.fill(pattern, 0, twist_locus, true); //in case of twist_locus == 0 no vals are true
 		
-		return Breeder.masked_switch(x, y, pattern);
+		return masked_switch(x, y, pattern);
 	}
 	
 	/**
@@ -50,7 +50,7 @@ public final class Breeder {
 	 * @param mask boolean mask to apply in deciding whether to take a gene from a or b
 	 * @return clone pair of [a][b] where a and b have had crossover applied
 	 */
-	public static Arrangement[] masked_switch(Arrangement a, Arrangement b, boolean[] mask){
+	public Arrangement[] masked_switch(Arrangement a, Arrangement b, boolean[] mask){
 		Arrangement x = a.clone();
 		Arrangement y = b.clone();
 		
@@ -64,5 +64,21 @@ public final class Breeder {
 		}
 		
 		return new Arrangement[]{x, y};
+	}
+	
+	/**
+	 * given an arrangement mutates each constituent note according to p_mutate
+	 * @param arrangement
+	 * @param rand random number generator
+	 * @param p_mutate the likelihood of a note being mutated, tested against each note individually
+	 * @return the (destructively) mutated arrangement
+	 */
+	public Arrangement mutate(Arrangement arrangement, Random rand, double p_mutate){
+		for(FingeredNote note : arrangement){
+			if(rand.nextDouble() < p_mutate){  
+				note.randomise_fingering();  
+			}
+		}
+		return arrangement; 
 	}
 }

@@ -3,7 +3,7 @@ import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.*;
 
 import java.util.Iterator;
-import java.util.List;
+import java.util.Random;
 
 import nruth.fingar.FingeredNote;
 import nruth.fingar.domain.guitar.Guitar.GuitarString;
@@ -13,8 +13,10 @@ import nruth.fingar.domain.music.Score;
 import nruth.fingar.domain.music.TimedNote;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
-import nruth.fingar.ga.evolvers.Evolver;
+import nruth.fingar.ga.evolvers.Breeder;
+import nruth.fingar.ga.evolvers.GeneticAlgorithmEvolver;
 import nruth.fingar.ga.evolvers.MonophonicFretGapEvolver;
+import nruth.fingar.ga.probability.GoldbergRouletteWheel;
 import nruth.fingar.specs.MonophonicScales;
 
 import org.junit.*;
@@ -31,7 +33,7 @@ public class MonophonicFretGapEvolverSpec {
 	
 	@Before
 	public void given_a_population_for_a_score(){
-		evolver = new MonophonicFretGapEvolver(6);
+		evolver = new MonophonicFretGapEvolver(6, 0.3, 0.05, new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder());
 		score = MonophonicScales.c_major_scale();
 		pop = new Population(score, evolver);
 	}
@@ -73,45 +75,7 @@ public class MonophonicFretGapEvolverSpec {
 		assertEquals(10, MonophonicFretGapEvolver.cost_by_fretgap(arr));
 	}
 	
-	@Test
-	public void rank_population(){
-		MonophonicFretGapEvolver.assign_costs_to_population_by_fretgap(pop);
-		List<Arrangement> rankview = pop.ranked();
-		Iterator<Arrangement> itr = rankview.iterator();
-		Arrangement arr1, arr2 = itr.next();
-		while(itr.hasNext()){
-			arr1 = arr2;
-			arr2 = itr.next();
-			assertTrue("ordering error, see population spec", arr1.cost() <= arr2.cost());
-		}
-	}
-	
-	@Test
-	public void produce_successor_using_rankings(){
-		//this is not an easy test because of the random nature of the ga
-		//a rough test (which may fail occasionally without being broken) is to use a total cost and state that it should decrease in the successor population
-		
-		//ranking is done when a population's successor is created, otherwise it will have -1 values
-		Population pop2 = pop.successor();
-		Population pop5 = pop2.successor().successor().successor();
-		int gen1_cost = 0;
-		for(Arrangement arr : pop.ranked()){ gen1_cost += arr.cost();}
-		int gen2_cost = 0;
-		for(Arrangement arr : pop2.ranked()){ gen2_cost += arr.cost();}	
-		
-//		assertTrue("cost should reduce, but this test is random so try rerunning. Values: "+gen1_cost+" => "+gen2_cost,gen1_cost > gen2_cost);
-//		System.out.println(gen1_cost);
-//		System.out.println(gen2_cost);
-		
-		int gen5_cost = 0;
-		
-		MonophonicFretGapEvolver.assign_costs_to_population_by_fretgap(pop5);
-		for(Arrangement arr : pop5.ranked()){ gen5_cost += arr.cost();}
-		assertTrue("cost should reduce over 5 gens, but this test is random so try rerunning. Values: "+gen1_cost+" => "+gen5_cost,gen1_cost > gen5_cost);
-		//System.out.println(gen5_cost);
-	}
-	
 	private Population pop;
 	private Score score;
-	private MonophonicFretGapEvolver evolver;
+	private GeneticAlgorithmEvolver evolver;
 }

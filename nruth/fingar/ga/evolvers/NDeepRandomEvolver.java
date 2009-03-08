@@ -37,7 +37,7 @@ public final class NDeepRandomEvolver extends Evolver {
 		
 		//cloning created the next evolver with the same details (generation count) so force an update
 		NDeepRandomEvolver ev_succ = (NDeepRandomEvolver)successors.evolver();
-		if(++ev_succ.current_generation >= generations){ ev_succ.set_have_finished(); } 
+		if(++ev_succ.current_generation >= generations){ ev_succ.set_has_finished(); } 
 		
 		return successors;
 	}

@@ -1,4 +1,4 @@
-package nruth.fingar.ga.evolvers;
+package nruth.fingar.ga.probability;
 
 import java.util.Random;
 import java.util.SortedMap;
@@ -7,7 +7,16 @@ import java.util.TreeMap;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
 
-public final class GoldbergRouletteWheel {
+public final class GoldbergRouletteWheel implements ProbabilityDistribution{
+	public static class WheelFactory implements PdFactory{
+		@Override
+		public ProbabilityDistribution probability_distribution(
+				Population population) {
+			return new GoldbergRouletteWheel(population);
+		}
+	}
+	
+	
 	public GoldbergRouletteWheel(Population popl) {
 		double total_fitness = 0.0; //w_f in design doc
 		for(Arrangement i : popl){ total_fitness += fitness(i); }		
@@ -24,7 +33,7 @@ public final class GoldbergRouletteWheel {
 	 * get a random individual according to the wheel's probability distribution
 	 * @return an individual from the population provided to the wheel at construction, selected randomly according to fitness
 	 */
-	public Arrangement spin() {	return get_individual_at_cpd(spinner.nextDouble()); }
+	public Arrangement next_individual() {	return get_individual_at_cpd(spinner.nextDouble()); }
 	
 	/**
 	 * select an individual given a particular cpd value (between 0 and 1)
@@ -45,5 +54,5 @@ public final class GoldbergRouletteWheel {
 	private Double fitness(Arrangement i){ return (1.0/i.cost()); }
 	
 	private SortedMap<Double, Arrangement> wheel;
-	private Random spinner = new Random();	
+	private Random spinner = new Random();
 }

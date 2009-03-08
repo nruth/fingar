@@ -48,7 +48,7 @@ public class EvolverSpec {
 		assertFalse(new NDeepRandomEvolver(3).is_halted());
 		
 		Evolver finished = new Evolver() {
-			public Population create_successor_population(Population forebears) {	set_have_finished(); return null;	}
+			public Population create_successor_population(Population forebears) {	set_has_finished(); return null;	}
 			public Evolver clone() {return null;}
 			public int generation() {return 0;	}
 		};

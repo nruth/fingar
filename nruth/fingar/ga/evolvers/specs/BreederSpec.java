@@ -20,6 +20,7 @@ public class BreederSpec {
 	 */
 	@Test
 	public void crossover_by_pattern(){
+		Breeder breeder = new Breeder();
 		Score score = ScoreSpec.get_test_score();
 		//ensure the score is long enough for testing crossover effectively
 		while(score.size() < 5) score = ScoreSpec.get_test_score();
@@ -34,14 +35,14 @@ public class BreederSpec {
 		Arrangement[] children;
 		boolean[] pattern = new boolean[a.size()];
 		Arrays.fill(pattern, false);
-		children = Breeder.masked_switch(a, b, pattern);
+		children = breeder.masked_switch(a, b, pattern);
 		assertTrue("no switching should give back identical arrangements", 
 			(a.equals(children[0]) && b.equals(children[1])) 
 			|| (a.equals(children[1]) && b.equals(children[0]))
 		);
 		
 		Arrays.fill(pattern, true);
-		children = Breeder.masked_switch(a, b, pattern);
+		children = breeder.masked_switch(a, b, pattern);
 		assertTrue("all switching should give back identical arrangements",  
 			(a.equals(children[0]) && b.equals(children[1])) 
 			|| (a.equals(children[1]) && b.equals(children[0]))
@@ -50,7 +51,7 @@ public class BreederSpec {
 		Arrays.fill(pattern, false);
 		Arrays.fill(pattern, 0, 3, true);
 //		System.out.println(Arrays.toString(pattern));
-		children = Breeder.masked_switch(a, b, pattern);
+		children = breeder.masked_switch(a, b, pattern);
 		assertNotSame(children[0], a); assertNotSame(children[1], a);
 		assertNotSame(children[0], b); assertNotSame(children[1], b);
 		

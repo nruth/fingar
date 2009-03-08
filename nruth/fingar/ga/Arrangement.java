@@ -12,7 +12,7 @@ import nruth.fingar.domain.music.TimedNote;
  * @author nicholasrutherford
  *
  */
-public final class Arrangement implements Iterable<FingeredNote>, Cloneable{
+public class Arrangement implements Iterable<FingeredNote>, Cloneable{
 	private Score score;
 	private TreeMap<Float, FingeredNote> notes_starting_at;
 	private int cost=-1;

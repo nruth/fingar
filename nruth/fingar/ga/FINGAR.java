@@ -5,11 +5,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import nruth.fingar.domain.music.Score;
+import nruth.fingar.ga.evolvers.Breeder;
 import nruth.fingar.ga.evolvers.Evolver;
 import nruth.fingar.ga.evolvers.MonophonicFretGapEvolver;
 import nruth.fingar.ga.evolvers.NDeepRandomEvolver;
+import nruth.fingar.ga.probability.GoldbergRouletteWheel;
 
 /**
  * this class sets the GA in motion
@@ -35,7 +38,7 @@ public final class FINGAR {
 	 * @param score the music to process
 	 */
 	public FINGAR(Score score) {
-		this(score, new MonophonicFretGapEvolver(50)); 
+		this(score, new MonophonicFretGapEvolver(50, 0.5, 0.01, new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder())); 
 	}
 
 	/**

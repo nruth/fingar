@@ -35,7 +35,7 @@ public abstract class Evolver implements Cloneable {
 	 * use this to state that your evolver has finished, 
 	 * i.e. the current island population is the final generation for this evolver
 	 */
-	protected void set_have_finished(){	this.finished  = true;	}
+	protected void set_has_finished(){	this.finished  = true;	}
 	
 	/**
 	 * create a successor population
@@ -53,8 +53,14 @@ public abstract class Evolver implements Cloneable {
 	/**
 	 * create a copy of the object
 	 * deep enough to allow it to run atomically in parallel (i.e. threadsafe)
+	 * throws CloneNotSupportedException if subclass cannot be cloned
 	 */
-	public abstract Evolver clone();
+	public Evolver clone() { 
+		Object clone = null;
+		try {	clone = super.clone();	} 
+		catch (CloneNotSupportedException e) {	e.printStackTrace(); }
+		return (Evolver) clone;
+	}
 	
 	private boolean finished = false;
 }

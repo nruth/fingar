@@ -172,7 +172,7 @@ public class NoteSpec {
 		public void testRandomNoteGenerator(){
 			NamedNote[] notes = new NamedNote[4];
 			for(int n=0; n<notes.length; n++){ notes[n] = getRandomNamedNote(); }
-			assertFalse(notes[0] == notes[1] && notes[2] == notes[3] && notes[0] == notes[3]);
+			assertFalse("run again incase of false positive", notes[0] == notes[1] && notes[2] == notes[3] && notes[0] == notes[3]);
 		}		
 	}
 }

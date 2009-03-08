@@ -10,7 +10,7 @@ import nruth.fingar.ga.evolvers.Evolver;
  * a population of genetic individuals
  * i.e. encapsulates a set of atomic solutions to the domain problem
  */
-public final class Population implements Iterable<Arrangement>, Cloneable{
+public class Population implements Iterable<Arrangement>, Cloneable{
 	/**
 	 * seeds an initial population
 	 * @param score
