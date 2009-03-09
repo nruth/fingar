@@ -2,7 +2,7 @@ package nruth.fingar.ga;
 
 import java.util.*;
 
-import nruth.fingar.FingeredNote;
+import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.domain.music.TimedNote;
 

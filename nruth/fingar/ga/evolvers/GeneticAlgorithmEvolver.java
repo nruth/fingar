@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Random;
 
-import nruth.fingar.FingeredNote;
+import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
 import nruth.fingar.ga.probability.PdFactory;

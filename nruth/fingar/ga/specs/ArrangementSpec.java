@@ -12,6 +12,7 @@ import java.util.Random;
 import nruth.Helpers;
 import nruth.fingar.*;
 import nruth.fingar.domain.*;
+import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.domain.guitar.Guitar;
 import nruth.fingar.domain.guitar.Guitar.GuitarString;
 import nruth.fingar.domain.music.Note;

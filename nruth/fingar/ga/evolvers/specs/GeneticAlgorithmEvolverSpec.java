@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;
 
-import nruth.fingar.FingeredNote;
+import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.domain.guitar.Guitar.GuitarString;
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.domain.music.TimedNote;

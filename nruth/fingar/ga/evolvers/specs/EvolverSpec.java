@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.junit.*;
 
-import nruth.fingar.FingeredNote;
+import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.domain.guitar.Guitar.GuitarString;
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.ga.Arrangement;

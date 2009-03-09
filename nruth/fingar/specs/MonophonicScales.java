@@ -5,8 +5,8 @@ import static nruth.fingar.domain.music.NamedNote.*;
 
 import java.util.*;
 
-import nruth.fingar.FingeredNote;
 import nruth.fingar.domain.*;
+import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.domain.guitar.Guitar.GuitarString;
 import nruth.fingar.domain.music.NamedNote;
 import nruth.fingar.domain.music.Note;
@@ -16,6 +16,7 @@ import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.FINGAR;
 import nruth.fingar.ga.evolvers.Evolver;
 import nruth.fingar.ga.evolvers.MonophonicFretGapEvolver;
+import nruth.fingar.ga.evolvers.SimpleHandPositionModelGAEvolver;
 
 import org.junit.*;
 
@@ -40,7 +41,7 @@ public class MonophonicScales {
 		
 		//process alternatives		
 		//and check the list contains a known solution
-		Evolver evolver = new MonophonicFretGapEvolver(40); //TODO this needs to be the production evolver, whatever that ends up being
+		Evolver evolver = new SimpleHandPositionModelGAEvolver(500, 0.7, 0.05); //TODO this needs to be the production evolver, whatever that ends up being
 		
 		FINGAR ga = new FINGAR(c_major_scale, evolver);
 		List<Arrangement> results = ga.results();
@@ -52,12 +53,18 @@ public class MonophonicScales {
 			if(result.equals(known)) found_match = true;				
 		}
 			
-//		List<Arrangement> rev_results = new ArrayList<Arrangement>(results.size());
-//		rev_results.addAll(results);
-//		Collections.reverse(rev_results);
-//		for(Arrangement result : rev_results){
-//			System.out.println(result+"Cost: "+result.cost()+"\n----\n\n");
-//		}
+		List<Arrangement> rev_results = new ArrayList<Arrangement>(results.size());
+		rev_results.addAll(results);
+		Collections.sort(rev_results, new Comparator<Arrangement>() {
+			@Override
+			public int compare(Arrangement o1, Arrangement o2) {
+				return ((Integer)o2.cost()).compareTo(o1.cost());
+			}
+		});
+		
+		for(Arrangement result : rev_results){
+			System.out.println(result+"Cost: "+result.cost()+"\n----\n\n");
+		}
 		
 		assertTrue("known result was not found in results",found_match);
 	}

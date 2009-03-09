@@ -2,7 +2,7 @@ package nruth.fingar.specs;
 
 import static org.junit.Assert.*;
 
-import nruth.fingar.FingeredNote;
+import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.domain.guitar.Guitar.GuitarString;
 import nruth.fingar.domain.music.NamedNote;
 import nruth.fingar.domain.music.Note;

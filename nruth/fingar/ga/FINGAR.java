@@ -12,6 +12,7 @@ import nruth.fingar.ga.evolvers.Breeder;
 import nruth.fingar.ga.evolvers.Evolver;
 import nruth.fingar.ga.evolvers.MonophonicFretGapEvolver;
 import nruth.fingar.ga.evolvers.NDeepRandomEvolver;
+import nruth.fingar.ga.evolvers.SimpleHandPositionModelGAEvolver;
 import nruth.fingar.ga.probability.GoldbergRouletteWheel;
 
 /**
@@ -38,7 +39,7 @@ public final class FINGAR {
 	 * @param score the music to process
 	 */
 	public FINGAR(Score score) {
-		this(score, new MonophonicFretGapEvolver(50, 0.5, 0.01, new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder())); 
+		this(score, new SimpleHandPositionModelGAEvolver(800, 0.5, 0.01)); 
 	}
 
 	/**

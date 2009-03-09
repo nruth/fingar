@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.util.Iterator;
 import java.util.Random;
 
-import nruth.fingar.FingeredNote;
+import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.domain.guitar.Guitar.GuitarString;
 import nruth.fingar.domain.music.NamedNote;
 import nruth.fingar.domain.music.Note;

@@ -3,7 +3,7 @@ package nruth.fingar.ga.evolvers;
 import java.util.Arrays;
 import java.util.Random;
 
-import nruth.fingar.FingeredNote;
+import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.ga.Arrangement;
 
 public class Breeder {
