@@ -31,11 +31,29 @@ public class Arrangement implements Iterable<FingeredNote>, Cloneable{
 	 * @param score
 	 */
 	public Arrangement(Score score) {
+		this();
 		this.score = score;
-		
-		this.notes_starting_at = new TreeMap<Float, FingeredNote>();
+		//fill in the fingerednotes from the score
 		for(TimedNote note : score){ notes_starting_at.put(note.start_beat(), new FingeredNote(note)); }
 	}
+	
+	public Arrangement(List<FingeredNote> notes){
+		this();
+		ArrayList<TimedNote> arranged_notes = new ArrayList<TimedNote>(notes.size());
+		//read the implied score from the fingerednote data, will probably not work beyond monophony
+		//this is used in testing rather than production, so issues of the score becoming ordered differently to other individuals should not matter. 
+		//Polyphony should be made robust against simultaneous notes being recorded in different orders anyway.
+		for(FingeredNote note : notes){ 
+			arranged_notes.add(new TimedNote(note.note(), note.start_beat(), note.duration()));
+			notes_starting_at.put(note.start_beat(), note); 
+		}
+		this.score = new Score(arranged_notes.toArray(new TimedNote[arranged_notes.size()]));
+	}
+	
+	/**
+	 * shared hidden constructor to create the treemap data structure to store fingered note solutions
+	 */
+	protected Arrangement(){ this.notes_starting_at = new TreeMap<Float, FingeredNote>(); }
 	
 	/**
 	 * @return the number of distinct timed notes in the arrangement 

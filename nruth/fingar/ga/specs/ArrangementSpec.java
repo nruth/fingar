@@ -2,6 +2,8 @@ package nruth.fingar.ga.specs;
 
 import static org.junit.Assert.*;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +31,24 @@ public class ArrangementSpec {
 	public void arrangement_constructor_given_a_score(){
 		score = ScoreSpec.get_test_score();
 		arrangement = test_arranger(score);
+	}
+	
+	@Test
+	public void given_fingered_notes_can_construct_an_equivalent_model(){
+		//put some values into the arrangement first
+		arrangement.randomise();
+		
+		//then pull the notes out of it and try to reconstruct the score via the arrangement constructor AND retain equality of fingering data
+		List<FingeredNote> notes = new LinkedList<FingeredNote>(); 
+		notes.addAll(arrangement.fingered_notes().values());
+		Collections.sort(notes, new Comparator<FingeredNote>() {
+			@Override
+			public int compare(FingeredNote o1, FingeredNote o2) {
+				return Float.compare(o1.start_beat(), o2.start_beat());
+			}
+		});
+		
+		assertEquals(arrangement, new Arrangement(notes));
 	}
 	
 	/**

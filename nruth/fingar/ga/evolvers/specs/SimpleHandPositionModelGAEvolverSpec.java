@@ -4,15 +4,32 @@ import static org.junit.Assert.*;
 
 import java.util.Arrays;
 
+import nruth.fingar.FingeredNote;
+import nruth.fingar.domain.guitar.Guitar.GuitarString;
+import nruth.fingar.domain.music.NamedNote;
+import nruth.fingar.domain.music.Note;
+import nruth.fingar.domain.music.TimedNote;
+import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.evolvers.SimpleHandPositionModelGAEvolver;
+import nruth.fingar.ga.specs.ArrangementSpec;
+import nruth.fingar.specs.FingeredNoteSpec;
 
 import org.junit.Test;
 import static nruth.fingar.ga.evolvers.SimpleHandPositionModelGAEvolver.lhp_of_position;
 public class SimpleHandPositionModelGAEvolverSpec {
 
+	/**
+	 * this model is described in report chapter "Genetic Algorithm Design" section "Cost Functions and Fitness" subsection "Simple Hand Position Model"
+	 */
+	
 	@Test
 	public void testAssign_simple_hand_model_cost() {
-		fail("Not yet implemented"); // TODO
+		FingeredNote note_1 = new FingeredNote(1, 3, GuitarString.LOW_E, new TimedNote(new Note(NamedNote.F, 1), 1.0f, 1.0f));
+		FingeredNote note_2 = new FingeredNote(1, 3, GuitarString.LOW_E, new TimedNote(new Note(NamedNote.G, 1), 2.0f, 1.0f));
+		Arrangement arr = new Arrangement()
+		assign_simple_hand_model_cost(note_1);
+		
+		
 	}
 
 	@Test
@@ -28,12 +45,6 @@ public class SimpleHandPositionModelGAEvolverSpec {
 		//test negative lhp positions
 		assertEquals(0, lhp_of_position(2, 3));
 		assertEquals(-3, lhp_of_position(0, 4));
-	}
-	
-	@Test
-	public void open_string_is_free(){
-		//the open string does not change the lhp, so lhp(n+1) = lhp(n)
-		fail("not ready to test yet");
 	}
 	
 	@Test
