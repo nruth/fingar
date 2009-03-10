@@ -29,6 +29,18 @@ public final class GoldbergRouletteWheel implements ProbabilityDistribution{
 		}	
 	}
 	
+	public TreeMap<Double, String> view_pd(){
+		TreeMap<Double, String> summary = new TreeMap<Double, String>();
+		for(Double key : wheel.keySet()){
+			summary.put(key, this.get_individual_at_cpd(key).toString());
+		}
+		return summary;
+	}
+	
+	public String toString(){
+		return GoldbergRouletteWheel.class.getName()+" "+wheel.toString();
+	}
+	
 	/**
 	 * get a random individual according to the wheel's probability distribution
 	 * @return an individual from the population provided to the wheel at construction, selected randomly according to fitness

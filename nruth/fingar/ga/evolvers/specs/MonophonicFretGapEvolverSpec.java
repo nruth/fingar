@@ -33,7 +33,7 @@ public class MonophonicFretGapEvolverSpec {
 	
 	@Before
 	public void given_a_population_for_a_score(){
-		evolver = new MonophonicFretGapEvolver(6, 0.3, 0.05, new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder());
+		evolver = new MonophonicFretGapEvolver(15, 6, 0.3, 0.05, new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder());
 		score = MonophonicScales.c_major_scale();
 		pop = new Population(score, evolver);
 	}

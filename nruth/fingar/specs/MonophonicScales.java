@@ -29,8 +29,20 @@ public class MonophonicScales {
 	/**
 	 * given a C major scale
 	 * process alternative arrangements
-	 * and return a ranked list of the best solutions
+	 * and return a list of costed solutions
 	 */
+	
+	/**
+	 * check solutions are costed
+	 */
+	@Test
+	public void are_solutions_costed(){
+		Evolver evolver = new MonophonicFretGapEvolver(10, 2); //TODO this needs to be the production evolver, whatever that ends up being
+		FINGAR ga = new FINGAR(c_major_scale(), evolver);
+		for(Arrangement arr: ga.results()){
+			assertTrue("cost not assigned",arr.cost()>=0);
+		}
+	}
 	
 	/**
 	 * check known solution is included
@@ -41,44 +53,32 @@ public class MonophonicScales {
 		
 		//process alternatives		
 		//and check the list contains a known solution
-		Evolver evolver = new SimpleHandPositionModelGAEvolver(500, 0.7, 0.05); //TODO this needs to be the production evolver, whatever that ends up being
+		Evolver evolver = new SimpleHandPositionModelGAEvolver(10000, 50, 0.7, 0.2); //TODO this needs to be the production evolver, whatever that ends up being
 		
 		FINGAR ga = new FINGAR(c_major_scale, evolver);
 		List<Arrangement> results = ga.results();
 		assertTrue(results.size() > 0);
 		
-		boolean found_match=false;
-		Arrangement known = known_solution();		
-		for(Arrangement result : results){
-			if(result.equals(known)) found_match = true;				
-		}
+		
 			
 		List<Arrangement> rev_results = new ArrayList<Arrangement>(results.size());
 		rev_results.addAll(results);
 		Collections.sort(rev_results, new Comparator<Arrangement>() {
 			@Override
 			public int compare(Arrangement o1, Arrangement o2) {
-				return ((Integer)o2.cost()).compareTo(o1.cost());
+				return ((Integer)o1.cost()).compareTo(o2.cost());
 			}
 		});
 		
+		rev_results = rev_results.subList(0, 20);
+		Collections.reverse(rev_results);
+		boolean found_match=false;
 		for(Arrangement result : rev_results){
 			System.out.println(result+"Cost: "+result.cost()+"\n----\n\n");
+			if(match_known_result(result)) found_match = true;	
 		}
 		
 		assertTrue("known result was not found in results",found_match);
-	}
-	
-	/**
-	 * check solutions are ranked
-	 */
-	@Test
-	public void are_solutions_ranked(){
-		Evolver evolver = new MonophonicFretGapEvolver(2); //TODO this needs to be the production evolver, whatever that ends up being
-		FINGAR ga = new FINGAR(c_major_scale(), evolver);
-		for(Arrangement arr: ga.results()){
-			assertTrue("cost not assigned",arr.cost()>=0);
-		}
 	}
 	
 	public static Score c_major_scale(){
@@ -94,19 +94,25 @@ public class MonophonicScales {
 		return new Score(notes);
 	}
 	
-	private Arrangement known_solution(){
-		Arrangement sol = new Arrangement(c_major_scale());
-		for(FingeredNote note : sol){
-			if(note.note().equals(new Note(NamedNote.C, 1))){	note.setFinger(2); note.setString(GuitarString.A); note.setFret(3);	}
-			else if(note.note().equals(new Note(NamedNote.D, 1))){	note.setFinger(4); note.setString(GuitarString.A); note.setFret(5);	}
-			else if(note.note().equals(new Note(NamedNote.E, 2))){	note.setFinger(1); note.setString(GuitarString.D); note.setFret(2);	}
-			else if(note.note().equals(new Note(NamedNote.F, 2))){	note.setFinger(2); note.setString(GuitarString.D); note.setFret(3);	}
-			else if(note.note().equals(new Note(NamedNote.G, 2))){	note.setFinger(4); note.setString(GuitarString.D); note.setFret(5);	}
-			else if(note.note().equals(new Note(NamedNote.A, 2))){	note.setFinger(1); note.setString(GuitarString.G); note.setFret(2);	}
-			else if(note.note().equals(new Note(NamedNote.B, 2))){	note.setFinger(3); note.setString(GuitarString.G); note.setFret(4);	}
-			else if(note.note().equals(new Note(NamedNote.C, 2))){	note.setFinger(4); note.setString(GuitarString.G); note.setFret(5);	}		
+	private boolean match_known_result(Arrangement arr){
+		boolean ret = true;
+		
+		Iterator<FingeredNote> itr = arr.iterator();
+		for(int n=0; n < solution.length; n++){
+			if(!solution[n].equals(itr.next())) ret = false;
 		}
 		
-		return sol;
+		return ret;
 	}
+	
+	private FingeredNote[] solution = new FingeredNote[]{
+			new FingeredNote(2, 3, GuitarString.A, c_major_scale().get_nth_note(1)), 
+			new FingeredNote(4, 5, GuitarString.A, c_major_scale().get_nth_note(2)), 
+			new FingeredNote(1, 2, GuitarString.D, c_major_scale().get_nth_note(3)), 
+			new FingeredNote(2, 3, GuitarString.D, c_major_scale().get_nth_note(4)), 
+			new FingeredNote(4, 5, GuitarString.D, c_major_scale().get_nth_note(5)), 
+			new FingeredNote(1, 2, GuitarString.G, c_major_scale().get_nth_note(6)), 
+			new FingeredNote(3, 4, GuitarString.G, c_major_scale().get_nth_note(7)), 
+			new FingeredNote(4, 5, GuitarString.G, c_major_scale().get_nth_note(8))
+	};
 }

@@ -10,13 +10,13 @@ import nruth.fingar.ga.probability.GoldbergRouletteWheel;
 import nruth.fingar.ga.probability.PdFactory;
 
 public final class MonophonicFretGapEvolver extends GeneticAlgorithmEvolver {
-	public MonophonicFretGapEvolver(int generations, double p_crossover, double p_mutate, Random rand, PdFactory pdfac, Breeder breeder) {
-		super(generations, p_crossover, p_mutate, rand, pdfac, breeder);
+	public MonophonicFretGapEvolver(int population_size, int generations, double p_crossover, double p_mutate, Random rand, PdFactory pdfac, Breeder breeder) {
+		super(population_size, generations, p_crossover, p_mutate, rand, pdfac, breeder);
 		if(generations < 1){ throw new RuntimeException("must be 1 or more generations"); }		
 	}
 	
-	public MonophonicFretGapEvolver(int generations) {
-		this(generations, 0.7, 0.03, new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder());		
+	public MonophonicFretGapEvolver(int population_size, int generations) {
+		this(population_size, generations, 0.7, 0.03, new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder());		
 	}
 
 	/**
@@ -42,10 +42,9 @@ public final class MonophonicFretGapEvolver extends GeneticAlgorithmEvolver {
 	}
 
 	@Override
-	protected Population assign_costs_to_population(Population pop) {
+	protected void assign_costs_to_population(Population pop) {
 		for(Arrangement arr : pop){
 			arr.assign_cost(cost_by_fretgap(arr));
 		}
-		return pop;
 	}
 }

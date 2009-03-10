@@ -12,13 +12,12 @@ import nruth.fingar.ga.probability.ProbabilityDistribution;
 
 public abstract class GeneticAlgorithmEvolver extends Evolver {		
 	
-
 	/**
 	 * given a population the function will evaluate its contents and allocate costs to them according to cost, where a higher cost indicates a lower fitness
 	 * @param pop a population to assign costs to
 	 * @return the population provided, unchanged except for allocating costs to each individual within.
 	 */
-	protected abstract Population assign_costs_to_population(Population pop);
+	protected abstract void assign_costs_to_population(Population pop);
 	
 	@Override
 	public GeneticAlgorithmEvolver clone() {
@@ -33,8 +32,9 @@ public abstract class GeneticAlgorithmEvolver extends Evolver {
 	 * @param p_mutate  the likelihood of each chromosome being mutated
 	 * @param rand Random number generator. Decoupled for testing & sharing if desired
 	 */
-	public GeneticAlgorithmEvolver(int target_generations, double p_crossover, double p_mutate, Random rand, PdFactory pdfac, Breeder breeder) {
+	public GeneticAlgorithmEvolver(int population_size, int target_generations, double p_crossover, double p_mutate, Random rand, PdFactory pdfac, Breeder breeder) {
 		super();
+		this.set_population_size(population_size);
 		this.p_crossover = p_crossover;
 		this.p_mutate = p_mutate;
 		this.current_generation = 1; //incremented elsewhere
@@ -54,19 +54,16 @@ public abstract class GeneticAlgorithmEvolver extends Evolver {
 	public Population create_successor_population(Population forebears) {
 		if(current_generation >= target_generations){ throw new RuntimeException("too many generations produced: current "+current_generation+" target "+target_generations); }
 		
-		//1. allocate cost to each individual
-		assign_costs_to_population(forebears);
+		//1. allocate cost to each individual for first generation
+		if(current_generation==1){	assign_costs_to_population(forebears); }
 		
-		//2. use weights to construct Goldberg's roulette wheel
-		//this should be delegated to a selection object which constructs the wheel once only, or *is* the wheel
-		//TODO: generalise this to a probability distribution of which the wheel is 1 implementation
-//		GoldbergRouletteWheel wheel = new GoldbergRouletteWheel(forebears);
+		//2. form a probability distribution for selection over the parent population
 		ProbabilityDistribution pd = pdfac.probability_distribution(forebears);		
 		
 		/*	
 		 3. produce successor population by:
 		while successors < forebears 
-			3.1. spin the wheel twice to get clones of parents X and Y 
+			3.1. select from pd twice to get clones of parents X and Y 
 			3.2. randomly crossover (X_clone, Y_clone) producing (M, N) according to p_crossover
 			3.3. randomly mutate M and N according to p_mutate
 			3.3  add M and N to the successor population
@@ -80,12 +77,18 @@ public abstract class GeneticAlgorithmEvolver extends Evolver {
 		}
 		
 		//4. if size(sucessor_population) > fixed population size then drop 1 individual at random from successor_population
-		if(successors.size() > forebears.size() ){ successors.remove(new Random().nextInt(successors.size())); }
-	
+		if(successors.size() > forebears.size() ){ successors.remove(new Random().nextInt(successors.size())); }		
+		
+		
 		GeneticAlgorithmEvolver ev;
 		ev = this.clone();
 		if(++ev.current_generation >= target_generations){ ev.set_has_finished(); }
-		return new Population(ev, successors, forebears.score());
+		Population successor_pop = new Population(ev, successors, forebears.score());
+		
+		//every pop is assigned costs at creation doing it this way, except the first one handled earlier
+		assign_costs_to_population(successor_pop);
+		
+		return successor_pop;
 	}
 	
 	/**

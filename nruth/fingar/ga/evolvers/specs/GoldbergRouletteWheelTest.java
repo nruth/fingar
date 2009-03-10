@@ -3,6 +3,8 @@ package nruth.fingar.ga.evolvers.specs;
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Set;
 
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.domain.specs.ScoreSpec;
@@ -51,5 +53,11 @@ public class GoldbergRouletteWheelTest {
 		assertEquals(wheel.get_individual_at_cpd(0.6),arr2);
 		assertEquals(wheel.get_individual_at_cpd(0.82),arr3);
 		assertEquals(wheel.get_individual_at_cpd(1.0),arr3);
+		
+		Set<Double> pdview = wheel.view_pd().keySet();
+		Iterator<Double> pdv_itr = pdview.iterator();
+		assertEquals(6/11.0, pdv_itr.next(), 0.01);
+		assertEquals((6+3)/11.0, pdv_itr.next(), 0.01);
+		assertEquals(1.0, pdv_itr.next(), 0.01);
 	}
 }

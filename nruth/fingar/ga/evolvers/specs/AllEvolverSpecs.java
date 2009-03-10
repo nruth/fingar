@@ -6,8 +6,11 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
   EvolverSpec.class,
+  BreederSpec.class, 
   MonophonicFretGapEvolverSpec.class,
   GoldbergRouletteWheelTest.class,
+  GeneticAlgorithmEvolverSpec.class, 
+  SimpleHandPositionModelGAEvolverSpec.class,
 })
 
 public class AllEvolverSpecs {

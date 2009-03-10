@@ -39,7 +39,7 @@ public final class FINGAR {
 	 * @param score the music to process
 	 */
 	public FINGAR(Score score) {
-		this(score, new SimpleHandPositionModelGAEvolver(800, 0.5, 0.01)); 
+		this(score, new SimpleHandPositionModelGAEvolver(400, 30, 0.5, 0.01)); 
 	}
 
 	/**

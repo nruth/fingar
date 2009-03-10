@@ -11,20 +11,19 @@ import nruth.fingar.ga.probability.PdFactory;
 
 public class SimpleHandPositionModelGAEvolver extends GeneticAlgorithmEvolver {
 
-	public SimpleHandPositionModelGAEvolver(int target_generations,
+	public SimpleHandPositionModelGAEvolver(int population_size, int target_generations,
 			double p_crossover, double p_mutate, Random rand, PdFactory pdfac,
 			Breeder breeder) {
-		super(target_generations, p_crossover, p_mutate, rand, pdfac, breeder);
+		super(population_size, target_generations, p_crossover, p_mutate, rand, pdfac, breeder);
 	}
 
-	public SimpleHandPositionModelGAEvolver(int target_generations, double p_crossover, double p_mutate) {
-		this(target_generations, p_crossover, p_mutate, new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder());
+	public SimpleHandPositionModelGAEvolver(int population_size, int target_generations, double p_crossover, double p_mutate) {
+		this(population_size, target_generations, p_crossover, p_mutate, new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder());
 	}
 
 	@Override
-	protected Population assign_costs_to_population(Population pop) {
+	protected void assign_costs_to_population(Population pop) {
 		for(Arrangement arr: pop){ assign_simple_hand_model_cost(arr); }
-		return pop;
 	}
 	
 	public static void assign_simple_hand_model_cost(Arrangement arr){
@@ -42,7 +41,8 @@ public class SimpleHandPositionModelGAEvolver extends GeneticAlgorithmEvolver {
 			previous_note = note;
 		}
 		
-		arr.assign_cost(delta_sum);	
+		//+1 to avoid divide by zero issue
+		arr.assign_cost(delta_sum+1);	
 	}
 	
 	public static int lhp_of_fingered_fret(int fret, int finger){

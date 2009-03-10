@@ -14,10 +14,9 @@ public abstract class Evolver implements Cloneable {
 	 * @return a stochastic initial population of problem solutions
 	 */
 	public List<Arrangement> initial_population(Score score){
-		int POPULATION_SIZE = 8000;
-		ArrayList<Arrangement> population = new ArrayList<Arrangement>(POPULATION_SIZE);
+		ArrayList<Arrangement> population = new ArrayList<Arrangement>(population_size);
 		
-		for(int i=0; i<POPULATION_SIZE; i++){
+		for(int i=0; i<population_size; i++){
 			Arrangement individual = new Arrangement(score);
 			individual.randomise();
 			population.add(individual);
@@ -25,6 +24,12 @@ public abstract class Evolver implements Cloneable {
 		return population;
 	}
 
+	protected void set_population_size(int population_size){
+		this.population_size = population_size;
+	}
+	
+	private int population_size = 200;
+	
 	/**
 	 * reports whether the current population is the final population for this island
 	 * @return

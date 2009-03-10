@@ -94,7 +94,8 @@ public class Arrangement implements Iterable<FingeredNote>, Cloneable{
 			//makes use of the starting beat (which is the map key) being in each FingeredNote object
 			clone.notes_starting_at.put(note.start_beat(), note.clone());
 		}
-		//may need to reset the cost to -1 at some point, but not now
+		//reset the cost to -1 now, as we're assuming it's no longer part of the current population / fitness landscape. avoids pain later
+		clone.cost = -1;
 
 		//no need to clone score, it's immutable
 		return clone;
