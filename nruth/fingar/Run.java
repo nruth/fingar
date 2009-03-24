@@ -1,12 +1,5 @@
 package nruth.fingar;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-
-import sun.security.krb5.Realm;
-
+import java.util.*;
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.FINGAR;
@@ -48,7 +41,7 @@ public class Run {
 	 
 	 */
 	public static void main(String[] args){
-		if(args[0].equals("--help")){
+		if(args!=null && args[0].equals("--help")){
 			System.out.println(
 					"* legal params: "                                                                                          +
 					"\n * 	pop 		:: 	natural integer"                                                                +
