@@ -44,6 +44,13 @@ public abstract class GeneticAlgorithmEvolver extends Evolver {
 		this.breeder = breeder;
 	}
 	
+	public String toString(){
+		return 		"\npopulation size: "+population_size
+				+ 	"\nlocus crossover likelihood: "+p_crossover
+				+	"\nallele mutation likelihood: "+p_mutate
+				+	"\ngeneration "+current_generation+" of "+target_generations;
+	}
+	
 	/**
 	 * the population is the nth generation, starting from 1
 	 */

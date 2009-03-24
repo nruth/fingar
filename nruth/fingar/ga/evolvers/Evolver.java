@@ -28,7 +28,7 @@ public abstract class Evolver implements Cloneable {
 		this.population_size = population_size;
 	}
 	
-	private int population_size = 200;
+	protected int population_size = 200;
 	
 	/**
 	 * reports whether the current population is the final population for this island

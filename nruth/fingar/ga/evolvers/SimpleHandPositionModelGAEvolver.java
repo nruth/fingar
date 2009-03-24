@@ -48,5 +48,9 @@ public class SimpleHandPositionModelGAEvolver extends GeneticAlgorithmEvolver {
 	public static int lhp_of_fingered_fret(int fret, int finger){
 		return fret - (finger-1);
 	}
+	
+	public String toString(){
+		return this.getClass().getSimpleName() + ": " + super.toString();
+	}
 
 }
