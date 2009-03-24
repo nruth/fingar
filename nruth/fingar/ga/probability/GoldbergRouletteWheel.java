@@ -9,7 +9,6 @@ import nruth.fingar.ga.Population;
 
 public final class GoldbergRouletteWheel implements ProbabilityDistribution{
 	public static class WheelFactory implements PdFactory{
-		@Override
 		public ProbabilityDistribution probability_distribution(
 				Population population) {
 			return new GoldbergRouletteWheel(population);

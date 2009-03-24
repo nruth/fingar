@@ -43,7 +43,6 @@ public class ArrangementSpec {
 		List<FingeredNote> notes = new LinkedList<FingeredNote>(); 
 		notes.addAll(arrangement.fingered_notes().values());
 		Collections.sort(notes, new Comparator<FingeredNote>() {
-			@Override
 			public int compare(FingeredNote o1, FingeredNote o2) {
 				return Float.compare(o1.start_beat(), o2.start_beat());
 			}

@@ -30,7 +30,6 @@ public class Run {
 		results_set.addAll(results);
 		Arrangement[] sorted_results_set =results_set.toArray(new Arrangement[results_set.size()]); 
 		Arrays.sort(sorted_results_set, new Comparator<Arrangement>() {
-			@Override
 			public int compare(Arrangement o1, Arrangement o2) {
 				return ((Integer)o2.cost()).compareTo(o1.cost());
 			}

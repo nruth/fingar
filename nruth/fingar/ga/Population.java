@@ -36,7 +36,6 @@ public class Population implements Iterable<Arrangement>, Cloneable{
 	
 	public int size(){ return population.size(); } 
 	
-	@Override
 	public Iterator<Arrangement> iterator() {	return population.iterator();	}
 	
 	@Override
@@ -77,7 +76,6 @@ public class Population implements Iterable<Arrangement>, Cloneable{
 		List<Arrangement> view = new ArrayList<Arrangement>(population.size());
 		view.addAll(population);
 		Collections.sort(view, new Comparator<Arrangement>() {
-			@Override
 			public int compare(Arrangement o1, Arrangement o2) {
 				return o1.cost() - o2.cost();
 			}
