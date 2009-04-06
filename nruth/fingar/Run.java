@@ -38,10 +38,10 @@ public class Run {
 	
 	
 	/**
-	 
+	 see --help print in definition
 	 */
 	public static void main(String[] args){
-		if(args!=null && args[0].equals("--help")){
+		if((args.length != 0) && args[0].equals("--help")){
 			System.out.println(
 					"* legal params: "                                                                                          +
 					"\n * 	pop 		:: 	natural integer"                                                                +

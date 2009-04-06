@@ -63,10 +63,17 @@ public final class FINGAR {
 	public boolean process() {
 		if(!finished){
 			Population population = new Population(score, evolver);
+			
+			
+			
 			boolean finished = false;
-			while(!finished){ 
+			while(!finished){ //make a new one and throw the old one away at each stage, this will enable garbage collection to occur				
 				population = population.successor();
+				
+				
+				System.gc(); //suggests garbage collection
 				finished = population.evolver().is_halted();
+				System.out.print("."); //progress bar!
 			}
 			results = population.view_arrangements();
 			

@@ -43,7 +43,9 @@ public abstract class Evolver implements Cloneable {
 	protected void set_has_finished(){	this.finished  = true;	}
 	
 	/**
-	 * create a successor population
+	 * create a successor population. 
+	 * Do not keep references to the parent population else garbage collection will not occur, which will create a memory leak 
+	 * (unless you need the references for something, in which case expect to reduce your population size + generation total)
 	 * @param forebears the parent population to evolve from
 	 * @return the child population derived from forebears
 	 */
