@@ -24,7 +24,7 @@ public class BestResultSet extends TreeSet<Arrangement>{
 
 	private int worst_result_cost(){ return worst_result().cost();	}
 	
-	private Arrangement worst_result(){	return first();	}
+	private Arrangement worst_result(){	return last();	}
 	
 	/**
 	 * compare the given arrangement to the ones stored and add it if:

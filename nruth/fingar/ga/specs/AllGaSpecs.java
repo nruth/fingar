@@ -9,8 +9,9 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 	ArrangementSpec.class,
 	AllEvolverSpecs.class,
-  PopulationSpec.class,
-  FINGAR_Spec.class,
+	PopulationSpec.class,
+	FINGAR_Spec.class,
+	BestResultSetSpec.class,
 })
 
 public class AllGaSpecs {

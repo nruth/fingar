@@ -115,4 +115,10 @@ public class Arrangement implements Iterable<FingeredNote>, Cloneable{
 	public SortedMap<Float, FingeredNote> fingered_notes() {
 		return notes_starting_at;
 	}
+	
+	//this is tacked on for use by BestResultSet and should not be considered part of the class design. This isn't ideal as it couples the classes but doing anything else with Java is a major pain at this stage.
+	public int generation_discovered(){
+		return generation_discovered;
+	}
+	public int generation_discovered;
 }
