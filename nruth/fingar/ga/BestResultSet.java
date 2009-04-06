@@ -22,25 +22,9 @@ public class BestResultSet extends TreeSet<Arrangement>{
 		this.capacity = capacity;
 	}
 
-	private int worst_result_cost(){
-		int maxcost = 0;
-		for(Arrangement arr : this){
-			int cost = arr.cost(); 
-			if (maxcost < cost) {
-				maxcost = cost;
-			}
-		}
-		return maxcost;
-	}
+	private int worst_result_cost(){ return worst_result().cost();	}
 	
-	private Arrangement worst_result(){
-		Arrangement worst=null;
-		for(Arrangement arr : this){
-			if(worst==null) worst = arr;	
-			if (arr.cost() > worst.cost()) { worst = arr;	}
-		}
-		return worst;
-	}
+	private Arrangement worst_result(){	return first();	}
 	
 	/**
 	 * compare the given arrangement to the ones stored and add it if:
@@ -63,9 +47,7 @@ public class BestResultSet extends TreeSet<Arrangement>{
 
 	public boolean addAll(Collection<? extends Arrangement> c) {
 		boolean changed = false;
-		for(Arrangement arr : c){
-			changed |= add(arr);
-		}
+		for(Arrangement arr : c){ changed |= add(arr);	}
 		return changed;
 	}
 }
