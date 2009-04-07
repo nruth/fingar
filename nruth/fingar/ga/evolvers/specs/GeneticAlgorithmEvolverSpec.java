@@ -41,7 +41,19 @@ public class GeneticAlgorithmEvolverSpec {
     
     @Test
     public void population_should_be_costed_on_creation(){
-    	fail("...");
+    	//set up a population with a trivial evolver cost function
+    	Population pop = new Population(ScoreSpec.get_test_score(), 
+    		new GeneticAlgorithmEvolver(5, 5, 0.4, 0.4, new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder()) {
+				protected void assign_costs_to_population(Population pop) {
+					for(Arrangement i : pop){ i.assign_cost(0); }
+				}
+			});
+    	
+    	//now get a successor and make sure it was costed
+    	pop = pop.successor();
+    	for(Arrangement i : pop){
+    		assertTrue(i.cost()>=0); 
+    	}
     }
     
     @Test
