@@ -41,8 +41,7 @@ public class SimpleHandPositionModelGAEvolver extends GeneticAlgorithmEvolver {
 			previous_note = note;
 		}
 		
-		//+1 to avoid divide by zero issue
-		arr.assign_cost(delta_sum+1);	
+		arr.assign_cost(delta_sum);	
 	}
 	
 	public static int lhp_of_fingered_fret(int fret, int finger){

@@ -11,7 +11,7 @@ import java.util.Iterator;
 /**
 	@author nicholasrutherford
  */
-public final class Score implements Iterable<TimedNote>{
+public class Score implements Iterable<TimedNote>{
 	private ArrayList<TimedNote> timed_notes; //could use a tree sorted by start_beat ?
 	
 	public Score(TimedNote[] arranged_notes) {

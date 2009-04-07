@@ -62,7 +62,7 @@ public final class GoldbergRouletteWheel implements ProbabilityDistribution{
 	 * @param i individual to evaluate fitness of
 	 * @return inverse of i's cost
 	 */
-	private Double fitness(Arrangement i){ return (1.0/i.cost()); }
+	private Double fitness(Arrangement i){ return (1.0/(i.cost()+1)); }
 	
 	private SortedMap<Double, Arrangement> wheel;
 	private Random spinner = new Random();
