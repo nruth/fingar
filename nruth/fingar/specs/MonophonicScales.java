@@ -91,14 +91,14 @@ public class MonophonicScales {
 			,	new TimedNote(new Note(C, 1), time++, 1f)
 			,	new TimedNote(new Note(D, 1), time++, 1f)
 			,	new TimedNote(new Note(Eb, 1), time++, 1f)
-			,	new TimedNote(new Note(E, 1), time++, 1f)
-			,	new TimedNote(new Note(G, 1), time++, 1f)
+			,	new TimedNote(new Note(E, 2), time++, 1f)
+			,	new TimedNote(new Note(G, 2), time++, 1f)
 			,	new TimedNote(new Note(A, 2), time++, 1f)
 			,	new TimedNote(new Note(C, 2), time++, 1f)
 			,	new TimedNote(new Note(D, 2), time++, 1f)
 			,	new TimedNote(new Note(Eb, 2), time++, 1f)
-			,	new TimedNote(new Note(E, 2), time++, 1f)
-			,	new TimedNote(new Note(G, 2), time++, 1f)
+			,	new TimedNote(new Note(E, 3), time++, 1f)
+			,	new TimedNote(new Note(G, 3), time++, 1f)
 			,	new TimedNote(new Note(A, 3), time++, 1f)
 		};
 		
