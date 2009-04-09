@@ -62,18 +62,17 @@ public final class FINGAR {
 	 */
 	public boolean process() {
 		if(!finished){
-			Population population = new Population(score, evolver);
-			
-			
+			Population population = new Population(score, evolver);			
 			
 			boolean finished = false;
 			while(!finished){ //make a new one and throw the old one away at each stage, this will enable garbage collection to occur				
 				population = population.successor();
-				
+				for(Arrangement ind : population){ best_results.add(ind); }
 				
 				System.gc(); //suggests garbage collection
 				finished = population.evolver().is_halted();
-				System.out.print("."); //progress bar!
+				int gen = population.evolver().generation();
+				System.out.print((gen%5==0)?((gen%10==0) ? gen : "|") :"."); //progress bar!
 			}
 			results = population.view_arrangements();
 			
@@ -83,6 +82,7 @@ public final class FINGAR {
 		else return false;
 	}
 	
+	public BestResultSet best_results = new BestResultSet(7);
 	private final Score score;
 	private boolean finished = false;
 	private List<Arrangement> results;

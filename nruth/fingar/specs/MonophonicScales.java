@@ -84,6 +84,27 @@ public class MonophonicScales {
 		return new Score(notes);
 	}
 	
+	public static Score a_minor_scale(){
+		float time = 0.0f;		
+		TimedNote[] notes = new TimedNote[]{
+				new TimedNote(new Note(A, 1), time++, 1f)
+			,	new TimedNote(new Note(C, 1), time++, 1f)
+			,	new TimedNote(new Note(D, 1), time++, 1f)
+			,	new TimedNote(new Note(Eb, 1), time++, 1f)
+			,	new TimedNote(new Note(E, 1), time++, 1f)
+			,	new TimedNote(new Note(G, 1), time++, 1f)
+			,	new TimedNote(new Note(A, 2), time++, 1f)
+			,	new TimedNote(new Note(C, 2), time++, 1f)
+			,	new TimedNote(new Note(D, 2), time++, 1f)
+			,	new TimedNote(new Note(Eb, 2), time++, 1f)
+			,	new TimedNote(new Note(E, 2), time++, 1f)
+			,	new TimedNote(new Note(G, 2), time++, 1f)
+			,	new TimedNote(new Note(A, 3), time++, 1f)
+		};
+		
+		return new Score(notes);
+	}
+	
 	private boolean match_known_result(Arrangement arr){
 		boolean ret = true;
 		

@@ -10,7 +10,8 @@ import nruth.fingar.specs.MonophonicScales;
 public class Run {
 	
 	private static Score score(){
-		return MonophonicScales.c_major_scale();
+//		return MonophonicScales.c_major_scale();
+		return MonophonicScales.a_minor_scale();
 	}
 	
 	private static HashMap<String, String> parse_params(String[] args){
@@ -29,7 +30,7 @@ public class Run {
 	private static final String ARGN_POPSIZE = "pop", ARGN_GENS="gens", ARGN_FARMSZ="farm_sz", ARGN_PCROSS="p_cross", ARGN_PMUT="p_mutate";
 	static {
 		valid_params = new HashMap<String, Number>();
-		valid_params.put(ARGN_POPSIZE, 10000);
+		valid_params.put(ARGN_POPSIZE, 30000);
 		valid_params.put(ARGN_GENS, 50);
 		valid_params.put(ARGN_FARMSZ, 40);
 		valid_params.put(ARGN_PCROSS, 0.16);
@@ -76,23 +77,27 @@ public class Run {
 		
 		
 		//process alternatives		
-		//and check the list contains a known solution
 		Evolver evolver = new SimpleHandPositionModelGAEvolver(popsize, generations, pcross, pmut); //TODO this needs to be the production evolver, whatever that ends up being
 		System.out.println(evolver);
 		FINGAR ga = new FINGAR(score(), evolver);
 		List<Arrangement> results = ga.results();
 		
-		//print out results section, may be removed from the test
-		HashSet<Arrangement> results_set = new HashSet<Arrangement>() ;
-		results_set.addAll(results);
-		Arrangement[] sorted_results_set =results_set.toArray(new Arrangement[results_set.size()]); 
-		Arrays.sort(sorted_results_set, new Comparator<Arrangement>() {
-			public int compare(Arrangement o1, Arrangement o2) {
-				return ((Integer)o2.cost()).compareTo(o1.cost());
-			}
-		});
+//		//print out results section, may be removed from the test
+//		HashSet<Arrangement> results_set = new HashSet<Arrangement>() ;
+//		results_set.addAll(results);
+//		Arrangement[] sorted_results_set =results_set.toArray(new Arrangement[results_set.size()]); 
+//		Arrays.sort(sorted_results_set, new Comparator<Arrangement>() {
+//			public int compare(Arrangement o1, Arrangement o2) {
+//				return ((Integer)o2.cost()).compareTo(o1.cost());
+//			}
+//		});
+//		
+//		for(Arrangement result : sorted_results_set){
+//			System.out.println(result+"Cost: "+result.cost()+"\n----\n\n");
+//		}
 		
-		for(Arrangement result : sorted_results_set){
+		System.out.println("\n\n\nBest results\n===================================\n\n");
+		for(Arrangement result : ga.best_results){
 			System.out.println(result+"Cost: "+result.cost()+"\n----\n\n");
 		}
 	}
