@@ -70,15 +70,16 @@ public class MonophonicScales {
 		}
 		assertTrue("known result was not found in results",found_match);
 	}
+	public static Score c_major_scale(){ return c_major_scale(1); }
 	
-	public static Score c_major_scale(){
+	public static Score c_major_scale(int start_octave){
 		TimedNote[] notes = new TimedNote[8];
 		int time = 0;
 		for(NamedNote name : new NamedNote[]{C,D}){
-			notes[time] = new TimedNote(new Note(name, 1), time++, 1f);
+			notes[time] = new TimedNote(new Note(name, start_octave), time++, 1f);
 		}
 		for(NamedNote name : new NamedNote[]{E,F,G,A,B,C}){
-			notes[time] = new TimedNote(new Note(name, 2), time++, 1f);
+			notes[time] = new TimedNote(new Note(name, start_octave+1), time++, 1f);
 		}
 		
 		return new Score(notes);

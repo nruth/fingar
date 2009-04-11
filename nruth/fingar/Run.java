@@ -10,8 +10,8 @@ import nruth.fingar.specs.MonophonicScales;
 public class Run {
 	
 	private static Score score(){
-//		return MonophonicScales.c_major_scale();
-		return MonophonicScales.a_minor_scale();
+		return MonophonicScales.c_major_scale(2);
+//		return MonophonicScales.a_minor_scale();
 	}
 	
 	private static HashMap<String, String> parse_params(String[] args){
@@ -98,7 +98,7 @@ public class Run {
 		
 		System.out.println("\n\n\nBest results\n===================================\n\n");
 		for(Arrangement result : ga.best_results){
-			System.out.println(result+"Cost: "+result.cost()+"\n----\n\n");
+			System.out.println(result+"Cost: "+result.cost()+"\nGeneration: "+result.generation_discovered()+"\n----\n\n");
 		}
 	}
 }

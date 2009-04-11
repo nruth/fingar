@@ -16,7 +16,10 @@ public class BestResultSet extends TreeSet<Arrangement>{
 	public BestResultSet(int capacity) {
 		super(new Comparator<Arrangement>() {	
 			public int compare(Arrangement o1, Arrangement o2) {
-				return ((Integer)o1.cost()).compareTo(o2.cost());
+				int res = ((Integer)o1.cost()).compareTo(o2.cost());
+				if(res!=0) return res;
+				else if(o1.equals(o2)) return 0;
+				else return -1;
 			}
 		});
 		this.capacity = capacity;
@@ -32,6 +35,13 @@ public class BestResultSet extends TreeSet<Arrangement>{
 	 * 	the collection is below maximum capacity
 	 * @param arr
 	 */
+	public boolean add(Arrangement arr, int gen){
+		if(add(arr)){
+			arr.generation_discovered=gen;
+			return true;
+		} else return false;
+	}
+	
 	public boolean add(Arrangement arr) {
 		if(this.size()<capacity){
 			return super.add(arr);

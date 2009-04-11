@@ -120,5 +120,5 @@ public class Arrangement implements Iterable<FingeredNote>, Cloneable{
 	public int generation_discovered(){
 		return generation_discovered;
 	}
-	public int generation_discovered;
+	public int generation_discovered=-1;
 }

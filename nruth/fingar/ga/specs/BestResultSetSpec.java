@@ -152,4 +152,27 @@ public class BestResultSetSpec {
 		assertEquals(1, rs.size());
 		assertEquals(1, rs.first().generation_discovered());
 	}
+	
+	//stores different individuals with the same cost and replays them correctly by iterator
+	@Test public void stores_equivalent_cost_individuals(){
+		BestResultSet rs = new BestResultSet(3);		
+		final Arrangement arr1 = context.mock(Arrangement.class,"arr1");
+		final Arrangement arr2 = context.mock(Arrangement.class,"arr2");
+		final Arrangement arr3 = context.mock(Arrangement.class,"arr3");
+		context.checking(new Expectations() {{
+			allowing (arr1).cost(); will(returnValue(1));
+			allowing (arr2).cost(); will(returnValue(1));
+			allowing (arr3).cost(); will(returnValue(3));
+		}});
+		rs.add(arr1);
+		rs.add(arr3);
+		rs.add(arr2);
+		assertEquals(3, rs.size());
+		Iterator<Arrangement> itr = rs.iterator();
+		Arrangement arr =itr.next(); 
+		if(arr.equals(arr1)){assertEquals(arr2, itr.next());}
+		else if(arr.equals(arr2)){assertEquals(arr1, itr.next());}
+		else fail("wrong first value");
+		assertEquals(arr3, itr.next());
+	}
 }
