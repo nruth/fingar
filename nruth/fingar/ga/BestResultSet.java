@@ -19,7 +19,8 @@ public class BestResultSet extends TreeSet<Arrangement>{
 				int res = ((Integer)o1.cost()).compareTo(o2.cost());
 				if(res!=0) return res;
 				else if(o1.equals(o2)) return 0;
-				else return -1;
+//				else return 1;
+				else return ((Integer)o1.hashCode()).compareTo(o2.hashCode());
 			}
 		});
 		this.capacity = capacity;

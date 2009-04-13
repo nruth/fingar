@@ -175,4 +175,22 @@ public class BestResultSetSpec {
 		else fail("wrong first value");
 		assertEquals(arr3, itr.next());
 	}
+	
+	//catch repeated entry bug from broken comparator
+	@Test public void test_non_adjacent_comparator_ordering_bug(){
+		BestResultSet rs = new BestResultSet(4);		
+		final Arrangement arr1 = context.mock(Arrangement.class,"arr1");
+		final Arrangement arr2 = context.mock(Arrangement.class,"arr2");
+		final Arrangement arr3 = context.mock(Arrangement.class,"arr3");
+		context.checking(new Expectations() {{
+			allowing (arr1).cost(); will(returnValue(1));
+			allowing (arr2).cost(); will(returnValue(1));
+			allowing (arr3).cost(); will(returnValue(3));
+		}});
+		rs.add(arr1);
+		rs.add(arr3);
+		rs.add(arr2);
+		rs.add(arr1);
+		assertEquals(3, rs.size());
+	}
 }

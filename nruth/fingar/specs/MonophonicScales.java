@@ -85,25 +85,108 @@ public class MonophonicScales {
 		return new Score(notes);
 	}
 	
-	public static Score a_minor_scale(){
+	public static Score a_minor_scale(int octave){
 		float time = 0.0f;		
 		TimedNote[] notes = new TimedNote[]{
-				new TimedNote(new Note(A, 1), time++, 1f)
-			,	new TimedNote(new Note(C, 1), time++, 1f)
-			,	new TimedNote(new Note(D, 1), time++, 1f)
-			,	new TimedNote(new Note(Eb, 1), time++, 1f)
-			,	new TimedNote(new Note(E, 2), time++, 1f)
-			,	new TimedNote(new Note(G, 2), time++, 1f)
-			,	new TimedNote(new Note(A, 2), time++, 1f)
-			,	new TimedNote(new Note(C, 2), time++, 1f)
-			,	new TimedNote(new Note(D, 2), time++, 1f)
-			,	new TimedNote(new Note(Eb, 2), time++, 1f)
-			,	new TimedNote(new Note(E, 3), time++, 1f)
-			,	new TimedNote(new Note(G, 3), time++, 1f)
-			,	new TimedNote(new Note(A, 3), time++, 1f)
+				new TimedNote(new Note(A, octave), time++, 1f)
+			,	new TimedNote(new Note(C, octave), time++, 1f)
+			,	new TimedNote(new Note(D, octave), time++, 1f)
+			,	new TimedNote(new Note(Eb, octave), time++, 1f)
+			,	new TimedNote(new Note(E, ++octave), time++, 1f)
+			,	new TimedNote(new Note(G, octave), time++, 1f)
+			,	new TimedNote(new Note(A, octave), time++, 1f)
+			,	new TimedNote(new Note(C, octave), time++, 1f)
+			,	new TimedNote(new Note(D, octave), time++, 1f)
+			,	new TimedNote(new Note(Eb, octave), time++, 1f)
+			,	new TimedNote(new Note(E, ++octave), time++, 1f)
+			,	new TimedNote(new Note(G, octave), time++, 1f)
+			,	new TimedNote(new Note(A, octave), time++, 1f)
 		};
 		
 		return new Score(notes);
+	}
+	
+	public static Score sailors_hornpipe(){
+		LinkedList<TimedNote> notes = new LinkedList<TimedNote>();
+		float start = 0.0f;
+		
+		//bar 1
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(G, 3));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(Gb, 3));
+		start = add_note_and_return_its_ending_beat(notes, start, 1.0f, new Note(G, 3));
+		start = add_note_and_return_its_ending_beat(notes, start, 1.0f, new Note(G, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 1.0f, new Note(G, 2));		
+		
+		//bar 2
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(D, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(C, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(B, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(D, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(G, 3));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(Gb, 3));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(G, 3));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(Gb, 3));
+		
+		//bar 3
+		start = add_note_and_return_its_ending_beat(notes, start, 1.0f, new Note(G, 3));
+		start = add_note_and_return_its_ending_beat(notes, start, 1.0f, new Note(A, 3));
+		start = add_note_and_return_its_ending_beat(notes, start, 1.0f, new Note(A, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 1.0f, new Note(A, 2));
+		
+		//bar 4
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(A, 3));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(G, 3));
+		start = add_note_and_return_its_ending_beat(notes, start, 1.0f, new Note(Gb, 3));
+		start = add_note_and_return_its_ending_beat(notes, start, 1.0f, new Note(D, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 1.0f, new Note(D, 2));
+		
+		//bar 5
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(E, 3));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(Gb, 3));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(G, 3));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(E, 3));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(D, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(E, 3));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(D, 2));
+		
+		//bar 6
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(C, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(B, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(C, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(B, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(A, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(G, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(Gb, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(E, 2));
+		
+		//bar 7
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(D, 1));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(G, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(Gb, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(A, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(G, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(B, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(A, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 0.5f, new Note(C, 2));
+		
+		//bar 8
+		start = add_note_and_return_its_ending_beat(notes, start, 1.0f, new Note(B, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 1.0f, new Note(G, 2));
+		start = add_note_and_return_its_ending_beat(notes, start, 1.0f, new Note(G, 2));
+		
+		return new Score(notes.toArray(new TimedNote[notes.size()]));
+	}
+
+	/**
+	 * @param notes collection to add to
+	 * @param start start beat
+	 * @param duration note duration (beats)
+	 * @param note note to use
+	 * @return ending beat for the note (start+duration)
+	 */
+	private static float add_note_and_return_its_ending_beat(List<TimedNote> notes, float start, float duration, Note note){
+		notes.add(new TimedNote(note, start, duration));
+		return start+duration;
 	}
 	
 	private boolean match_known_result(Arrangement arr){

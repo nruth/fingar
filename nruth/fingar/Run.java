@@ -10,8 +10,9 @@ import nruth.fingar.specs.MonophonicScales;
 public class Run {
 	
 	private static Score score(){
-		return MonophonicScales.c_major_scale(2);
-//		return MonophonicScales.a_minor_scale();
+//		return MonophonicScales.c_major_scale(2);
+//		return MonophonicScales.a_minor_scale(2);
+		return MonophonicScales.sailors_hornpipe();
 	}
 	
 	private static HashMap<String, String> parse_params(String[] args){
@@ -75,30 +76,42 @@ public class Run {
 		String s_mut = params.get(ARGN_PMUT);
 		double pmut =  (s_mut == null) ? (Double)valid_params.get(ARGN_PMUT) : Double.parseDouble(s_mut);
 		
+		run(pcross, pmut, farm_sz, generations, popsize, 1);
+	}
+	
+	//recursive wrapper for out-of-memory errors, reduces population size until success
+	private static void run(double pcross, double pmut, int farm_sz, int generations, int popsize, int attempt){
+		if(attempt>10){ throw new RuntimeException("more than 10 attempts at shrinking memory size failed. Use lower population size. Remember to specify java runtime engine heap size using -Xmx1g for example");}
 		
-		//process alternatives		
-		Evolver evolver = new SimpleHandPositionModelGAEvolver(popsize, generations, pcross, pmut); //TODO this needs to be the production evolver, whatever that ends up being
-		System.out.println(evolver);
-		FINGAR ga = new FINGAR(score(), evolver);
-		List<Arrangement> results = ga.results();
-		
-//		//print out results section, may be removed from the test
-//		HashSet<Arrangement> results_set = new HashSet<Arrangement>() ;
-//		results_set.addAll(results);
-//		Arrangement[] sorted_results_set =results_set.toArray(new Arrangement[results_set.size()]); 
-//		Arrays.sort(sorted_results_set, new Comparator<Arrangement>() {
-//			public int compare(Arrangement o1, Arrangement o2) {
-//				return ((Integer)o2.cost()).compareTo(o1.cost());
-//			}
-//		});
-//		
-//		for(Arrangement result : sorted_results_set){
-//			System.out.println(result+"Cost: "+result.cost()+"\n----\n\n");
-//		}
-		
-		System.out.println("\n\n\nBest results\n===================================\n\n");
-		for(Arrangement result : ga.best_results){
-			System.out.println(result+"Cost: "+result.cost()+"\nGeneration: "+result.generation_discovered()+"\n----\n\n");
+		try{
+			//process alternatives
+			Score score = score();
+			pcross = 1.0/score.size();
+			Evolver evolver = new SimpleHandPositionModelGAEvolver(popsize, generations, pcross, pmut); //this needs to be the production evolver, whatever that ends up being
+			System.out.println(evolver);
+			FINGAR ga = new FINGAR(score, evolver);
+			List<Arrangement> results = ga.results();
+	//		//print out results section, may be removed from the test
+	//		HashSet<Arrangement> results_set = new HashSet<Arrangement>() ;
+	//		results_set.addAll(results);
+	//		Arrangement[] sorted_results_set =results_set.toArray(new Arrangement[results_set.size()]); 
+	//		Arrays.sort(sorted_results_set, new Comparator<Arrangement>() {
+	//			public int compare(Arrangement o1, Arrangement o2) {
+	//				return ((Integer)o2.cost()).compareTo(o1.cost());
+	//			}
+	//		});
+	//		
+	//		for(Arrangement result : sorted_results_set){
+	//			System.out.println(result+"Cost: "+result.cost()+"\n----\n\n");
+	//		}
+			
+			System.out.println("\n\n\nBest results\n===================================\n\n");
+			for(Arrangement result : ga.best_results){
+				System.out.println(result+"Cost: "+result.cost()+"\nGeneration: "+result.generation_discovered()+"\n----\n\n");
+			}
+		} catch(OutOfMemoryError e){
+			System.out.println("Insufficient memory to run with population size: "+popsize);
+			run(pcross, pmut, farm_sz, generations, (popsize*75)/100, attempt+1); //reduce to 75% of popsize using integers until it works.
 		}
 	}
 }
