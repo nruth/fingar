@@ -18,6 +18,7 @@ import org.junit.runners.Suite;
 	PositionSpec.class,
 	ScoreSpec.class,
 	TimedNoteSpec.class,
+	FingeredNoteTest.class,
 })
 
 
