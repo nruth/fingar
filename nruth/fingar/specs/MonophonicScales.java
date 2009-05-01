@@ -51,12 +51,12 @@ public class MonophonicScales {
 	public void c_major_scale_alternatives(){
 		Score c_major_scale = c_major_scale();
 		boolean found_match=false;
-		for(int i=0; i<8; i++){ //check 8 runs for the result
+		for(int i=0; i<20; i++){ //check several runs for the result
 			//process alternatives		
 			//and check the list contains a known solution
-			Evolver evolver = new SimpleHandPositionModelGAEvolver(10000, 50, 0.13, 0.03); //TODO this needs to be the production evolver, whatever that ends up being
+			Evolver evolver = new SimpleHandPositionModelGAEvolver(20000, 100, 1.00/c_major_scale.size(), 0.02); //TODO this needs to be the production evolver, whatever that ends up being
 			
-			FINGAR ga = new FINGAR(c_major_scale, evolver);
+			FINGAR ga = new FINGAR(c_major_scale, evolver, 30);
 			List<Arrangement> results = ga.results();
 			assertTrue(results.size() > 0);
 			

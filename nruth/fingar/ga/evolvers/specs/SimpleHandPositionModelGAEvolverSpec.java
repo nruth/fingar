@@ -39,19 +39,25 @@ public class SimpleHandPositionModelGAEvolverSpec {
     		oneOf (arr).iterator(); will(returnIterator(note1, note2));    		
     		
     		//lhp 3
-    		oneOf (note1).finger(); will(returnValue(1));
-    		oneOf (note1).fret(); will(returnValue(3));    		
+    		atLeast(1).of (note1).finger(); will(returnValue(1));
+    		atLeast(1).of (note1).fret(); will(returnValue(3));    		
     		
     		//lhp 5, delta from lhp3 = 2
-    		oneOf (note2).finger(); will(returnValue(1));
-    		oneOf (note2).fret(); will(returnValue(5));    		
+    		atLeast(1).of (note2).finger(); will(returnValue(1));
+    		atLeast(1).of (note2).fret(); will(returnValue(5));    		
     		oneOf (arr).assign_cost(2);
     	}});
 		
     	assign_simple_hand_model_cost(arr);
-    	
+	}
+	
+	@Test
+	public void assign_simple_hand_model_cost2(){
+		final FingeredNote note1 = context.mock(FingeredNote.class, "note1");
+		final FingeredNote note2 = context.mock(FingeredNote.class, "note2");
     	final FingeredNote note3 = context.mock(FingeredNote.class, "note3");
 		final FingeredNote note4 = context.mock(FingeredNote.class, "note4");
+		final Arrangement arr = context.mock(Arrangement.class);
     	context.checking(new Expectations() {{
     		oneOf (arr).iterator(); will(returnIterator(note1, note2, note3, note4));
     		
@@ -75,8 +81,6 @@ public class SimpleHandPositionModelGAEvolverSpec {
     	}});
 		
     	assign_simple_hand_model_cost(arr);
-    	
-    	
 	}
 
 	@Test
@@ -221,5 +225,24 @@ public class SimpleHandPositionModelGAEvolverSpec {
     	}});
 		
     	assign_simple_hand_model_cost(arr);
+	}
+	
+	@Test
+	public void dont_assign_lhp_to_open_string(){
+		final FingeredNote note1 = context.mock(FingeredNote.class, "note1");
+		final FingeredNote note2 = context.mock(FingeredNote.class, "note2");
+		final FingeredNote note3 = context.mock(FingeredNote.class, "note3");
+		final Arrangement arr = context.mock(Arrangement.class);
+		
+		context.checking(new Expectations() {{
+    		oneOf (arr).iterator(); will(returnIterator(note1, note2, note3));    		
+    	
+    		atLeast(1).of (note1).finger(); will(returnValue(1)); atLeast(1).of (note1).fret(); will(returnValue(8));    		    		
+    		atLeast(1).of (note2).finger(); will(returnValue(0)); atLeast(1).of (note2).fret(); will(returnValue(0));
+    		atLeast(1).of (note3).finger(); will(returnValue(1)); atLeast(1).of (note3).fret(); will(returnValue(5));    		
+    		oneOf (arr).assign_cost(3);
+    	}});
+		
+		assign_simple_hand_model_cost(arr);
 	}
 }

@@ -10,17 +10,23 @@ import nruth.fingar.specs.MonophonicScales;
 public class Run {
 	
 	private static Score score(){
-//		return MonophonicScales.c_major_scale(2);
+		return MonophonicScales.c_major_scale(1);
 //		return MonophonicScales.a_minor_scale(2);
-		return MonophonicScales.sailors_hornpipe();
+//		return MonophonicScales.sailors_hornpipe();
 	}
 	
 	private static HashMap<String, String> parse_params(String[] args){
 		params = new HashMap<String,String>();	
 		for(String arg : args){	
 			String[] pair = arg.split("=");
-			if(pair.length != 2) throw new RuntimeException("invalid arguments "+args);
-			if(valid_params.get(pair[0]) == null) throw new RuntimeException("illegal argument "+pair[0]); 
+			if(pair.length != 2){
+				print_help();
+				throw new RuntimeException("invalid arguments "+args);
+			}
+			if(valid_params.get(pair[0]) == null) {
+				print_help();
+				throw new RuntimeException("illegal argument "+pair[0]); 
+			}
 			else params.put(pair[0], pair[1]);	
 		}
 		return params;
@@ -38,25 +44,29 @@ public class Run {
 		valid_params.put(ARGN_PMUT, 0.02);
 	}
 	
+	public static void print_help(){
+		System.out.println(
+				"* legal params: "
+				+"\n * 	pop 		:: 	natural integer"
+				+"\n * 		population size for each generation "
+				+"\n * 	gens 		:: 	natural integer"
+				+"\n * 		number of generations to produce before halting"
+				+"\n * 	farm_sz 	:: 	natural integer"
+				+"\n * 		size of best-result farm (set)"
+				+"\n * 	p_cross 	:: 	0<=real<=1"
+				+"\n * 		likelihood of crossover at locus (not likelihood of crossover for individual, see design chapter)"
+				+"\n * 	p_mutate	:: 	0<=real<=1"
+				+"\n * 		likelihood of allele mutation for all alleles  "
+				+"\n * @param args in the form arg=val as appropriate" 
+				+"\n *** example: java -Xmx1g nruth.fingar.Run p_mutate=0.1 pop=40000 gens=400");
+	}
 	
 	/**
 	 see --help print in definition
 	 */
 	public static void main(String[] args){
 		if((args.length != 0) && args[0].equals("--help")){
-			System.out.println(
-					"* legal params: "                                                                                          +
-					"\n * 	pop 		:: 	natural integer"                                                                +
-					"\n * 		population size for each generation "                                                       +
-					"\n * 	gens 		:: 	natural integer"                                                                +
-					"\n * 		number of generations to produce before halting"                                            +
-					"\n * 	farm_sz 	:: 	natural integer"                                                                          +
-					"\n * 		size of best-result farm (set)"                                                                       +
-					"\n * 	p_cross 	:: 	0<=real<=1"                                                                               +
-					"\n * 		likelihood of crossover at locus (not likelihood of crossover for individual, see design chapter)"    +
-					"\n * 	p_mutate	:: 	0<=real<=1"                                                                               +
-					"\n * 		likelihood of allele mutation for all alleles  "                                                      +
-					"\n * @param args in the form arg=val as appropriate"  );
+			print_help();
 			System.exit(0);
 		}
 		parse_params(args);
@@ -71,7 +81,7 @@ public class Run {
 		int farm_sz =  (s_farm == null) ? (Integer)valid_params.get(ARGN_FARMSZ) : Integer.parseInt(s_farm);
 		
 		String s_cross = params.get(ARGN_PCROSS);
-		double pcross =  (s_cross == null) ? (Double)valid_params.get(ARGN_PCROSS) : Double.parseDouble(s_cross);
+		double pcross =  (s_cross == null) ? Double.NaN : Double.parseDouble(s_cross);
 		
 		String s_mut = params.get(ARGN_PMUT);
 		double pmut =  (s_mut == null) ? (Double)valid_params.get(ARGN_PMUT) : Double.parseDouble(s_mut);
@@ -86,7 +96,10 @@ public class Run {
 		try{
 			//process alternatives
 			Score score = score();
-			pcross = 1.0/score.size();
+			
+			//match crossover likelihood to the piece unless it was specified as a param
+			if(((Double)pcross).equals(Double.NaN)){ pcross = 1.0/score.size(); }
+			
 			Evolver evolver = new SimpleHandPositionModelGAEvolver(popsize, generations, pcross, pmut); //this needs to be the production evolver, whatever that ends up being
 			System.out.println(evolver);
 			FINGAR ga = new FINGAR(score, evolver);

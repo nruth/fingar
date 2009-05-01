@@ -93,7 +93,7 @@ public class ArrangementSpec {
 	public void stores_finger_allocations(){		
 		List<Integer> fingers = new LinkedList<Integer>();
 		for(FingeredNote note : arrangement){ 
-			int finger = seed.nextInt(Guitar.FINGERS.length);
+			int finger = seed.nextInt(Guitar.FINGERS.length) + 1;
 			note.setFinger(finger);
 			fingers.add(finger);
 		}
@@ -128,17 +128,19 @@ public class ArrangementSpec {
 	 */
 	@Test
 	public void randomise_entire_fingering_arrangement(){
-		Note random_note = NoteFactory.getRandomNote();
-		arrangement = new Arrangement(new Score(new TimedNote[]{
-				new TimedNote(random_note, 1f, 1f), new TimedNote(random_note, 2f, 1f), new TimedNote(random_note, 3f, 1f)
-		}));
-		arrangement.randomise();
-		FingeredNote[] notes = new FingeredNote[arrangement.size()];
-		int n=0;
-		for(FingeredNote note : arrangement ){	notes[n++] = note;	}
-		
-		assertFalse(notes[0].equals(notes[1]) && notes[0].equals(notes[2]));
-		assertFalse(notes[1].equals(notes[2]) && notes[0].equals(notes[2]));
+		for(int z=0; z<40; z++){ //repeat to catch probabilistic weirdness e.g. intermitteny runtime errors
+			Note random_note = NoteFactory.getRandomNote();
+			arrangement = new Arrangement(new Score(new TimedNote[]{
+					new TimedNote(random_note, 1f, 1f), new TimedNote(random_note, 2f, 1f), new TimedNote(random_note, 3f, 1f)
+			}));
+			arrangement.randomise();
+			FingeredNote[] notes = new FingeredNote[arrangement.size()];
+			int n=0;
+			for(FingeredNote note : arrangement ){	notes[n++] = note;	}
+			
+			assertFalse(notes[0].equals(notes[1]) && notes[0].equals(notes[2]));
+			assertFalse(notes[1].equals(notes[2]) && notes[0].equals(notes[2]));
+		}
 	}
 	
 	/**

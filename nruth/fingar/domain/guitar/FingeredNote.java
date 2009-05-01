@@ -97,8 +97,7 @@ public class FingeredNote implements Cloneable {
 		this.finger = finger;	
 	}
 	
-	
-	public void setString(Guitar.GuitarString string) {	this.string = string;	}
+	public void setString(Guitar.GuitarString string) {	this.string = string; }
 
 	/**
 	 * sets valid fret, string and finger values randomly
@@ -108,10 +107,8 @@ public class FingeredNote implements Cloneable {
 		Position p = ps.get(seed.nextInt(ps.size()));
 		setString(p.string());
 		setFret(p.fret());
-		if(fret()==0){
-			setFinger(0);
-		}
-		setFinger(Guitar.FINGERS[seed.nextInt(Guitar.FINGERS.length)]);
+		if(fret()==0) { setFinger(0); }
+		else { setFinger(Guitar.FINGERS[seed.nextInt(Guitar.FINGERS.length)]); }
 	}
 	
 	public String toString(){
@@ -121,21 +118,11 @@ public class FingeredNote implements Cloneable {
 	static final Random seed = new Random();
 	
 	public static class FingerAssignmentException extends RuntimeException {
-		public FingerAssignmentException(String msg){
-			super(msg);
-		}
-		
-		public FingerAssignmentException(){
-			super();
-		}
+		public FingerAssignmentException(String msg){ super(msg); }
+		public FingerAssignmentException(){	super(); }
 	}
 	public static class FretAssignmentException extends RuntimeException {
-		public FretAssignmentException(String msg){
-			super(msg);
-		}
-		
-		public FretAssignmentException(){
-			super();
-		}
+		public FretAssignmentException(String msg){	super(msg);	}
+		public FretAssignmentException(){ super();	}
 	}
 }

@@ -3,6 +3,7 @@ package nruth.fingar.ga;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -28,12 +29,23 @@ public final class FINGAR {
 	/**
 	 * @param score the music to process
 	 * @param evolver the evolution mechanism to use (fitness function, crossover, etc)
+	 * @param farmsize how many best results to store, best result set capacity
+	 */
+	public FINGAR(Score score, Evolver evolver, int farmsize) {
+		this(score, evolver);
+		this.best_results = new BestResultSet(farmsize);
+	}
+	/**
+	 * @param score the music to process
+	 * @param evolver the evolution mechanism to use (fitness function, crossover, etc)
 	 */
 	public FINGAR(Score score, Evolver evolver) {
 		this.score = score;
 		this.evolver = evolver;
+		this.best_results = new BestResultSet(7);
 	}
 
+	
 	/**
 	 * Uses the default evolultion mechanism
 	 * @param score the music to process
@@ -49,7 +61,7 @@ public final class FINGAR {
 	 */
 	public List<Arrangement> results() {
 		process();
-		return results;
+		return Arrays.asList(best_results.toArray(new Arrangement[best_results.size()]));
 	}
 
 	public Score get_score() {	return score;	}
@@ -63,6 +75,7 @@ public final class FINGAR {
 	public boolean process() {
 		if(!finished){
 			Population population = new Population(score, evolver);			
+			System.out.print("\n."); //clear a line for the progress bar
 			
 			boolean finished = false;
 			while(!finished){ //make a new one and throw the old one away at each stage, this will enable garbage collection to occur				
@@ -82,7 +95,7 @@ public final class FINGAR {
 		else return false;
 	}
 	
-	public BestResultSet best_results = new BestResultSet(7);
+	public BestResultSet best_results;
 	private final Score score;
 	private boolean finished = false;
 	private List<Arrangement> results;

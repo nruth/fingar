@@ -36,9 +36,14 @@ public class SimpleHandPositionModelGAEvolver extends GeneticAlgorithmEvolver {
 		while (itr.hasNext()){ //the first evaluation is 1 against 2, 1 by itself has 0 cost as a starting point.
 			note = itr.next();
 			int lhp_this_n = lhp_of_fingered_fret(note.fret(), note.finger());
-			int lhp_previous_n = lhp_of_fingered_fret(previous_note.fret(), previous_note.finger());	 
-			delta_sum += Math.abs(lhp_this_n - lhp_previous_n); 
-			previous_note = note;
+			int lhp_previous_n = lhp_of_fingered_fret(previous_note.fret(), previous_note.finger());
+			if(note.fret()==0){
+				// don't cost 0 fret and don't advance previous note, cost across the open string as though it isn't there
+				// this is a naive costing method, and is documented as such in the design report
+			}else{
+				delta_sum += Math.abs(lhp_this_n - lhp_previous_n); 
+				previous_note = note;
+			}
 		}
 		
 		arr.assign_cost(delta_sum);	

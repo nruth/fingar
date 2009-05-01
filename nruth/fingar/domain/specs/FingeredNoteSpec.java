@@ -150,7 +150,31 @@ public class FingeredNoteSpec {
 
 	@Test
 	public void fingering_values_can_be_randomised() {
-		FingeredNote initial = initialised_fingerednote_fixture;
+		boolean finger_changed, fret_changed, string_changed;
+		finger_changed = fret_changed = string_changed = false;
+		
+		for(int z=0; z<100; z++){ //do it for a few different notes, as some only have 1 position and other properties e.g. open string positions
+			FingeredNote initial = new FingeredNote(TimedNoteSpec.create_random_monophonic_arranged_notes(1)[0]);
+			FingeredNote random = initial.clone();
+			
+			for(int n=0; n<100;n++){ //do it a few times to catch any quirky runtime exceptions & chance of 'false positive'
+				random.randomise_fingering();
+				if(random.finger() != initial.finger()) finger_changed = true;
+				if(random.fret() != initial.fret()) fret_changed = true;
+				if(!random.string().equals(initial.string())) string_changed = true;
+				assertEquals("timing should not change",random.duration(), initial.duration(),0.01f);
+				assertEquals("timing should not change",random.start_beat(), initial.start_beat(),0.01f);
+			}
+		}
+		
+		if(!finger_changed){fail("finger did not change");}
+		if(!fret_changed){fail("fret did not change");}
+		if(!string_changed){fail("string did not change");}
+	}
+	
+	@Test
+	public void randomising_note_with_open_string_possibility(){
+		FingeredNote initial = new FingeredNote(new TimedNote(GuitarString.A.open_string_note(),0.0f, 1.0f));
 		FingeredNote random = initial.clone();
 		
 		boolean finger_changed, fret_changed, string_changed;
@@ -257,11 +281,12 @@ public class FingeredNoteSpec {
 		assertFalse("different note", b.hashCode() == a.hashCode());
 	}
 
-	//TODO: doesn't reject being given invalid fingering positions for the note, e.g. E first fret for G (should be F)
-	@Test
-	public void rejects_invalid_positions(){
-		
-	}
+	//doesn't reject being given invalid fingering positions for the note, e.g. E first fret for G (should be F)
+	//but this is ok, validation isn't really necessary until this becomes an API, at which time results should be shared.
+//	@Test
+//	public void rejects_invalid_positions(){
+//		fixture.setFret()
+//	}
 	
 	//it was decided to remove uninitialised fingered notes, since no use of them was found within the system
 //	@Test
