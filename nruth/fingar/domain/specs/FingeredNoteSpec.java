@@ -152,12 +152,22 @@ public class FingeredNoteSpec {
 	public void fingering_values_can_be_randomised() {
 		FingeredNote initial = initialised_fingerednote_fixture;
 		FingeredNote random = initial.clone();
-		random.randomise_fingering();
-		assertFalse(random.finger() == initial.finger());
-		assertFalse(random.fret() == initial.fret());
-		assertFalse(random.string().equals(initial.string()));
-		assertEquals("timing should not change",random.duration(), initial.duration(),0.01f);
-		assertEquals("timing should not change",random.start_beat(), initial.start_beat(),0.01f);
+		
+		boolean finger_changed, fret_changed, string_changed;
+		finger_changed = fret_changed = string_changed = false;
+		
+		for(int n=0; n<50;n++){ //do it a few times to catch any quirky runtime exceptions & chance of 'false positive'
+			random.randomise_fingering();
+			if(random.finger() != initial.finger()) finger_changed = true;
+			if(random.fret() != initial.fret()) fret_changed = true;
+			if(!random.string().equals(initial.string())) string_changed = true;
+			assertEquals("timing should not change",random.duration(), initial.duration(),0.01f);
+			assertEquals("timing should not change",random.start_beat(), initial.start_beat(),0.01f);
+		}
+		
+		if(!finger_changed){fail("finger did not change");}
+		if(!fret_changed){fail("fret did not change");}
+		if(!string_changed){fail("string did not change");}
 	}
 
 	@Test

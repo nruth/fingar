@@ -108,9 +108,9 @@ public class FingeredNote implements Cloneable {
 		Position p = ps.get(seed.nextInt(ps.size()));
 		setString(p.string());
 		setFret(p.fret());
-//		if(fret()==0){
-//			setFinger(0);
-//		}
+		if(fret()==0){
+			setFinger(0);
+		}
 		setFinger(Guitar.FINGERS[seed.nextInt(Guitar.FINGERS.length)]);
 	}
 	
