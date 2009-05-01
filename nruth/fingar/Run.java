@@ -102,7 +102,7 @@ public class Run {
 			
 			Evolver evolver = new SimpleHandPositionModelGAEvolver(popsize, generations, pcross, pmut); //this needs to be the production evolver, whatever that ends up being
 			System.out.println(evolver);
-			FINGAR ga = new FINGAR(score, evolver);
+			FINGAR ga = new FINGAR(score, evolver, farm_sz);
 			List<Arrangement> results = ga.results();
 	//		//print out results section, may be removed from the test
 	//		HashSet<Arrangement> results_set = new HashSet<Arrangement>() ;
