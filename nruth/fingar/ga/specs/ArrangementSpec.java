@@ -160,20 +160,24 @@ public class ArrangementSpec {
 		Arrangement arr1, arr2, arr3;
 		arr1 = new Arrangement(score1);
 		arr2 = new Arrangement(score2);
-		
-		arr3 = arr1.clone();
 		assertFalse("different score, but considered equal", arr1.equals(arr2));
 		assertEquals("same object equality fail", arr1, arr1);
 		assertEquals("same object equality fail", arr2, arr2);
 		
+		arr3 = arr1.clone();
 		assertEquals("different object same arrangement", arr1, arr3);
-		arr3.randomise();
-		assertFalse("different values, randomised (rerun to check), considered equal ",arr3.equals(arr1));
 		
-		Arrangement arr4 = arr3.clone();
-		float key = arr4.fingered_notes().firstKey();
-		arr4.fingered_notes().put(key, arr1.fingered_notes().get(key));
-		assertFalse("should not be equal, since a fingered note has changed",arr3.equals(arr4));
+		boolean changed = false, equality = true;
+		for(int n=0;n<5;n++){
+			arr3.randomise();
+			if(! arr3.equals(arr1)){ equality = false; }	
+			Arrangement arr4 = arr3.clone();
+			float key = arr4.fingered_notes().firstKey();
+			arr4.fingered_notes().put(key, arr1.fingered_notes().get(key));
+			if(! arr3.equals(arr4)) changed = true; 
+		}
+		assertFalse("different values (arrangement randomised) considered equal ",equality);
+		assertTrue("should not be equal, since a fingered note has changed",changed);
 	}
 	
 	@Test
