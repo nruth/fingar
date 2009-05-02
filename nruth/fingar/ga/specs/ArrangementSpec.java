@@ -22,17 +22,9 @@ import nruth.fingar.ga.Arrangement;
 import org.junit.*;
 
 public class ArrangementSpec {
-	/**
-	 * given a score
-	 */
-	@Before
-	public void arrangement_constructor_given_a_score(){
-		score = ScoreSpec.get_test_score();
-		arrangement = test_arranger(score);
-	}
-	
 	@Test
 	public void given_fingered_notes_can_construct_an_equivalent_model(){
+		Arrangement arrangement = test_arranger(test_score());
 		//put some values into the arrangement first
 		arrangement.randomise();
 		
@@ -54,6 +46,9 @@ public class ArrangementSpec {
 	 */
 	@Test
 	public void is_iterable_correctly(){
+		Score score = test_score();
+		Arrangement arrangement = test_arranger(score);
+		
 		int n=1;
 		for(FingeredNote note : arrangement){
 			assertEquals(score.get_nth_note(n++).note(), note.tnote().note());
@@ -61,7 +56,7 @@ public class ArrangementSpec {
 	}
 	
 	@Test(expected=UnsupportedOperationException.class)
-	public void collection_is_immutable(){ arrangement.iterator().remove();	}
+	public void collection_is_immutable(){ test_arranger(test_score()).iterator().remove();	}
 	
 	/**
 	 * given a score
@@ -69,6 +64,8 @@ public class ArrangementSpec {
 	 */
 	@Test
 	public void stores_string_allocations(){
+		Random seed = new Random();
+		Arrangement arrangement = test_arranger(test_score());
 		List<GuitarString> strings = new LinkedList<GuitarString>();
 		for(FingeredNote note : arrangement){
 			GuitarString string = GuitarString.values()[seed.nextInt(GuitarString.values().length)];
@@ -87,17 +84,24 @@ public class ArrangementSpec {
 	 * 	will store string, fret and finger allocations for each note in the score
 	 */
 	@Test
-	public void stores_finger_allocations(){		
-		List<Integer> fingers = new LinkedList<Integer>();
-		for(FingeredNote note : arrangement){ 
-			int finger = seed.nextInt(Guitar.FINGERS.length) + 1;
-			note.setFinger(finger);
-			fingers.add(finger);
-		}
-		
-		Iterator<Integer> finger_iterator = fingers.iterator();
-		for(FingeredNote note : arrangement){
-			assertEquals(finger_iterator.next(), (Integer)note.finger());
+	public void stores_finger_allocations(){
+		Random seed = new Random();
+		Arrangement arrangement = test_arranger(test_score());
+		for(int n=0; n<10; n++){
+			List<Integer> fingers = new LinkedList<Integer>();
+			for(FingeredNote note : arrangement){ 
+				if(note.fret()==0){ note.setFinger(0); }
+				else{
+					int finger = seed.nextInt(Guitar.FINGERS.length) + 1;
+					note.setFinger(finger);
+					fingers.add(finger);
+				}
+			}
+			
+			Iterator<Integer> finger_iterator = fingers.iterator();
+			for(FingeredNote note : arrangement){
+				assertEquals(finger_iterator.next(), (Integer)note.finger());
+			}
 		}
 	}
 	
@@ -106,7 +110,9 @@ public class ArrangementSpec {
 	 * 	will store string, fret and finger allocations for each note in the score
 	 */
 	@Test
-	public void stores_fret_allocations(){	
+	public void stores_fret_allocations(){
+		Random seed = new Random();
+		Arrangement arrangement = test_arranger(test_score());
 		List<Integer> frets = new LinkedList<Integer>();
 		for(FingeredNote note : arrangement){
 			int fret = seed.nextInt(Guitar.FRETS+1);
@@ -125,6 +131,7 @@ public class ArrangementSpec {
 	 */
 	@Test
 	public void randomise_entire_fingering_arrangement(){
+		Arrangement arrangement;
 		for(int z=0; z<40; z++){ //repeat to catch probabilistic weirdness e.g. intermitteny runtime errors
 			Note random_note = NoteFactory.getRandomNote();
 			arrangement = new Arrangement(new Score(new TimedNote[]{
@@ -179,6 +186,7 @@ public class ArrangementSpec {
 	
 	@Test
 	public void clones_correctly(){
+		Arrangement arrangement = test_arranger(test_score());
 		Arrangement clone = arrangement.clone();
 		assertNotSame("same object returned by clone",clone, arrangement);
 		assertEquals("cloning should maintain equality", clone, arrangement);
@@ -192,6 +200,7 @@ public class ArrangementSpec {
 	 */
 	@Test
 	public void hashcode_distinctness(){
+		Arrangement arrangement = test_arranger(test_score());
 		assertEquals("same object hashcode production inconsistent",arrangement.hashCode(), arrangement.hashCode());
 		assertEquals("clone object hashcode production inconsistent",arrangement.hashCode(), arrangement.clone().hashCode());
 		Arrangement a2 = arrangement.clone();	a2.randomise();
@@ -203,6 +212,7 @@ public class ArrangementSpec {
 	 */
 	@Test
 	public void holds_ranking_metadata_for_evolution(){
+		Arrangement arrangement = test_arranger(test_score());
 		arrangement.assign_cost(100);
 		assertEquals(100, arrangement.cost());
 	}
@@ -212,12 +222,12 @@ public class ArrangementSpec {
 	 */
 	@Test
 	public void provides_list_access_to_fingered_notes(){
-		assertTrue(arrangement.fingered_notes().size()>0);
+		assertTrue(test_arranger(test_score()).fingered_notes().size()>0);
 	}
 	
-	private Arrangement arrangement;
-	private Score score;
-	Random seed = new Random();
+	public static Score test_score(){
+		return ScoreSpec.get_test_score();
+	}
 	
 	public static Arrangement test_arranger(Score score){
 		return new Arrangement(score);
