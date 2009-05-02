@@ -7,7 +7,7 @@ import nruth.fingar.domain.guitar.Guitar.GuitarString;
 import nruth.fingar.domain.music.TimedNote;
 
 public class FingeredNote implements Cloneable {
-	private int finger=-1, fret=-1;
+	private byte finger=-1, fret=-1;
 	private Guitar.GuitarString string = null;
 	private TimedNote note;
 	
@@ -41,8 +41,8 @@ public class FingeredNote implements Cloneable {
 	 */
 	public FingeredNote(int finger, int fret, GuitarString string, TimedNote note) {
 		this.note = note;
-		this.finger = finger;
-		this.fret = fret;
+		this.finger = (byte)finger;
+		this.fret = (byte)fret;
 		this.string = string;
 	}
 	
@@ -84,7 +84,7 @@ public class FingeredNote implements Cloneable {
 	 */
 	public void setFret(int fret) {
 		if(fret<0){ throw new FretAssignmentException("Attempting to set negative fret "+fret+"\n"+this.toString()); }
-		this.fret = fret;
+		this.fret = (byte)fret;
 		if(fret==0){ setFinger(0); }
 	}	
 	
@@ -93,7 +93,7 @@ public class FingeredNote implements Cloneable {
 		if(finger<0 || finger>4){ throw new FingerAssignmentException("Attempting to set invalid finger "+finger+"\n"+this.toString()); }
 		if(fret()==0 && finger!=0){ throw new FingerAssignmentException("attempted to assign finger "+finger+" to an open string.\n"+this.toString()); }
 		if(finger==0 && fret()!=0){ throw new FingerAssignmentException("attempted to assign no finger to fretted position\n"+this.toString()); }
-		this.finger = finger;	
+		this.finger = (byte)finger;	
 	}
 	
 	public void setString(Guitar.GuitarString string) {	this.string = string; }

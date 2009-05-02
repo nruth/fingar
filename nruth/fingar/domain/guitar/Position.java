@@ -7,11 +7,11 @@ public final class Position {
 	public int hashCode() { return toString().hashCode(); }
 	
 	public Position(int fret, GuitarString string) {
-	    this.fret = fret;
+	    this.fret = (byte)fret;
 	    this.string = string;
     }
 
-	private final int fret;
+	private final byte fret;
 	private final GuitarString string;
 	/**
     	@return the fret

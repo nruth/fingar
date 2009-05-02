@@ -10,9 +10,14 @@ import nruth.fingar.domain.guitar.Guitar;
 	
  */
 public final class Note implements Comparable<Note>, Cloneable{
+	/**
+	 * 
+	 * @param named_note
+	 * @param octave is cast to byte for storage efficiency
+	 */
 	public Note(NamedNote named_note, int octave) {
 		if(! nruth.Helpers.in_range(1, octave, Guitar.OCTAVE_RANGE)){ throw new IndexOutOfBoundsException("octave :"+octave+" invalid, must be 1 to "+Guitar.OCTAVE_RANGE);}
-	    this.octave = octave;
+	    this.octave = (byte)octave;
 	    this.named_note = named_note;
     }
 	
@@ -73,6 +78,6 @@ public final class Note implements Comparable<Note>, Cloneable{
 		return cmp.named_note().ordinal() - this.named_note().ordinal();
 	}
 	
-	private final int octave;
+	private final byte octave;
 	private final NamedNote named_note;
 }
