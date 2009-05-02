@@ -18,5 +18,4 @@ public class HeijinkNeckPositionCostFunction extends CostFunction {
 		for(FingeredNote n : arr){	fretsum += n.fret(); }
 		arr.assign_cost(fretsum);
 	}
-
 }

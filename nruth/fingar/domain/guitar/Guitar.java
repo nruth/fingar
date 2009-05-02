@@ -15,10 +15,10 @@ import nruth.fingar.domain.music.Note;
 	
  */
 public final class Guitar {
-	public static final int[] FINGERS = {1,2,3,4};
+	public static final byte[] FINGERS = {1,2,3,4};
 	
-	public static final int FRETS = 24;
-	public static final int OCTAVE_RANGE = 4;
+	public static final byte FRETS = 24;
+	public static final byte OCTAVE_RANGE = 4;
 	
 	public static enum GuitarString {
 		LOW_E, A, D, G, B, HIGH_E;

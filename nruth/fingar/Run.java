@@ -5,6 +5,7 @@ import nruth.fingar.domain.music.Score;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.FINGAR;
 import nruth.fingar.ga.cost_functions.CostFunction;
+import nruth.fingar.ga.cost_functions.HeijinkNeckPositionCostFunction;
 import nruth.fingar.ga.cost_functions.SimpleHandPositionModelCostFunction;
 import nruth.fingar.ga.evolvers.Breeder;
 import nruth.fingar.ga.evolvers.Evolver;
@@ -105,7 +106,7 @@ public class Run {
 			//match crossover likelihood to the piece unless it was specified as a param
 			if(((Double)pcross).equals(Double.NaN)){ pcross = 1.0/score.size(); }
 			
-			CostFunction cost_function = new SimpleHandPositionModelCostFunction(); 
+			CostFunction cost_function = new HeijinkNeckPositionCostFunction(); 
 			
 			Evolver evolver = new GeneticAlgorithmEvolver(popsize, generations, pcross, pmut,new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder(), cost_function); 
 			System.out.println(evolver);

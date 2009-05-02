@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
 	HeijinkNeckPositionCostFunctionSpec.class,
 	MonophonicFretGapEvolverSpec.class,
 	SimpleHandPositionModelGAEvolverSpec.class,
+	StringChangeCostFunctionSpec.class,
 })
 
 public class AllCostFunctionSpecs {
