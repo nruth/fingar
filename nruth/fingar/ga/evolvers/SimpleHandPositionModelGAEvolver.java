@@ -56,5 +56,4 @@ public class SimpleHandPositionModelGAEvolver extends GeneticAlgorithmEvolver {
 	public String toString(){
 		return this.getClass().getSimpleName() + ": " + super.toString();
 	}
-
 }

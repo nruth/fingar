@@ -17,7 +17,7 @@ public final class GoldbergRouletteWheel implements ProbabilityDistribution{
 	
 	
 	public GoldbergRouletteWheel(Population popl) {
-		double total_fitness = 0.0; //w_f in design doc
+		double total_fitness = 0.0;
 		for(Arrangement i : popl){ total_fitness += fitness(i); }		
 		wheel = new TreeMap<Double, Arrangement>();
 		double key = 0.0;  
