@@ -1,10 +1,7 @@
 package nruth.fingar.ga.evolvers;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Random;
-
-import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
 import nruth.fingar.ga.cost_functions.CostFunction;

@@ -1,21 +1,12 @@
 package nruth.fingar.ga.evolvers.specs;
 
 import static junit.framework.Assert.*;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
-import java.util.TreeMap;
-
-import nruth.fingar.domain.guitar.FingeredNote;
-import nruth.fingar.domain.guitar.Guitar.GuitarString;
 import nruth.fingar.domain.music.Score;
-import nruth.fingar.domain.music.TimedNote;
 import nruth.fingar.domain.specs.ScoreSpec;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
+import nruth.fingar.ga.cost_functions.CostFunction;
 import nruth.fingar.ga.evolvers.Breeder;
 import nruth.fingar.ga.evolvers.GeneticAlgorithmEvolver;
 import nruth.fingar.ga.probability.GoldbergRouletteWheel;
@@ -23,7 +14,6 @@ import nruth.fingar.ga.probability.PdFactory;
 import nruth.fingar.ga.probability.ProbabilityDistribution;
 import nruth.fingar.ga.specs.ArrangementSpec;
 import nruth.fingar.ga.specs.PopulationSpec;
-
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -43,11 +33,12 @@ public class GeneticAlgorithmEvolverSpec {
     public void population_should_be_costed_on_creation(){
     	//set up a population with a trivial evolver cost function
     	Population pop = new Population(ScoreSpec.get_test_score(), 
-    		new GeneticAlgorithmEvolver(5, 5, 0.4, 0.4, new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder()) {
-				protected void assign_costs_to_population(Population pop) {
-					for(Arrangement i : pop){ i.assign_cost(0); }
+    		new GeneticAlgorithmEvolver(5, 5, 0.4, 0.4, new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder(), new CostFunction(){			
+				@Override
+				public void assign_cost(Population population) {
+					for(Arrangement i : population){ i.assign_cost(0); }
 				}
-			});
+    		}));
     	
     	//now get a successor and make sure it was costed
     	pop = pop.successor();
@@ -115,12 +106,12 @@ public class GeneticAlgorithmEvolverSpec {
     	final Population popl = PopulationSpec.test_population();
     	for(Arrangement arr : popl){ arr.assign_cost(1); }
     	
-    	final GeneticAlgorithmEvolver ga = new GeneticAlgorithmEvolver(10, 2, 0.5, 1, new Random(), pdfacmoc, breeder) {		
+    	final GeneticAlgorithmEvolver ga = new GeneticAlgorithmEvolver(10, 2, 0.5, 1, new Random(), pdfacmoc, breeder, new CostFunction(){			
 			@Override
-			protected void assign_costs_to_population(Population pop) {
-				for(Arrangement arr : pop){ arr.assign_cost(1);}
+			public void assign_cost(Population population) {
+				for(Arrangement arr : population){ arr.assign_cost(1);}
 			}
-		};
+		});
     	
     	context.checking(new Expectations() {{
     		allowing (breeder).twist_about_random_locus(with(any(Arrangement.class)), with(any(Arrangement.class)));
