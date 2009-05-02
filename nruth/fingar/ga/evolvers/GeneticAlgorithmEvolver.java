@@ -7,18 +7,11 @@ import java.util.Random;
 import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
+import nruth.fingar.ga.cost_functions.CostFunction;
 import nruth.fingar.ga.probability.PdFactory;
 import nruth.fingar.ga.probability.ProbabilityDistribution;
 
-public abstract class GeneticAlgorithmEvolver extends Evolver {		
-	
-	/**
-	 * given a population the function will evaluate its contents and allocate costs to them according to cost, where a higher cost indicates a lower fitness
-	 * @param pop a population to assign costs to
-	 * @return the population provided, unchanged except for allocating costs to each individual within.
-	 */
-	protected abstract void assign_costs_to_population(Population pop);
-	
+public class GeneticAlgorithmEvolver extends Evolver {		
 	@Override
 	public GeneticAlgorithmEvolver clone() {
 		//all data here is primitive pertaining to generation counting, so shallow clone is sufficient
@@ -32,7 +25,7 @@ public abstract class GeneticAlgorithmEvolver extends Evolver {
 	 * @param p_mutate  the likelihood of each chromosome being mutated
 	 * @param rand Random number generator. Decoupled for testing & sharing if desired
 	 */
-	public GeneticAlgorithmEvolver(int population_size, int target_generations, double p_crossover, double p_mutate, Random rand, PdFactory pdfac, Breeder breeder) {
+	public GeneticAlgorithmEvolver(int population_size, int target_generations, double p_crossover, double p_mutate, Random rand, PdFactory pdfac, Breeder breeder, CostFunction cost_function) {
 		super();
 		this.set_population_size(population_size);
 		this.p_crossover = p_crossover;
@@ -42,6 +35,7 @@ public abstract class GeneticAlgorithmEvolver extends Evolver {
 		this.pdfac = pdfac;
 		this.target_generations= target_generations;
 		this.breeder = breeder;
+		this.cost_function = cost_function;
 	}
 	
 	public String toString(){
@@ -62,7 +56,7 @@ public abstract class GeneticAlgorithmEvolver extends Evolver {
 		if(current_generation >= target_generations){ throw new RuntimeException("too many generations produced: current "+current_generation+" target "+target_generations); }
 		
 		//1. allocate cost to each individual for first generation
-		if(current_generation==1){	assign_costs_to_population(forebears); }
+		if(current_generation==1){	cost_function.assign_cost(forebears); }
 		
 		//2. form a probability distribution for selection over the parent population
 		ProbabilityDistribution pd = pdfac.probability_distribution(forebears);		
@@ -93,7 +87,7 @@ public abstract class GeneticAlgorithmEvolver extends Evolver {
 		Population successor_pop = new Population(ev, successors, forebears.score());
 		
 		//every pop is assigned costs at creation doing it this way, except the first one handled earlier
-		assign_costs_to_population(successor_pop);
+		cost_function.assign_cost(successor_pop);
 		
 		return successor_pop;
 	}
@@ -128,4 +122,5 @@ public abstract class GeneticAlgorithmEvolver extends Evolver {
 	private int target_generations;
 	private double p_crossover;
 	private double p_mutate;
+	private CostFunction cost_function;
 }

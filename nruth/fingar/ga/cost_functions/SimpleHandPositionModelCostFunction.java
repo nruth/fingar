@@ -1,29 +1,14 @@
-package nruth.fingar.ga.evolvers;
+package nruth.fingar.ga.cost_functions;
 
 import java.util.Iterator;
-import java.util.Random;
-
 import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
-import nruth.fingar.ga.probability.GoldbergRouletteWheel;
-import nruth.fingar.ga.probability.PdFactory;
 
-public class SimpleHandPositionModelGAEvolver extends GeneticAlgorithmEvolver {
 
-	public SimpleHandPositionModelGAEvolver(int population_size, int target_generations,
-			double p_crossover, double p_mutate, Random rand, PdFactory pdfac,
-			Breeder breeder) {
-		super(population_size, target_generations, p_crossover, p_mutate, rand, pdfac, breeder);
-	}
-
-	public SimpleHandPositionModelGAEvolver(int population_size, int target_generations, double p_crossover, double p_mutate) {
-		this(population_size, target_generations, p_crossover, p_mutate, new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder());
-	}
-
-	@Override
-	protected void assign_costs_to_population(Population pop) {
-		for(Arrangement arr: pop){ assign_simple_hand_model_cost(arr); }
+public class SimpleHandPositionModelCostFunction extends CostFunction{
+	public void assign_cost(Population population) {
+		for(Arrangement arr: population){ assign_simple_hand_model_cost(arr); }
 	}
 	
 	public static void assign_simple_hand_model_cost(Arrangement arr){
@@ -54,6 +39,6 @@ public class SimpleHandPositionModelGAEvolver extends GeneticAlgorithmEvolver {
 	}
 	
 	public String toString(){
-		return this.getClass().getSimpleName() + ": " + super.toString();
+		return this.getClass().getSimpleName();
 	}
 }
