@@ -11,21 +11,12 @@ import nruth.fingar.domain.specs.TimedNoteSpec;
 import nruth.fingar.ga.*;
 import nruth.fingar.ga.cost_functions.CostFunction;
 import nruth.fingar.ga.cost_functions.StringChangeCostFunction;
-
-import org.jmock.*;
-import org.jmock.integration.junit4.*;
-import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static nruth.fingar.domain.guitar.Guitar.GuitarString.*;
 import static org.junit.Assert.*;
 
-@RunWith(JMock.class)
 public class StringChangeCostFunctionSpec {
-	private Mockery context = new JUnit4Mockery() {{
-        setImposteriser(ClassImposteriser.INSTANCE);
-    }};
     
 	@Test
 	public void string_gaps_determined_correctly(){
@@ -50,14 +41,9 @@ public class StringChangeCostFunctionSpec {
 	public void costs_population(){
 		TimedNote[] notes = TimedNoteSpec.create_random_monophonic_arranged_notes(3);
 		List<FingeredNote> fnotes = Arrays.asList(new FingeredNote(notes[0]), new FingeredNote(notes[1]), new FingeredNote(notes[2]));
-		final Arrangement high_cost = new Arrangement(fnotes);
-		final Arrangement low_cost = high_cost.clone();
-		final Population pop = context.mock(Population.class);
-		
-    	context.checking(new Expectations() {{
-    		allowing (pop).iterator(); will(returnIterator(high_cost, low_cost));   
-    	}});
-		
+		Arrangement high_cost = new Arrangement(fnotes);
+		Arrangement low_cost = high_cost.clone();
+
     	Iterator<FingeredNote> itr = high_cost.fingered_notes().values().iterator();
     	itr.next().setString(GuitarString.A);	itr.next().setString(GuitarString.B);	itr.next().setString(GuitarString.A);
     	
@@ -65,7 +51,6 @@ public class StringChangeCostFunctionSpec {
     	itr.next().setString(GuitarString.G);	itr.next().setString(GuitarString.G);	itr.next().setString(GuitarString.G);
     	
 		CostFunction cfn = new StringChangeCostFunction();
-		cfn.assign_cost(pop);
-		assertTrue(high_cost.cost() > low_cost.cost());
+		assertTrue(cfn.determine_cost(high_cost)> cfn.determine_cost(low_cost));
 	}
 }

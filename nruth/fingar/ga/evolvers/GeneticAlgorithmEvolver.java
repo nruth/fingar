@@ -63,7 +63,7 @@ public class GeneticAlgorithmEvolver extends Evolver {
 		if(current_generation >= target_generations){ throw new RuntimeException("too many generations produced: current "+current_generation+" target "+target_generations); }
 		
 		//1. allocate cost to each individual for first generation
-		if(current_generation==1){	cost_function.assign_cost(forebears); }
+		if(current_generation==1){	cost_function.evaluate(forebears); }
 		
 		//2. form a probability distribution for selection over the parent population
 		ProbabilityDistribution pd = pdfac.probability_distribution(forebears);		
@@ -94,7 +94,7 @@ public class GeneticAlgorithmEvolver extends Evolver {
 		Population successor_pop = new Population(ev, successors, forebears.score());
 		
 		//every pop is assigned costs at creation doing it this way, except the first one handled earlier
-		cost_function.assign_cost(successor_pop);
+		cost_function.evaluate(successor_pop);
 		
 		return successor_pop;
 	}

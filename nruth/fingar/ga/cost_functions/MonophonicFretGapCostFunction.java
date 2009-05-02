@@ -3,7 +3,6 @@ package nruth.fingar.ga.cost_functions;
 import java.util.Iterator;
 import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.ga.Arrangement;
-import nruth.fingar.ga.Population;
 
 public final class MonophonicFretGapCostFunction extends CostFunction {
 
@@ -16,7 +15,7 @@ public final class MonophonicFretGapCostFunction extends CostFunction {
 		return Math.abs(note_1.fret() - note_2.fret());
 	}
 
-	public static int cost_by_fretgap(Arrangement individual) {
+	public int determine_cost(Arrangement individual) {
 		int cost = 0;
 		Iterator<FingeredNote> itr = individual.iterator();  
 		FingeredNote n;
@@ -27,13 +26,5 @@ public final class MonophonicFretGapCostFunction extends CostFunction {
 			cost += fretgap(n, n2);
 		}
 		return cost;
-	}
-
-	@Override
-	public void assign_cost(Population population) {
-		for(Arrangement arr : population){
-			arr.assign_cost(cost_by_fretgap(arr));
-		}
-		
 	}
 }

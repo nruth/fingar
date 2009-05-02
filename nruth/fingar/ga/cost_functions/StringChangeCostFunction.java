@@ -9,13 +9,6 @@ import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
 
 public class StringChangeCostFunction extends CostFunction {
-
-	@Override
-	public void assign_cost(Population population) {
-		for(Arrangement i : population){ i.assign_cost(cost_notes(i.fingered_notes().values())); }
-
-	}
-
 	public static int string_gap(GuitarString s1, GuitarString s2){
 		return Math.abs(s1.compareTo(s2));
 	}
@@ -33,5 +26,9 @@ public class StringChangeCostFunction extends CostFunction {
 		}
 		return string_sum;
 	}
-	
+
+	@Override
+	public int determine_cost(Arrangement individual) {		
+		return cost_notes(individual.fingered_notes().values());
+	}	
 }

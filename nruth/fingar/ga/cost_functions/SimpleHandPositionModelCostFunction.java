@@ -7,11 +7,7 @@ import nruth.fingar.ga.Population;
 
 
 public class SimpleHandPositionModelCostFunction extends CostFunction{
-	public void assign_cost(Population population) {
-		for(Arrangement arr: population){ assign_simple_hand_model_cost(arr); }
-	}
-	
-	public static void assign_simple_hand_model_cost(Arrangement arr){
+	public int determine_cost(Arrangement arr){
 		//this is the deltas process described in paper
 		Iterator<FingeredNote> itr = arr.iterator();
 		FingeredNote note = itr.next();
@@ -31,7 +27,7 @@ public class SimpleHandPositionModelCostFunction extends CostFunction{
 			}
 		}
 		
-		arr.assign_cost(delta_sum);	
+		return delta_sum;	
 	}
 	
 	public static int lhp_of_fingered_fret(int fret, int finger){

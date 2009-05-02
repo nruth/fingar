@@ -127,7 +127,7 @@ public class PopulationSpec {
 	@Test
 	public void can_provide_an_increasing_cost_ranked_view(){
 		Population pop = test_population();
-		for(Arrangement arr : pop){	arr.assign_cost(MonophonicFretGapCostFunction.cost_by_fretgap(arr)); }
+		new MonophonicFretGapCostFunction().evaluate(pop);
 		List<Arrangement> rankview = pop.ranked();
 		Iterator<Arrangement> itr = rankview.iterator();
 		Arrangement arr1, arr2 = itr.next();

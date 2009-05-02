@@ -1,11 +1,16 @@
 package nruth.fingar.ga.cost_functions;
 
+import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
 
 public abstract class CostFunction {
+	public abstract int determine_cost(Arrangement individual);
+	
 	/**
-	 * assign cost values to each individual in population
-	 * @param population the population to be costed (which will mutate its objects using their assign cost methods)
+	 * mutates each individual in population p to have a cost allocated
+	 * @param p
 	 */
-	public abstract void assign_cost(Population population);
+	public void evaluate(Population p){
+		for (Arrangement a : p){ a.assign_cost(determine_cost(a));	}
+	}
 }

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import static nruth.fingar.ga.cost_functions.SimpleHandPositionModelCostFunction.*;
 import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.ga.Arrangement;
+import nruth.fingar.ga.cost_functions.SimpleHandPositionModelCostFunction;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -14,7 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(JMock.class)
-public class SimpleHandPositionModelGAEvolverSpec {
+public class SimpleHandPositionModelCostFunctionSpec {
 	private Mockery context = new JUnit4Mockery() {{
         setImposteriser(ClassImposteriser.INSTANCE);
     }};
@@ -39,10 +40,9 @@ public class SimpleHandPositionModelGAEvolverSpec {
     		//lhp 5, delta from lhp3 = 2
     		atLeast(1).of (note2).finger(); will(returnValue(1));
     		atLeast(1).of (note2).fret(); will(returnValue(5));    		
-    		oneOf (arr).assign_cost(2);
     	}});
 		
-    	assign_simple_hand_model_cost(arr);
+    	assertEquals(2, new SimpleHandPositionModelCostFunction().determine_cost(arr));
 	}
 	
 	@Test
@@ -70,11 +70,9 @@ public class SimpleHandPositionModelGAEvolverSpec {
     		//lhp 10, delta from lhp-2 = 12
     		atLeast(1).of (note4).finger(); will(returnValue(3));
     		atLeast(1).of (note4).fret(); will(returnValue(12));
-    		
-    		oneOf (arr).assign_cost(2+7+12);
     	}});
 		
-    	assign_simple_hand_model_cost(arr);
+    	assertEquals(2+7+12, new SimpleHandPositionModelCostFunction().determine_cost(arr));
 	}
 
 	@Test
@@ -134,11 +132,9 @@ public class SimpleHandPositionModelGAEvolverSpec {
     		atLeast(1).of (note6).finger(); will(returnValue(1)); atLeast(1).of (note6).fret(); will(returnValue(2));    		
     		atLeast(1).of (note7).finger(); will(returnValue(3)); atLeast(1).of (note7).fret(); will(returnValue(4));    		
     		atLeast(1).of (note8).finger(); will(returnValue(4)); atLeast(1).of (note8).fret(); will(returnValue(5));    		
-    		
-    		oneOf (arr).assign_cost(0);
     	}});
 		
-    	assign_simple_hand_model_cost(arr);
+    	assertEquals(0, new SimpleHandPositionModelCostFunction().determine_cost(arr));
 	}
 	
 	@Test
@@ -175,11 +171,9 @@ public class SimpleHandPositionModelGAEvolverSpec {
     		atLeast(1).of (note6).finger(); will(returnValue(3)); atLeast(1).of (note6).fret(); will(returnValue(7));    		
     		atLeast(1).of (note7).finger(); will(returnValue(1)); atLeast(1).of (note7).fret(); will(returnValue(4));    		
     		atLeast(1).of (note8).finger(); will(returnValue(1)); atLeast(1).of (note8).fret(); will(returnValue(1));    		
-    		
-    		oneOf (arr).assign_cost(4);
     	}});
 		
-    	assign_simple_hand_model_cost(arr);
+    	assertEquals(4, new SimpleHandPositionModelCostFunction().determine_cost(arr));
 	}
 	@Test
 	public void catch_buggy_cost_eval2(){
@@ -214,11 +208,9 @@ public class SimpleHandPositionModelGAEvolverSpec {
     		atLeast(1).of (note6).finger(); will(returnValue(4)); atLeast(1).of (note6).fret(); will(returnValue(7));    		
     		atLeast(1).of (note7).finger(); will(returnValue(1)); atLeast(1).of (note7).fret(); will(returnValue(4));    		
     		atLeast(1).of (note8).finger(); will(returnValue(2)); atLeast(1).of (note8).fret(); will(returnValue(5));    		
-    		
-    		oneOf (arr).assign_cost(18);
     	}});
 		
-    	assign_simple_hand_model_cost(arr);
+    	assertEquals(18, new SimpleHandPositionModelCostFunction().determine_cost(arr));
 	}
 	
 	@Test
@@ -233,10 +225,9 @@ public class SimpleHandPositionModelGAEvolverSpec {
     	
     		atLeast(1).of (note1).finger(); will(returnValue(1)); atLeast(1).of (note1).fret(); will(returnValue(8));    		    		
     		atLeast(1).of (note2).finger(); will(returnValue(0)); atLeast(1).of (note2).fret(); will(returnValue(0));
-    		atLeast(1).of (note3).finger(); will(returnValue(1)); atLeast(1).of (note3).fret(); will(returnValue(5));    		
-    		oneOf (arr).assign_cost(3);
+    		atLeast(1).of (note3).finger(); will(returnValue(1)); atLeast(1).of (note3).fret(); will(returnValue(5));
     	}});
 		
-		assign_simple_hand_model_cost(arr);
+		assertEquals(3, new SimpleHandPositionModelCostFunction().determine_cost(arr));
 	}
 }

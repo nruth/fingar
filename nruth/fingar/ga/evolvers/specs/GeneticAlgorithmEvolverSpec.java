@@ -33,11 +33,9 @@ public class GeneticAlgorithmEvolverSpec {
     public void population_should_be_costed_on_creation(){
     	//set up a population with a trivial evolver cost function
     	Population pop = new Population(ScoreSpec.get_test_score(), 
-    		new GeneticAlgorithmEvolver(5, 5, 0.4, 0.4, new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder(), new CostFunction(){			
+    		new GeneticAlgorithmEvolver(5, 5, 0.4, 0.4, new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder(), new CostFunction(){
 				@Override
-				public void assign_cost(Population population) {
-					for(Arrangement i : population){ i.assign_cost(0); }
-				}
+				public int determine_cost(Arrangement individual) { return 0; }			
     		}));
     	
     	//now get a successor and make sure it was costed
@@ -107,10 +105,8 @@ public class GeneticAlgorithmEvolverSpec {
     	for(Arrangement arr : popl){ arr.assign_cost(1); }
     	
     	final GeneticAlgorithmEvolver ga = new GeneticAlgorithmEvolver(10, 2, 0.5, 1, new Random(), pdfacmoc, breeder, new CostFunction(){			
-			@Override
-			public void assign_cost(Population population) {
-				for(Arrangement arr : population){ arr.assign_cost(1);}
-			}
+    		@Override
+			public int determine_cost(Arrangement individual) { return 1; }			
 		});
     	
     	context.checking(new Expectations() {{

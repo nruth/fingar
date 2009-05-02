@@ -55,7 +55,7 @@ public class MonophonicFretGapEvolverSpec {
 	
 	@Test
 	public void cost_by_fret_gap(){
-		assertTrue(MonophonicFretGapCostFunction.cost_by_fretgap(pop.iterator().next()) > 0);
+		assertTrue(new MonophonicFretGapCostFunction().determine_cost(pop.iterator().next()) > 0);
 		
 		Arrangement arr = new Arrangement(
 				new Score(new TimedNote[] {
@@ -72,7 +72,7 @@ public class MonophonicFretGapEvolverSpec {
 		note1.setString(GuitarString.LOW_E); note1.setFret(1);
 		FingeredNote note2 = itr.next();
 		note2.setString(GuitarString.LOW_E); note2.setFret(11);
-		assertEquals(10, MonophonicFretGapCostFunction.cost_by_fretgap(arr));
+		assertEquals(10, new MonophonicFretGapCostFunction().determine_cost(arr));
 	}
 	
 	private Population pop;
