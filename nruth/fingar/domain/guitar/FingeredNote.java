@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import nruth.fingar.domain.guitar.Guitar.GuitarString;
-import nruth.fingar.domain.music.Note;
 import nruth.fingar.domain.music.TimedNote;
 
 public class FingeredNote implements Cloneable {
@@ -58,7 +57,8 @@ public class FingeredNote implements Cloneable {
 	}
 	
 	//accessors / getters
-	public Note note(){	return note.note();	}
+//	public Note note(){	return note.note();	}
+	public TimedNote tnote(){ return note; }
 	public int finger() {
 		if(finger < 0) throw new RuntimeException("uninitialised finger");
 		return finger;  	
@@ -102,7 +102,7 @@ public class FingeredNote implements Cloneable {
 	 * sets valid fret, string and finger values randomly
 	 */
 	public void randomise_fingering() {
-		LinkedList<Position> ps = Guitar.get_positions_for_note(note());
+		LinkedList<Position> ps = Guitar.get_positions_for_note(tnote().note());
 		Position p = ps.get(seed.nextInt(ps.size()));
 		setString(p.string());
 		setFret(p.fret());

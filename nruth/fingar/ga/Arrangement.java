@@ -37,6 +37,10 @@ public class Arrangement implements Iterable<FingeredNote>, Cloneable{
 		for(TimedNote note : score){ notes_starting_at.put(note.start_beat(), new FingeredNote(note)); }
 	}
 	
+	/**
+	 * this function is for testing purposes and should not be used elsewhere
+	 * @param notes fingerednotes to produce an arrangement from. The notes will be cloned so they are unique to the arrangement
+	 */
 	public Arrangement(List<FingeredNote> notes){
 		this();
 		ArrayList<TimedNote> arranged_notes = new ArrayList<TimedNote>(notes.size());
@@ -44,7 +48,8 @@ public class Arrangement implements Iterable<FingeredNote>, Cloneable{
 		//this is used in testing rather than production, so issues of the score becoming ordered differently to other individuals should not matter. 
 		//Polyphony should be made robust against simultaneous notes being recorded in different orders anyway.
 		for(FingeredNote note : notes){ 
-			arranged_notes.add(new TimedNote(note.note(), note.start_beat(), note.duration()));
+			note = note.clone(); //safety
+			arranged_notes.add(note.tnote());
 			notes_starting_at.put(note.start_beat(), note); 
 		}
 		this.score = new Score(arranged_notes.toArray(new TimedNote[arranged_notes.size()]));

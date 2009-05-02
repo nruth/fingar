@@ -49,7 +49,7 @@ public class FingeredNoteSpec {
 		assertEquals(finger, testfn.finger());
 		assertEquals(fret, testfn.fret());
 		assertEquals(string, testfn.string());
-		assertEquals(note, testfn.note());
+		assertEquals(tnote, testfn.tnote());
 		assertEquals(notestart, testfn.start_beat(),0.01f);
 		assertEquals(notedur, testfn.duration(),0.01f);
 	}
@@ -68,7 +68,7 @@ public class FingeredNoteSpec {
 
 	@Test
 	public void note_can_be_retrieved() {
-		assertEquals("accessor failure, or Note equality broken", note, initialised_fingerednote_fixture.note());
+		assertEquals("accessor failure, or Note equality broken", tnote, initialised_fingerednote_fixture.tnote());
 	}
 
 	//trivial accessor tests

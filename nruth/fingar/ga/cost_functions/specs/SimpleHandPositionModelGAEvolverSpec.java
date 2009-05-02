@@ -1,4 +1,4 @@
-package nruth.fingar.ga.cost_functions;
+package nruth.fingar.ga.cost_functions.specs;
 
 import static org.junit.Assert.*;
 import static nruth.fingar.ga.cost_functions.SimpleHandPositionModelCostFunction.*;

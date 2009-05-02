@@ -1,17 +1,16 @@
-package nruth.fingar.ga.evolvers.specs;
+package nruth.fingar.ga.cost_functions.specs;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-  EvolverSpec.class,
-  BreederSpec.class, 
-  GoldbergRouletteWheelTest.class,
-  GeneticAlgorithmEvolverSpec.class, 
+	HeijinkNeckPositionCostFunctionSpec.class,
+	MonophonicFretGapEvolverSpec.class,
+	SimpleHandPositionModelGAEvolverSpec.class,
 })
 
-public class AllEvolverSpecs {
+public class AllCostFunctionSpecs {
     // the class remains empty, 
     // being used only as a holder for the above annotations
 }

@@ -1,4 +1,4 @@
-package nruth.fingar.ga.cost_functions;
+package nruth.fingar.ga.cost_functions.specs;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.*;
 
@@ -13,6 +13,7 @@ import nruth.fingar.domain.music.Score;
 import nruth.fingar.domain.music.TimedNote;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
+import nruth.fingar.ga.cost_functions.MonophonicFretGapCostFunction;
 import nruth.fingar.ga.evolvers.Breeder;
 import nruth.fingar.ga.evolvers.GeneticAlgorithmEvolver;
 import nruth.fingar.ga.probability.GoldbergRouletteWheel;
