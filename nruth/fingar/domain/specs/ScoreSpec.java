@@ -1,7 +1,6 @@
 package nruth.fingar.domain.specs;
 import static org.junit.Assert.*;
 import org.junit.*;
-import nruth.fingar.domain.*;
 import nruth.fingar.domain.music.NamedNote;
 import nruth.fingar.domain.music.Note;
 import nruth.fingar.domain.music.Score;

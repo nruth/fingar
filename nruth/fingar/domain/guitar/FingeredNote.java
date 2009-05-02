@@ -3,7 +3,6 @@ package nruth.fingar.domain.guitar;
 import java.util.LinkedList;
 import java.util.Random;
 
-import nruth.fingar.domain.*;
 import nruth.fingar.domain.guitar.Guitar.GuitarString;
 import nruth.fingar.domain.music.Note;
 import nruth.fingar.domain.music.TimedNote;

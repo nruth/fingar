@@ -2,13 +2,11 @@ package nruth.fingar.domain.specs;
 
 import static org.junit.Assert.*;
 
-import nruth.fingar.domain.music.NamedNote;
 import nruth.fingar.domain.music.Note;
 
 import org.junit.*;
 
 
-import static org.junit.Assert.*;
 import static nruth.fingar.domain.guitar.Guitar.GuitarString; 
 import static nruth.fingar.domain.music.NamedNote.*;
 

@@ -1,20 +1,15 @@
 package nruth.fingar.ga.evolvers.specs;
 
 import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeMap;
 
-import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.domain.music.Score;
-import nruth.fingar.domain.specs.ScoreSpec;
-import nruth.fingar.ga.evolvers.Evolver;
 import nruth.fingar.ga.evolvers.NDeepRandomEvolver;
 import nruth.fingar.ga.probability.GoldbergRouletteWheel;
-import nruth.fingar.ga.specs.ArrangementSpec;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
 

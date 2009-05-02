@@ -2,7 +2,6 @@ package nruth.fingar.domain.specs;
 
 import static org.junit.Assert.*;
 import java.util.*;
-import nruth.fingar.domain.*;
 import nruth.fingar.domain.guitar.Guitar;
 import nruth.fingar.domain.music.NamedNote;
 import nruth.fingar.domain.music.Note;

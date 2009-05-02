@@ -5,7 +5,6 @@ import static nruth.fingar.domain.music.NamedNote.*;
 
 import java.util.*;
 
-import nruth.fingar.domain.*;
 import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.domain.guitar.Guitar.GuitarString;
 import nruth.fingar.domain.music.NamedNote;
@@ -14,9 +13,12 @@ import nruth.fingar.domain.music.Score;
 import nruth.fingar.domain.music.TimedNote;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.FINGAR;
+import nruth.fingar.ga.cost_functions.MonophonicFretGapCostFunction;
+import nruth.fingar.ga.cost_functions.SimpleHandPositionModelCostFunction;
+import nruth.fingar.ga.evolvers.Breeder;
 import nruth.fingar.ga.evolvers.Evolver;
-import nruth.fingar.ga.evolvers.MonophonicFretGapEvolver;
-import nruth.fingar.ga.evolvers.SimpleHandPositionModelGAEvolver;
+import nruth.fingar.ga.evolvers.GeneticAlgorithmEvolver;
+import nruth.fingar.ga.probability.GoldbergRouletteWheel;
 
 import org.junit.*;
 
@@ -37,7 +39,7 @@ public class MonophonicScales {
 	 */
 	@Test
 	public void are_solutions_costed(){
-		Evolver evolver = new MonophonicFretGapEvolver(10, 2); //TODO this needs to be the production evolver, whatever that ends up being
+		Evolver evolver = new GeneticAlgorithmEvolver(new GoldbergRouletteWheel.WheelFactory(), new Breeder() ,new MonophonicFretGapCostFunction()); //TODO this needs to be the production evolver, whatever that ends up being
 		FINGAR ga = new FINGAR(c_major_scale(), evolver);
 		for(Arrangement arr: ga.results()){
 			assertTrue("cost not assigned",arr.cost()>=0);
@@ -54,7 +56,7 @@ public class MonophonicScales {
 		for(int i=0; i<20; i++){ //check several runs for the result
 			//process alternatives		
 			//and check the list contains a known solution
-			Evolver evolver = new SimpleHandPositionModelGAEvolver(20000, 100, 1.00/c_major_scale.size(), 0.02); //TODO this needs to be the production evolver, whatever that ends up being
+			Evolver evolver = new GeneticAlgorithmEvolver(20000, 40, 1.00/c_major_scale.size(), 0.02,new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder(), new SimpleHandPositionModelCostFunction()); //TODO this needs to be the production evolver, whatever that ends up being
 			
 			FINGAR ga = new FINGAR(c_major_scale, evolver, 30);
 			List<Arrangement> results = ga.results();

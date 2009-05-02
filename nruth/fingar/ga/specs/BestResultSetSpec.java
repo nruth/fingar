@@ -4,10 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Random;
-
-import javax.swing.event.ListSelectionEvent;
-
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -19,10 +15,6 @@ import org.junit.runner.RunWith;
 import nruth.fingar.domain.specs.ScoreSpec;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.BestResultSet;
-import nruth.fingar.ga.evolvers.Breeder;
-import nruth.fingar.ga.evolvers.GeneticAlgorithmEvolver;
-import nruth.fingar.ga.probability.GoldbergRouletteWheel;
-import nruth.fingar.ga.probability.PdFactory;
 
 @RunWith(JMock.class)
 public class BestResultSetSpec {

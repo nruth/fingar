@@ -1,10 +1,15 @@
 package nruth.fingar;
 import java.util.*;
+
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.FINGAR;
+import nruth.fingar.ga.cost_functions.CostFunction;
+import nruth.fingar.ga.cost_functions.SimpleHandPositionModelCostFunction;
+import nruth.fingar.ga.evolvers.Breeder;
 import nruth.fingar.ga.evolvers.Evolver;
-import nruth.fingar.ga.evolvers.SimpleHandPositionModelGAEvolver;
+import nruth.fingar.ga.evolvers.GeneticAlgorithmEvolver;
+import nruth.fingar.ga.probability.GoldbergRouletteWheel;
 import nruth.fingar.specs.MonophonicScales;
 
 public class Run {
@@ -100,7 +105,9 @@ public class Run {
 			//match crossover likelihood to the piece unless it was specified as a param
 			if(((Double)pcross).equals(Double.NaN)){ pcross = 1.0/score.size(); }
 			
-			Evolver evolver = new SimpleHandPositionModelGAEvolver(popsize, generations, pcross, pmut); //this needs to be the production evolver, whatever that ends up being
+			CostFunction cost_function = new SimpleHandPositionModelCostFunction(); 
+			
+			Evolver evolver = new GeneticAlgorithmEvolver(popsize, generations, pcross, pmut,new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder(), cost_function); 
 			System.out.println(evolver);
 			FINGAR ga = new FINGAR(score, evolver, farm_sz);
 			List<Arrangement> results = ga.results();
@@ -119,7 +126,7 @@ public class Run {
 	//		}
 			
 			System.out.println("\n\n\nBest results\n===================================\n\n");
-			for(Arrangement result : ga.best_results){
+			for(Arrangement result : results){
 				System.out.println(result+"Cost: "+result.cost()+"\nGeneration: "+result.generation_discovered()+"\n----\n\n");
 			}
 		} catch(OutOfMemoryError e){

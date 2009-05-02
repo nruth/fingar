@@ -1,14 +1,8 @@
-package nruth.fingar.ga.evolvers.specs;
+package nruth.fingar.ga.cost_functions;
 
 import static org.junit.Assert.*;
-import static nruth.fingar.ga.evolvers.SimpleHandPositionModelGAEvolver.*;
-
-import java.util.Arrays;
-
+import static nruth.fingar.ga.cost_functions.SimpleHandPositionModelCostFunction.*;
 import nruth.fingar.domain.guitar.FingeredNote;
-import nruth.fingar.domain.guitar.Guitar.GuitarString;
-import nruth.fingar.domain.music.NamedNote;
-import nruth.fingar.domain.music.Note;
 import nruth.fingar.ga.Arrangement;
 
 import org.jmock.Expectations;

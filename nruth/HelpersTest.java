@@ -5,13 +5,10 @@ package nruth;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.swing.event.ListSelectionEvent;
 
 import org.junit.Test;
 

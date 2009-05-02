@@ -1,5 +1,8 @@
 package nruth.fingar.ga.evolvers.specs;
 
+import nruth.fingar.ga.cost_functions.MonophonicFretGapEvolverSpec;
+import nruth.fingar.ga.cost_functions.SimpleHandPositionModelGAEvolverSpec;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

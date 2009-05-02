@@ -2,7 +2,6 @@ package nruth.fingar.ga.evolvers;
 
 import java.util.*;
 
-import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.domain.music.Score;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;

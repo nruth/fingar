@@ -2,12 +2,8 @@ package nruth.fingar.domain.specs;
 
 import static org.junit.Assert.*;
 
-import nruth.fingar.domain.guitar.Guitar;
 import nruth.fingar.domain.guitar.Position;
 import nruth.fingar.domain.guitar.Guitar.GuitarString;
-import nruth.fingar.domain.music.NamedNote;
-import nruth.fingar.domain.music.Note;
-
 import org.junit.Test;
 
 public class PositionSpec {

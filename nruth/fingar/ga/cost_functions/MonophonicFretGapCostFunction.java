@@ -1,16 +1,11 @@
 package nruth.fingar.ga.cost_functions;
 
 import java.util.Iterator;
-import java.util.Random;
-
 import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
-import nruth.fingar.ga.evolvers.Breeder;
-import nruth.fingar.ga.probability.GoldbergRouletteWheel;
-import nruth.fingar.ga.probability.PdFactory;
 
-public final class MonophonicFretGapEvolver extends CostFunction {
+public final class MonophonicFretGapCostFunction extends CostFunction {
 
 	/**
 	 * @param note_1

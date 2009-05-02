@@ -35,6 +35,16 @@ public class GeneticAlgorithmEvolver extends Evolver {
 		this.cost_function = cost_function;
 	}
 	
+	/**
+	 * uses trivially small GA parameters, intended for testing not experimental use
+	 * @param pdfac 
+	 * @param breeder
+	 * @param cost_function
+	 */
+	public GeneticAlgorithmEvolver(PdFactory pdfac,  Breeder breeder, CostFunction cost_function){
+		this(100, 10, 0.2, 0.04, new Random(), pdfac, breeder, cost_function);
+	}
+	
 	public String toString(){
 		return 		"\npopulation size: "+population_size
 				+ 	"\nlocus crossover likelihood: "+p_crossover

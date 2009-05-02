@@ -1,19 +1,14 @@
 package nruth.fingar.ga;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 import nruth.fingar.domain.music.Score;
+import nruth.fingar.ga.cost_functions.SimpleHandPositionModelCostFunction;
 import nruth.fingar.ga.evolvers.Breeder;
 import nruth.fingar.ga.evolvers.Evolver;
-import nruth.fingar.ga.evolvers.MonophonicFretGapEvolver;
-import nruth.fingar.ga.evolvers.NDeepRandomEvolver;
-import nruth.fingar.ga.evolvers.SimpleHandPositionModelGAEvolver;
+import nruth.fingar.ga.evolvers.GeneticAlgorithmEvolver;
 import nruth.fingar.ga.probability.GoldbergRouletteWheel;
 
 /**
@@ -51,7 +46,7 @@ public final class FINGAR {
 	 * @param score the music to process
 	 */
 	public FINGAR(Score score) {
-		this(score, new SimpleHandPositionModelGAEvolver(400, 30, 0.5, 0.01)); 
+		this(score, new GeneticAlgorithmEvolver(400, 30, 0.5, 0.01,new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder(), new SimpleHandPositionModelCostFunction())); 
 	}
 
 	/**

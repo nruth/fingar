@@ -12,8 +12,7 @@ import nruth.fingar.domain.music.TimedNote;
 import nruth.fingar.domain.specs.ScoreSpec;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
-import nruth.fingar.ga.evolvers.Evolver;
-import nruth.fingar.ga.evolvers.MonophonicFretGapEvolver;
+import nruth.fingar.ga.cost_functions.MonophonicFretGapCostFunction;
 import nruth.fingar.ga.evolvers.specs.EvolverSpec;
 import static junit.framework.Assert.*;
 
@@ -128,7 +127,7 @@ public class PopulationSpec {
 	@Test
 	public void can_provide_an_increasing_cost_ranked_view(){
 		Population pop = test_population();
-		for(Arrangement arr : pop){	arr.assign_cost(MonophonicFretGapEvolver.cost_by_fretgap(arr)); }
+		for(Arrangement arr : pop){	arr.assign_cost(MonophonicFretGapCostFunction.cost_by_fretgap(arr)); }
 		List<Arrangement> rankview = pop.ranked();
 		Iterator<Arrangement> itr = rankview.iterator();
 		Arrangement arr1, arr2 = itr.next();
