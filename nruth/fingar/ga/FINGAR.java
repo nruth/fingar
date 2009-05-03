@@ -25,11 +25,25 @@ public final class FINGAR {
 	 * @param score the music to process
 	 * @param evolver the evolution mechanism to use (fitness function, crossover, etc)
 	 * @param farmsize how many best results to store, best result set capacity
+	 * @param print_costs if true each individual produced will be printed in a MATLAB friendly dat file of form col1:gen col2:cost
+	 */
+	public FINGAR(Score score, Evolver evolver, int farmsize, boolean print_costs) {
+		this(score, evolver, farmsize);
+		this.print_costs = print_costs;
+		
+	}
+	
+	/**
+	 * @param score the music to process
+	 * @param evolver the evolution mechanism to use (fitness function, crossover, etc)
+	 * @param farmsize how many best results to store, best result set capacity
 	 */
 	public FINGAR(Score score, Evolver evolver, int farmsize) {
 		this(score, evolver);
 		this.best_results = new BestResultSet(farmsize);
 	}
+	
+	
 	/**
 	 * @param score the music to process
 	 * @param evolver the evolution mechanism to use (fitness function, crossover, etc)
@@ -72,7 +86,6 @@ public final class FINGAR {
 			Population population = new Population(score, evolver);			
 			System.out.print("\n."); //clear a line for the progress bar
 			
-			boolean finished = false;
 			while(!finished){ //make a new one and throw the old one away at each stage, this will enable garbage collection to occur				
 				population = population.successor();
 				for(Arrangement ind : population){ best_results.add(ind, population.evolver().generation()); }
@@ -83,8 +96,6 @@ public final class FINGAR {
 				System.out.print((gen%5==0)?((gen%10==0) ? gen : "|") :"."); //progress bar!
 			}
 			results = population.view_arrangements();
-			
-			this.finished = true;
 			return true;
 		}
 		else return false;

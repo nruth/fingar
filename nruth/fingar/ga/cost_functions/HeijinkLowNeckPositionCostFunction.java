@@ -4,7 +4,7 @@ import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.ga.Arrangement;
 import nruth.fingar.ga.Population;
 
-public class HeijinkNeckPositionCostFunction extends CostFunction {	
+public class HeijinkLowNeckPositionCostFunction extends CostFunction {	
 	public int determine_cost(Arrangement arr){
 		int fretsum=0;
 		for(FingeredNote n : arr){	fretsum += n.fret(); }

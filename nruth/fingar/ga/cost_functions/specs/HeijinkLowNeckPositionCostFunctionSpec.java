@@ -9,10 +9,10 @@ import nruth.fingar.domain.guitar.FingeredNote;
 import nruth.fingar.domain.music.TimedNote;
 import nruth.fingar.domain.specs.TimedNoteSpec;
 import nruth.fingar.ga.Arrangement;
-import nruth.fingar.ga.cost_functions.HeijinkNeckPositionCostFunction;
+import nruth.fingar.ga.cost_functions.HeijinkLowNeckPositionCostFunction;
 
 import org.junit.Test;
-public class HeijinkNeckPositionCostFunctionSpec {
+public class HeijinkLowNeckPositionCostFunctionSpec {
 	@Test
 	public void low_neck_solutions_cheaper(){
 		TimedNote[] notes = TimedNoteSpec.create_random_monophonic_arranged_notes(3);
@@ -21,7 +21,7 @@ public class HeijinkNeckPositionCostFunctionSpec {
 		Arrangement low_pos = high_pos.clone();
 		for(FingeredNote note : low_pos.fingered_notes().values()){ note.setFret(1); }
 		for(FingeredNote note : high_pos.fingered_notes().values()){ note.setFret(10); }
-		assertTrue(new HeijinkNeckPositionCostFunction().determine_cost(high_pos) > new HeijinkNeckPositionCostFunction().determine_cost(low_pos));
+		assertTrue(new HeijinkLowNeckPositionCostFunction().determine_cost(high_pos) > new HeijinkLowNeckPositionCostFunction().determine_cost(low_pos));
 	}
 	
 	
@@ -35,6 +35,6 @@ public class HeijinkNeckPositionCostFunctionSpec {
     	for(FingeredNote note : low_pos.fingered_notes().values()){ note.setFret(1); }
 		for(FingeredNote note : high_pos.fingered_notes().values()){ note.setFret(10); }
 
-		assertTrue(new HeijinkNeckPositionCostFunction().determine_cost(high_pos)> new HeijinkNeckPositionCostFunction().determine_cost(low_pos));
+		assertTrue(new HeijinkLowNeckPositionCostFunction().determine_cost(high_pos)> new HeijinkLowNeckPositionCostFunction().determine_cost(low_pos));
 	}
 }

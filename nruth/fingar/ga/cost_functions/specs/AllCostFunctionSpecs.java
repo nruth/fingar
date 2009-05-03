@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	HeijinkNeckPositionCostFunctionSpec.class,
+	HeijinkLowNeckPositionCostFunctionSpec.class,
 	MonophonicFretGapEvolverSpec.class,
 	SimpleHandPositionModelCostFunctionSpec.class,
 	StringChangeCostFunctionSpec.class,
