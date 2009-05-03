@@ -17,7 +17,7 @@ import nruth.fingar.specs.MonophonicScales;
 public class Run {
 	
 	private static Score score(){
-		return MonophonicScales.c_major_scale(1);
+		return MonophonicScales.c_major_scale(2);
 //		return MonophonicScales.a_minor_scale(2);
 //		return MonophonicScales.sailors_hornpipe();
 	}
@@ -108,7 +108,7 @@ public class Run {
 			
 			Evolver evolver = new GeneticAlgorithmEvolver(popsize, generations, pcross, pmut,new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder(), cost_function); 
 			System.out.println(evolver);
-			FINGAR ga = new FINGAR(score, evolver, farm_sz);
+			FINGAR ga = new FINGAR(score, evolver, farm_sz, true);
 			List<Arrangement> results = ga.results();
 	//		//print out results section, may be removed from the test
 	//		HashSet<Arrangement> results_set = new HashSet<Arrangement>() ;

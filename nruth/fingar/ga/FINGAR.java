@@ -1,5 +1,8 @@
 package nruth.fingar.ga;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -86,9 +89,13 @@ public final class FINGAR {
 			Population population = new Population(score, evolver);			
 			System.out.print("\n."); //clear a line for the progress bar
 			
-			while(!finished){ //make a new one and throw the old one away at each stage, this will enable garbage collection to occur				
+			while(!finished){ //make a new one and throw the old one away at each stage, this will enable garbage collection to occur
+				
+				Population current = population; //keep a reference to the old pop for printing after costing
 				population = population.successor();
 				for(Arrangement ind : population){ best_results.add(ind, population.evolver().generation()); }
+				if(print_costs){ write_pop_summary_file(current, population.evolver().generation()); }
+				current = null; //get rid of reference to the old population
 				
 				System.gc(); //suggests garbage collection
 				finished = population.evolver().is_halted();
@@ -101,9 +108,18 @@ public final class FINGAR {
 		else return false;
 	}
 	
+	private static void write_pop_summary_file(Population population, int generation) {
+		try {
+			PrintWriter dat = new PrintWriter(new FileWriter("pop_summary.dat", true));
+			for(Arrangement arr : population){	dat.println(generation+" "+arr.cost()); }
+			dat.close();
+		} catch (IOException e) {	e.printStackTrace(); }	
+	}
+
 	public BestResultSet best_results;
 	private final Score score;
 	private boolean finished = false;
 	private List<Arrangement> results;
 	private Evolver evolver;
+	private boolean print_costs;
 }
