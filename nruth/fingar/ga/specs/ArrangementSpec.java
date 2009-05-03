@@ -90,12 +90,9 @@ public class ArrangementSpec {
 		for(int n=0; n<10; n++){
 			List<Integer> fingers = new LinkedList<Integer>();
 			for(FingeredNote note : arrangement){ 
-				if(note.fret()==0){ note.setFinger(0); }
-				else{
-					int finger = seed.nextInt(Guitar.FINGERS.length) + 1;
-					note.setFinger(finger);
-					fingers.add(finger);
-				}
+				int finger = (note.fret()==0) ? 0 : seed.nextInt(Guitar.FINGERS.length) + 1;
+				note.setFinger(finger);
+				fingers.add(finger);
 			}
 			
 			Iterator<Integer> finger_iterator = fingers.iterator();
