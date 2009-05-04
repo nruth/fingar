@@ -108,7 +108,7 @@ public class Run {
 		File sdir = new File(s_summarydir);
 		sdir.mkdir();
 		
-		run(pcross, pmut, farm_sz, generations, popsize, 1, ((Long)Calendar.getInstance().getTime().getTime()).toString(), repeats, sdir);
+		run(pcross, pmut, farm_sz, generations, popsize, 1, "run_", repeats, sdir);
 	}
 	
 	//recursive wrapper for out-of-memory errors, reduces population size until success
@@ -127,7 +127,16 @@ public class Run {
 				
 				Evolver evolver = new GeneticAlgorithmEvolver(popsize, generations, pcross, pmut,new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder(), cost_function); 
 				System.out.println(evolver);
-				FINGAR ga = new FINGAR(score, evolver, farm_sz, true, pop_filename_prefix+"pop"+popsize+"gens"+generations+"_run"+run, sdir);
+				
+				
+				String filename = pop_filename_prefix + "pop"+popsize+"gens"+generations+"_run";
+				int postfix = run;
+				File file = new File(sdir, filename+postfix);
+				while (file.exists()){ //find the first unused digit for the common filename
+					file = new File(sdir, filename+ (++postfix));
+				}
+				
+				FINGAR ga = new FINGAR(score, evolver, farm_sz, true, file.getName(), sdir);
 				List<Arrangement> results = ga.results();
 		//		//print out results section, may be removed from the test
 		//		HashSet<Arrangement> results_set = new HashSet<Arrangement>() ;
