@@ -1,5 +1,7 @@
 package nruth.fingar.ga;
 
+import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,10 +32,11 @@ public final class FINGAR {
 	 * @param farmsize how many best results to store, best result set capacity
 	 * @param print_costs if true each individual produced will be printed in a MATLAB friendly dat file of form col1:gen col2:cost
 	 */
-	public FINGAR(Score score, Evolver evolver, int farmsize, boolean print_costs, String pop_summary_filename) {
+	public FINGAR(Score score, Evolver evolver, int farmsize, boolean print_costs, String pop_summary_filename, File summarydir) {
 		this(score, evolver, farmsize);
 		this.print_costs = print_costs;
 		this.pop_summary_filename = pop_summary_filename;
+		this.summarydir = summarydir;
 	}
 	
 	/**
@@ -112,7 +115,7 @@ public final class FINGAR {
 	
 	private void write_pop_summary_file(Population population, int generation) {
 		try {
-			PrintWriter dat = new PrintWriter(new FileWriter(pop_summary_filename, true));
+			PrintWriter dat = new PrintWriter(new FileWriter(new File(summarydir,pop_summary_filename), true));
 			for(Arrangement arr : population){	dat.print(arr.cost()+" "); }
 			dat.println();
 			dat.close();
@@ -126,4 +129,5 @@ public final class FINGAR {
 	private Evolver evolver;
 	private boolean print_costs=false;
 	private String pop_summary_filename=null;
+	private File summarydir=null;
 }
