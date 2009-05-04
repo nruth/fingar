@@ -30,10 +30,10 @@ public final class FINGAR {
 	 * @param farmsize how many best results to store, best result set capacity
 	 * @param print_costs if true each individual produced will be printed in a MATLAB friendly dat file of form col1:gen col2:cost
 	 */
-	public FINGAR(Score score, Evolver evolver, int farmsize, boolean print_costs) {
+	public FINGAR(Score score, Evolver evolver, int farmsize, boolean print_costs, String pop_summary_filename) {
 		this(score, evolver, farmsize);
 		this.print_costs = print_costs;
-		
+		this.pop_summary_filename = pop_summary_filename;
 	}
 	
 	/**
@@ -102,16 +102,19 @@ public final class FINGAR {
 				int gen = population.evolver().generation();
 				System.out.print((gen%5==0)?((gen%10==0) ? gen : "|") :"."); //progress bar!
 			}
+			//and print the last one
+			if(print_costs){ write_pop_summary_file(population, population.evolver().generation()); }
 			results = population.view_arrangements();
 			return true;
 		}
 		else return false;
 	}
 	
-	private static void write_pop_summary_file(Population population, int generation) {
+	private void write_pop_summary_file(Population population, int generation) {
 		try {
-			PrintWriter dat = new PrintWriter(new FileWriter("pop_summary.dat", true));
-			for(Arrangement arr : population){	dat.println(generation+" "+arr.cost()); }
+			PrintWriter dat = new PrintWriter(new FileWriter(pop_summary_filename, true));
+			for(Arrangement arr : population){	dat.print(arr.cost()+" "); }
+			dat.println();
 			dat.close();
 		} catch (IOException e) {	e.printStackTrace(); }	
 	}
@@ -121,5 +124,6 @@ public final class FINGAR {
 	private boolean finished = false;
 	private List<Arrangement> results;
 	private Evolver evolver;
-	private boolean print_costs;
+	private boolean print_costs=false;
+	private String pop_summary_filename=null;
 }

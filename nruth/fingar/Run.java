@@ -41,7 +41,7 @@ public class Run {
 	
 	private static HashMap<String, String> params;
 	private static HashMap<String, Number> valid_params;
-	private static final String ARGN_POPSIZE = "pop", ARGN_GENS="gens", ARGN_FARMSZ="farm_sz", ARGN_PCROSS="p_cross", ARGN_PMUT="p_mutate";
+	private static final String ARGN_POPSIZE = "pop", ARGN_GENS="gens", ARGN_FARMSZ="farm_sz", ARGN_PCROSS="p_cross", ARGN_PMUT="p_mutate", ARGN_REPEATS="repeats";
 	static {
 		valid_params = new HashMap<String, Number>();
 		valid_params.put(ARGN_POPSIZE, 30000);
@@ -49,6 +49,7 @@ public class Run {
 		valid_params.put(ARGN_FARMSZ, 40);
 		valid_params.put(ARGN_PCROSS, 0.16);
 		valid_params.put(ARGN_PMUT, 0.02);
+		valid_params.put(ARGN_REPEATS, 1);
 	}
 	
 	public static void print_help(){
@@ -62,8 +63,11 @@ public class Run {
 				+"\n * 		size of best-result farm (set)"
 				+"\n * 	p_cross 	:: 	0<=real<=1"
 				+"\n * 		likelihood of crossover at locus (not likelihood of crossover for individual, see design chapter)"
+				+"\n *		default adjusts to length of piece and its use is advised"
 				+"\n * 	p_mutate	:: 	0<=real<=1"
-				+"\n * 		likelihood of allele mutation for all alleles  "
+				+"\n * 		likelihood of allele mutation for all alleles"
+				+"\n *	repeats		::	natural integer"
+				+"\n *		how many times to perform the experiment before halting"
 				+"\n * @param args in the form arg=val as appropriate" 
 				+"\n *** example: java -Xmx1g nruth.fingar.Run p_mutate=0.1 pop=40000 gens=400");
 	}
@@ -90,11 +94,15 @@ public class Run {
 		String s_mut = params.get(ARGN_PMUT);
 		double pmut =  (s_mut == null) ? (Double)valid_params.get(ARGN_PMUT) : Double.parseDouble(s_mut);
 		
-		run(pcross, pmut, farm_sz, generations, popsize, 1);
+		String s_repeats = params.get(ARGN_REPEATS);
+		int repeats = (s_repeats == null) ? (Integer)valid_params.get(ARGN_REPEATS) : Integer.parseInt(s_repeats);
+		
+		run(pcross, pmut, farm_sz, generations, popsize, 1, "run_popsummary_", repeats);
+		
 	}
 	
 	//recursive wrapper for out-of-memory errors, reduces population size until success
-	private static void run(double pcross, double pmut, int farm_sz, int generations, int popsize, int attempt){
+	private static void run(double pcross, double pmut, int farm_sz, int generations, int popsize, int attempt, String pop_filename_prefix, int repeats){
 		if(attempt>10){ throw new RuntimeException("more than 10 attempts at shrinking memory size failed. Use lower population size. Remember to specify java runtime engine heap size using -Xmx1g for example");}
 		
 		try{
@@ -104,33 +112,35 @@ public class Run {
 			//match crossover likelihood to the piece unless it was specified as a param
 			if(((Double)pcross).equals(Double.NaN)){ pcross = 1.0/score.size(); }
 			
-			CostFunction cost_function = new CompositeCostFunction(1,30,60); 
-			
-			Evolver evolver = new GeneticAlgorithmEvolver(popsize, generations, pcross, pmut,new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder(), cost_function); 
-			System.out.println(evolver);
-			FINGAR ga = new FINGAR(score, evolver, farm_sz, true);
-			List<Arrangement> results = ga.results();
-	//		//print out results section, may be removed from the test
-	//		HashSet<Arrangement> results_set = new HashSet<Arrangement>() ;
-	//		results_set.addAll(results);
-	//		Arrangement[] sorted_results_set =results_set.toArray(new Arrangement[results_set.size()]); 
-	//		Arrays.sort(sorted_results_set, new Comparator<Arrangement>() {
-	//			public int compare(Arrangement o1, Arrangement o2) {
-	//				return ((Integer)o2.cost()).compareTo(o1.cost());
-	//			}
-	//		});
-	//		
-	//		for(Arrangement result : sorted_results_set){
-	//			System.out.println(result+"Cost: "+result.cost()+"\n----\n\n");
-	//		}
-			
-			System.out.println("\n\n\nBest results\n===================================\n\n");
-			for(Arrangement result : results){
-				System.out.println(result+"Cost: "+result.cost()+"\nGeneration: "+result.generation_discovered()+"\n----\n\n");
+			for(int run=1; run<=repeats;run++){
+				CostFunction cost_function = new CompositeCostFunction(1,30,60); 
+				
+				Evolver evolver = new GeneticAlgorithmEvolver(popsize, generations, pcross, pmut,new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder(), cost_function); 
+				System.out.println(evolver);
+				FINGAR ga = new FINGAR(score, evolver, farm_sz, true, pop_filename_prefix+run);
+				List<Arrangement> results = ga.results();
+		//		//print out results section, may be removed from the test
+		//		HashSet<Arrangement> results_set = new HashSet<Arrangement>() ;
+		//		results_set.addAll(results);
+		//		Arrangement[] sorted_results_set =results_set.toArray(new Arrangement[results_set.size()]); 
+		//		Arrays.sort(sorted_results_set, new Comparator<Arrangement>() {
+		//			public int compare(Arrangement o1, Arrangement o2) {
+		//				return ((Integer)o2.cost()).compareTo(o1.cost());
+		//			}
+		//		});
+		//		
+		//		for(Arrangement result : sorted_results_set){
+		//			System.out.println(result+"Cost: "+result.cost()+"\n----\n\n");
+		//		}
+				
+				System.out.println("\n\n\nBest results\n===================================\n\n");
+				for(Arrangement result : results){
+					System.out.println(result+"Cost: "+result.cost()+"\nGeneration: "+result.generation_discovered()+"\n----\n\n");
+				}
 			}
 		} catch(OutOfMemoryError e){
 			System.out.println("Insufficient memory to run with population size: "+popsize);
-			run(pcross, pmut, farm_sz, generations, (popsize*75)/100, attempt+1); //reduce to 75% of popsize using integers until it works.
+			run(pcross, pmut, farm_sz, generations, (popsize*75)/100, attempt+1, pop_filename_prefix, repeats); //reduce to 75% of popsize using integers until it works.
 		}
 	}
 }
