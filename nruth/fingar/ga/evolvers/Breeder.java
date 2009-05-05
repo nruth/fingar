@@ -74,11 +74,10 @@ public class Breeder {
 	 * @return the (destructively) mutated arrangement
 	 */
 	public Arrangement mutate(Arrangement arrangement, Random rand, double p_mutate){
-		for(FingeredNote note : arrangement){
-			if(rand.nextDouble() < p_mutate){  
-				note.randomise_fingering();  
-			}
+		if(rand.nextDouble() < p_mutate){
+			arrangement.randomise();
 		}
+		
 		return arrangement; 
 	}
 }

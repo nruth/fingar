@@ -18,9 +18,9 @@ import nruth.fingar.specs.MonophonicScales;
 public class Run {
 	
 	private static Score score(){
-//		return MonophonicScales.c_major_scale(2);
+		return MonophonicScales.c_major_scale(2);
 //		return MonophonicScales.a_minor_scale(2);
-		return MonophonicScales.sailors_hornpipe();
+//		return MonophonicScales.sailors_hornpipe();
 	}
 	
 	private static HashMap<String, String> parse_params(String[] args){
