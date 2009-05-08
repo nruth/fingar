@@ -5,7 +5,7 @@ Dir.open('.') do |dir|
   
   dir.each do |file| 
     if file =~ /.eps$/
-      pdf = "#{File.basename(file, ".*")}.pdf"
+      pdf = "#{File.basename(file, ".eps")}.pdf"
       cmd = "epstopdf #{file} > #{pdf}"
       unless File.exists?(pdf)
         puts cmd

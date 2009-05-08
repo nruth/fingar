@@ -16,11 +16,12 @@ import nruth.fingar.ga.probability.GoldbergRouletteWheel;
 import nruth.fingar.specs.MonophonicScales;
 
 public class Run {
+	private static final boolean LOGGING = false;
 	
 	private static Score score(){
-//		return MonophonicScales.c_major_scale(2);
+		return MonophonicScales.c_major_scale(2);
 //		return MonophonicScales.a_minor_scale(2);
-		return MonophonicScales.sailors_hornpipe();
+//		return MonophonicScales.sailors_hornpipe();
 	}
 	
 	private static HashMap<String, String> parse_params(String[] args){
@@ -102,7 +103,7 @@ public class Run {
 		int repeats = (s_repeats == null) ? (Integer)valid_params.get(ARGN_REPEATS) : Integer.parseInt(s_repeats);
 		
 		String s_summarydir = params.get(ARGN_SDIR);
-		if(s_summarydir==null){ throw new RuntimeException("set a dir name"); } 
+		if(LOGGING && s_summarydir==null){ throw new RuntimeException("set a dir name"); } 
 		s_summarydir += "pm"+pmut+"pc"+pcross;
 		
 		File sdir = new File(s_summarydir);
@@ -123,7 +124,7 @@ public class Run {
 			if(((Double)pcross).equals(Double.NaN)){ pcross = 1.0/score.size(); }
 			
 			for(int run=1; run<=repeats;run++){
-				CostFunction cost_function = new CompositeCostFunction(1,30,60); 
+				CostFunction cost_function = new CompositeCostFunction(1,40,60); 
 				
 				Evolver evolver = new GeneticAlgorithmEvolver(popsize, generations, pcross, pmut,new Random(), new GoldbergRouletteWheel.WheelFactory(), new Breeder(), cost_function); 
 				System.out.println(evolver);
@@ -136,7 +137,7 @@ public class Run {
 					file = new File(sdir, filename+ (++postfix));
 				}
 				
-				FINGAR ga = new FINGAR(score, evolver, farm_sz, true, file.getName(), sdir);
+				FINGAR ga = new FINGAR(score, evolver, farm_sz, LOGGING, file.getName(), sdir);
 				List<Arrangement> results = ga.results();
 		//		//print out results section, may be removed from the test
 		//		HashSet<Arrangement> results_set = new HashSet<Arrangement>() ;
